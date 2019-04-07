@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
     public int speed = 15;
 
-    public string selected;
     // Start is called before the first frame update
     void Start()
     {

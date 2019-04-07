@@ -12,6 +12,7 @@ public abstract class Stats_Unit : Stats_Generic
     public int[] armor = { 0, 0, 0, 0 };
     public int[] ward = { 0, 0, 0, 0 };
 
+    public string unit_name;
     public int level = 1;
     public int movement = 0;  //if this is public, maybe we don't need get/set movement
 

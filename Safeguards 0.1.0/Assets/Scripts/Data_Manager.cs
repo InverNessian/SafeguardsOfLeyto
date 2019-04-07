@@ -30,6 +30,7 @@ public class Data_Manager : MonoBehaviour
             }
             */
         }
+        character_data.unit_name = character_name; //get rid of this later
     }
 
     public void gainExp(int amount)

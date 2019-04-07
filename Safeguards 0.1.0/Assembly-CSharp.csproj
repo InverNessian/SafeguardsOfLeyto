@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Data_Manager.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Navigation.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\Actions\Action.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\Actions\Action_Attack.cs" />
