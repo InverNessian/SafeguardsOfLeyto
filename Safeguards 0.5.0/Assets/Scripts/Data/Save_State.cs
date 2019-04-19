@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "SaveState", fileName = "SaveState")]
 public class Save_State : ScriptableObject
 {
+    public string id;
     public string test; //for testing purposes
 
     public int current_mission = 0; //we're doing it this way so that the game doesn't have to store as many values

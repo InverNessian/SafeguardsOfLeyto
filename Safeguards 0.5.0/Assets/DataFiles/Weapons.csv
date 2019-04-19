@@ -1,0 +1,12 @@
+Name,Type,Mastery,Stats,Range,Effects,Cost,Notes
+Iron Blade,Blades,0,"Attack +5, Critical +10",0-100,--,2,
+Iron Spear,Spears,0,"Attack +5, Accuracy +10",0-100,--,2,
+Iron Mace,Maces,0,Attack +7,0-100,--,2,
+Iron Bow,Bows,0,"Attack +3, Follow-up +3",0-200,--,2,
+Iron Knife,Knives,0,"Attack +3, Evasion +10",0-200,--,2,
+Iron Fang,Beast,0,"Attack +5, Defense +4, Accessories -1",0-100,--,2,
+Dark Burst,Dark,0,"Attack +7, Accuracy -15",0-200,--,2,
+Fire Orb,Anima (Fire),0,"Attack +4, Critical -5",0-200,--,2,
+Wind Orb,Anima (Wind),0,"Attack +3, Evasion +5, Defense -1",0-200,--,2,
+Light Beam,Light,0,"Attack +3, Guard +10",0-200,--,2,
+Ironwood Staff,Staff,0,"Attack +5, Defense +2",0-100,--,2,

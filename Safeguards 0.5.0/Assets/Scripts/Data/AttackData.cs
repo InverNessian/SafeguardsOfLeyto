@@ -12,8 +12,7 @@ public class AttackData
     public bool crit = false; //these are for logging purposes.
 
     public int HitRate;
-    public int CriticalRate;
-    public int GuardRate;
+    public int CriticalRate; //set this to a negative value to represent Guard chance.
     public int DamageDealt;
     public string[] OnHitEffects;
 

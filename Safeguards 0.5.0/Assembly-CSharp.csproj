@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Actions\Attack.cs" />
     <Compile Include="Assets\Scripts\Actions\CombatController.cs" />
     <Compile Include="Assets\Scripts\Actions\CombatEvent.cs" />
+    <Compile Include="Assets\Scripts\Actions\MovementController.cs" />
     <Compile Include="Assets\Scripts\Actions\MovementEvent.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\DataHolder.cs" />

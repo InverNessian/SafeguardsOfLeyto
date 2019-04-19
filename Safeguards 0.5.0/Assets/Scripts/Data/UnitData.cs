@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System;
 
-[System.Serializable]
-[CreateAssetMenuAttribute(menuName = "UnitData", fileName = "UnitData")]
+[CreateAssetMenu(menuName = "UnitData", fileName = "UnitData")]
 public class UnitData : ScriptableObject
 {
     //public enum stat_types : int { Current = 0, Base = 1, Growth = 2, Progress = 3 };
@@ -24,7 +26,9 @@ public class UnitData : ScriptableObject
     public int movement = 0;  //if this is public, maybe we don't need get/set movement
 
     public List<string> status = new List<string>();
-    public List<Item> equipped = new List<Item>(); //these are separate so that we can tell what's equipped and what's not.
+    [SerializeField]
+    public Weapon weapon; //for ease of use
+    public List<Item> accessories = new List<Item>(); //these are separate so that we can tell what's equipped and what's not.
     public List<Item> inventory = new List<Item>();
     public List<Talent> talents = new List<Talent>();
     public List<Training> mastery = new List<Training>();
@@ -36,23 +40,10 @@ public class UnitData : ScriptableObject
     public int expToLevel = 100;
     public int growthToBump = 100;
 
-    public enum character_list : int { Avery, Chalice, Crastos, Dondi, Eve, Faber, Fant, Ghar, Gradio, Hadrian, Jor, Kallen, Lena, Leonardo, Liliane, Litugenos, Lyra, Nora, Saph, Trinity, Vyka };
     public Dictionary<string, int> supports = new Dictionary<string, int>();
 
 
 
-    public static UnitData LoadData(string id)
-    {
-        UnitData temp = new UnitData();
-        //check in the persistent data path for the file name based on id
-            //if found, set temp stats and return
-        return temp;
-    }
-
-    public void SaveData()
-    {
-
-    }
 
     public void TakeDamage(int amount)
     {
@@ -87,7 +78,8 @@ public class UnitData : ScriptableObject
     public int DeriveDefense(Weapon weapon)
     {
         int temp = 0;
-        foreach(Item item in equipped)
+        temp += this.weapon.statMods[1];
+        foreach(Item item in accessories)
         {
             temp += item.statMods[1];
         }

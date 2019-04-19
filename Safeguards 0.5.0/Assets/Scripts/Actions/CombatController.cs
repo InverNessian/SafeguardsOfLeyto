@@ -6,18 +6,12 @@ public class CombatController : MonoBehaviour
 {
     void Start()
     {
-        UnitController.m_testEvent.AddListener(TriggerAction);
+        UnitController.mDuelCombat.AddListener(DuelCombat);
     }
-
-    public void TriggerAction(UnitData atkr, UnitData dfndr)
-    {
-        //call preview attack, which creates the UI button to proceed into DoCombat
-        //UnitData atkr = GameObject.Find(UnitController.selected).GetComponent<DataHolder>().unitData;
-        //UnitData dfndr = GameObject.Find(target).GetComponent<DataHolder>().unitData;
-        PreviewCombat(atkr, dfndr);
-    }
+    //do we want to have events just for combat?  might make things easier since we could have each special combat really just call some Events.
     
-    public void PreviewCombat(UnitData attacker, UnitData defender)
+    
+    public void DuelCombat(UnitData attacker, UnitData defender)
     {
         List<AttackData> attacks = new List<AttackData>();
         attacks.Add(GenerateHit(attacker, defender, true));
@@ -33,8 +27,10 @@ public class CombatController : MonoBehaviour
 
         foreach(AttackData ad in attacks)
         {
-            Debug.Log(ad.ToString());
+            Debug.Log(ad.ToString()); //once UI is up, have this display attacks in the UI.
         }
+
+        //then 
     }
 
     public void DoCombat(UnitData attacker, UnitData defender)
@@ -45,9 +41,11 @@ public class CombatController : MonoBehaviour
     public AttackData GenerateHit(UnitData attacker, UnitData defender, bool preview)
     {
         AttackData attackData = new AttackData();
-        attackData.HitRate = 60 + attacker.DeriveAccuracy() - defender.DeriveEvasion();
         attackData.attacker = attacker.unit_name;
-        //etc
+        attackData.HitRate = 60 + attacker.DeriveAccuracy() - defender.DeriveEvasion();
+        attackData.CriticalRate = attacker.DeriveCritical() - defender.DeriveGuard();
+        attackData.DamageDealt = attacker.DeriveAttack(attacker.weapon) - defender.DeriveDefense(attacker.weapon);
+        //update this to interact with Dual Wield later on.
 
         if (!preview)
         {

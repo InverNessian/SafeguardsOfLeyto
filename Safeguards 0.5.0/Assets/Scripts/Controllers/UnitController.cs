@@ -12,17 +12,16 @@ public class UnitController : MonoBehaviour
     //set up a clickaction event that fires the attack method from CombatController
     //public delegate void ClickAction(string target);
     //public static event ClickAction OnClicked;
-    public static CombatEvent m_testEvent;
+    public static CombatEvent mDuelCombat = new CombatEvent();
+    public static MovementEvent mNormalMove = new MovementEvent();
 
 
     //NavMeshAgent agent;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        if (m_testEvent == null)
-            m_testEvent = new CombatEvent();
 
-        //m_testEvent.AddListener(Ping);
+        //mDuelCombat.AddListener(Ping);
         //agent = GetComponent<NavMeshAgent>();
     }
 
@@ -41,18 +40,19 @@ public class UnitController : MonoBehaviour
 
                     //for right now, I'm going to hijack this to test the combat stuff
                     DataHolder target = hit.collider.GetComponent<DataHolder>();
-                    if (target != null && !target.unitData.unit_name.Equals(selected) && m_testEvent != null)
+                    if (target != null && !target.unitData.unit_name.Equals(selected) && mDuelCombat != null)
                     {
                         UnitData user = GameObject.Find(selected).GetComponent<DataHolder>().unitData;
                         //OnClicked(target.unit_name);
-                        m_testEvent.Invoke(target.unitData, user);
+                        mDuelCombat.Invoke(user, target.unitData);
                         //grab the user's data based on the "Selected" property
                         //;
-                        //GameObject.Find("ActionHolder").GetComponent<CombatController>().PreviewCombat(user,target);
+                        //GameObject.Find("ActionHolder").GetComponent<CombatController>().DuelCombat(user,target);
                     }
                     else
                     {
-                        GameObject.Find(selected).GetComponent<NavMeshAgent>().destination = hit.point;
+                        mNormalMove.Invoke(GameObject.Find(selected), hit.point);
+                        //GameObject.Find(selected).GetComponent<NavMeshAgent>().destination = hit.point; //get rid of this after MovementController is live
                     }
 
                 }
@@ -69,7 +69,6 @@ public class UnitController : MonoBehaviour
                 DataHolder target = hit.collider.GetComponent<DataHolder>();
                 if (target != null)
                 {
-
                     //this way, the script will only update the selected value if the target has a UnitData component
                     if (target.unitData.unit_name.Equals(selected))
                     {
