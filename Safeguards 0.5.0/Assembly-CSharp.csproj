@@ -65,9 +65,7 @@
     <Compile Include="Assets\Scripts\Actions\Action.cs" />
     <Compile Include="Assets\Scripts\Actions\Attack.cs" />
     <Compile Include="Assets\Scripts\Actions\CombatController.cs" />
-    <Compile Include="Assets\Scripts\Actions\CombatEvent.cs" />
     <Compile Include="Assets\Scripts\Actions\MovementController.cs" />
-    <Compile Include="Assets\Scripts\Actions\MovementEvent.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\DataHolder.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
@@ -79,7 +77,15 @@
     <Compile Include="Assets\Scripts\Data\Talent.cs" />
     <Compile Include="Assets\Scripts\Data\Training.cs" />
     <Compile Include="Assets\Scripts\Data\UnitData.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\Equip.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\GrowthData.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\GrowthManager.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\HealthManager.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\StatsData.cs" />
+    <Compile Include="Assets\Scripts\Data\Units\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Data\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Events\CombatEvent.cs" />
+    <Compile Include="Assets\Scripts\Events\MovementEvent.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

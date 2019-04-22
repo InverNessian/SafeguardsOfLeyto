@@ -15,14 +15,18 @@ public class UnitController : MonoBehaviour
     public static CombatEvent mDuelCombat = new CombatEvent();
     public static MovementEvent mNormalMove = new MovementEvent();
 
+    //experiment with non-static Events?
 
-    //NavMeshAgent agent;
+
     // Start is called before the first frame update
+    private void OnEnable()
+    {
+        //this method is intended to be used with adding event listeners.
+    }
+
     void Awake()
     {
 
-        //mDuelCombat.AddListener(Ping);
-        //agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -39,20 +43,18 @@ public class UnitController : MonoBehaviour
                     //this is worded this way so that there are no triggers here except if there's a selected unit.  
 
                     //for right now, I'm going to hijack this to test the combat stuff
-                    DataHolder target = hit.collider.GetComponent<DataHolder>();
-                    if (target != null && !target.unitData.unit_name.Equals(selected) && mDuelCombat != null)
+                    //DataHolder target = hit.collider.GetComponent<DataHolder>();
+                    string test = hit.collider.gameObject.name;
+                    if (hit.collider.GetComponent<StatsManager>() != null && !test.Equals(selected)) // && mDuelCombat != null
                     {
-                        UnitData user = GameObject.Find(selected).GetComponent<DataHolder>().unitData;
+                        GameObject user = GameObject.Find(selected);//.GetComponent<DataHolder>().unitData;
                         //OnClicked(target.unit_name);
-                        mDuelCombat.Invoke(user, target.unitData);
+                        mDuelCombat.Invoke(user, hit.collider.gameObject);
                         //grab the user's data based on the "Selected" property
-                        //;
-                        //GameObject.Find("ActionHolder").GetComponent<CombatController>().DuelCombat(user,target);
                     }
                     else
                     {
                         mNormalMove.Invoke(GameObject.Find(selected), hit.point);
-                        //GameObject.Find(selected).GetComponent<NavMeshAgent>().destination = hit.point; //get rid of this after MovementController is live
                     }
 
                 }
@@ -66,18 +68,19 @@ public class UnitController : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
 
-                DataHolder target = hit.collider.GetComponent<DataHolder>();
-                if (target != null)
+                //StatsManager target = hit.collider.GetComponent<StatsManager>();
+                string name = hit.collider.gameObject.name;
+                if (hit.collider.GetComponent<StatsManager>() != null)
                 {
                     //this way, the script will only update the selected value if the target has a UnitData component
-                    if (target.unitData.unit_name.Equals(selected))
+                    if (name.Equals(selected))
                     {
                         selected = "none";
-                        Debug.Log("Deselected " + target.unitData.unit_name);
+                        Debug.Log("Deselected " + name);
                     }
                     else
                     {
-                        selected = target.unitData.unit_name;
+                        selected = name;
                         Debug.Log("Selected " + selected);
                     }
 

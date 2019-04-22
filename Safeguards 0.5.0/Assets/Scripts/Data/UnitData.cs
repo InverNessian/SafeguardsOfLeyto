@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 
+//UnityCollege gave me an interesting idea.  What if this data was broken up into sections?
+//for example, what if the attributes were their own thing, and then there was another component that held equipped weapon, then another for level/exp
+//we could have a SO for each weapon being used, then just tie the SO to the data holder.
+//could be a decent solution for our unique HP problem- maybe enemy units have a separate data holder for their HP value?
+
 [CreateAssetMenu(menuName = "UnitData", fileName = "UnitData")]
 public class UnitData : ScriptableObject
 {
@@ -51,7 +56,10 @@ public class UnitData : ScriptableObject
         {
             health[0] -= amount;
         }
-        
+        if(health[0] <= 0)
+        {
+            //call "Down" event
+        }
     }
 
     public int DeriveAttack(Weapon weapon)

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public abstract class Item
+[CreateAssetMenu(fileName ="Item",menuName ="Item")]
+public class Item : ScriptableObject
 {
     public string itemName;
     public string type;

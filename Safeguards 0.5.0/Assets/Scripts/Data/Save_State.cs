@@ -14,5 +14,5 @@ public class Save_State : ScriptableObject
                                                                //It hopefully won't matter which particular ones are completed?  if it does, though, we can use the below.
                                                                //public Dictionary<string, bool> secondary_objectives = new Dictionary<string, bool>(); //initialize it so that it can be added to later.
     public int bonusEXP = 0;
-
+    public List<Item> convoy = new List<Item>();
 }
