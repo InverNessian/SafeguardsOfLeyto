@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0efd82dd2b84f45b033de23ff6b6b6, type: 3}
+  m_Name: Trinity
+  m_EditorClassIdentifier: 
+  health: 13000000130000002800000000000000
+  might: 00000000040000001400000000000000
+  focus: 000000000a0000003200000000000000
+  skill: 00000000080000002800000000000000
+  speed: 00000000060000001e00000000000000
+  favor: 000000000a0000003200000000000000
+  armor: 00000000020000000a00000000000000
+  ward: 00000000080000002800000000000000
+  unit_name: Trinity
+  level: 1
+  movement: 0
+  status: []
+  talents: []
+  mastery: []
+  actions: []
+  experience: 0
+  expToLevel: 100
+  growthToBump: 100
