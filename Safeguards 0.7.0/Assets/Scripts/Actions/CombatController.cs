@@ -9,7 +9,7 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        UnitController.mDuelCombat.AddListener(DuelCombat);
+        InputController.mDuelCombat.AddListener(DuelCombat);
     }
     //do we want to have events just for combat?  might make things easier since we could have each special combat really just call some Events.
         //these could be non-static events!
@@ -38,6 +38,9 @@ public class CombatController : MonoBehaviour
         {
             Debug.Log(ad.ToString()); //once UI is up, have this display attacks in the UI.
         }
+
+        //now we return control back to the player
+        InputController.SetState(InputController.PlayStates.UNIT_SELECT);
 
         //then 
     }

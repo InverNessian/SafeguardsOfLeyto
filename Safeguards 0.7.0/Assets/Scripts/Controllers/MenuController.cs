@@ -5,32 +5,30 @@ using UnityEngine.UIElements;
 
 public class MenuController : MonoBehaviour
 {
-    public GameObject masterPanel;
-    public GameObject actionPanel;
-    // Start is called before the first frame update
+    public GameObject[] panels;
+    // Set the unit UI panels to these values in Editor
 
 
     void Start()
     {
-        //actionPanel = GameObject.Find("OwnerPanel");
-        UnitController.mSelect.AddListener(ShowActionUI);
-        UnitController.mDeselect.AddListener(HideActionUI);
+        InputController.mSelect.AddListener(ShowActionUI);
+        InputController.mDeselect.AddListener(HideActionUI);
     }
 
 
     public void ShowActionUI(GameObject owner)
     {
-
-        //masterPanel.transform.position = owner.transform.position;
-        //masterPanel.transform.position = new Vector3(0, 0, 0);
-        masterPanel.GetComponent<UIHolder>().target = owner;
-        masterPanel.SetActive(true);
-        actionPanel.SetActive(true);
+        //since we configure this in editor, assume panels[0] is always the OwnerPanel
+        panels[0].GetComponent<UIHolder>().target = owner;
+        panels[0].SetActive(true);
+        panels[1].SetActive(true);
     }
 
-    public void HideActionUI(GameObject owner)
+    public void HideActionUI()
     {
-        masterPanel.SetActive(false);
-        actionPanel.SetActive(false);
+        foreach(GameObject panel in panels)
+        {
+            panel.SetActive(false);
+        }
     }
 }

@@ -24,7 +24,7 @@ public class SelectionEvent : UnityEvent<GameObject> //this will need updating f
 }
 
 [System.Serializable]
-public class DeselectionEvent : UnityEvent<GameObject> //this will need updating for Squads
+public class DeselectionEvent : UnityEvent //this will need updating for Squads
 {
 
 }

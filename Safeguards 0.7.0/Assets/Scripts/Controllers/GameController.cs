@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController master;
-    public static UnitController unitController;
+    public static InputController unitController;
 
     public int active_player = 0;
     public Save_State save_file;

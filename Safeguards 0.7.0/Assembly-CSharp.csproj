@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C054CF55-6E34-5FC8-A750-44A4E8E1F3DD}</ProjectGuid>
+    <ProjectGuid>{01A35445-6290-9BDF-C4CB-082A1A4AA9E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -67,18 +67,16 @@
     <Compile Include="Assets\Scripts\Actions\CombatController.cs" />
     <Compile Include="Assets\Scripts\Actions\MovementController.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\DataHolder.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\MenuController.cs" />
     <Compile Include="Assets\Scripts\Controllers\UIHolder.cs" />
-    <Compile Include="Assets\Scripts\Controllers\UnitController.cs" />
     <Compile Include="Assets\Scripts\Data\AttackData.cs" />
     <Compile Include="Assets\Scripts\Data\Events.cs" />
     <Compile Include="Assets\Scripts\Data\Item.cs" />
     <Compile Include="Assets\Scripts\Data\Save_State.cs" />
     <Compile Include="Assets\Scripts\Data\Talent.cs" />
     <Compile Include="Assets\Scripts\Data\Training.cs" />
-    <Compile Include="Assets\Scripts\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Data\Units\Equip.cs" />
     <Compile Include="Assets\Scripts\Data\Units\GrowthData.cs" />
     <Compile Include="Assets\Scripts\Data\Units\GrowthManager.cs" />
@@ -86,47 +84,49 @@
     <Compile Include="Assets\Scripts\Data\Units\StatsData.cs" />
     <Compile Include="Assets\Scripts\Data\Units\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Data\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Legacy\DataHolder.cs" />
+    <Compile Include="Assets\Scripts\Legacy\UnitData.cs" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -312,16 +312,16 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="CsvHelper">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Assets/Plugins/CsvHelper.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Assets/Plugins/CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>G:/GameCreation/Unity/Safeguards 0.5.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -393,7 +393,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 500, y: 500}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &298342087
 MonoBehaviour:
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a35a8bae7b29f44b4bfbad154f2f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 0.6
 --- !u!1 &586011880
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +986,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 586011883}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1069080612}
+        m_MethodName: SetStateInstance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &586011883
@@ -1093,7 +1104,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Combat Actions
@@ -1299,8 +1310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee23e683f01c03a4fb984a19f337380f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterPanel: {fileID: 298342085}
-  actionPanel: {fileID: 1411325628}
+  panels:
+  - {fileID: 298342085}
+  - {fileID: 1411325628}
+  - {fileID: 1962559147}
+  - {fileID: 1277178286}
 --- !u!4 &969366833
 Transform:
   m_ObjectHideFlags: 0
@@ -1313,7 +1327,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992157523
 GameObject:
@@ -1396,7 +1410,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 992157526}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1069080612}
+        m_MethodName: SetStateInstance
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &992157526
@@ -1436,6 +1461,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992157523}
   m_CullTransparentMesh: 0
+--- !u!1 &1069080609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1069080611}
+  - component: {fileID: 1069080612}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1069080611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069080609}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.7113845, y: 1.5306854, z: -1.451572}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1069080612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069080609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00bb4aec6f67146bdddb33138dbcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1133850153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,7 +2115,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1462890154
 GameObject:
@@ -2508,7 +2576,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Movement Actions
@@ -3103,72 +3171,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6402777c1d8091a4ba077f4f04926010, type: 3}
---- !u!1001 &8836505571126786146
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1551446215755667240, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_Name
-      value: UnitController
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.1033826
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.2947955
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -5.283687
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593462905737394517, guid: 54610a9eed6f75f449785ed58d02e015,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 54610a9eed6f75f449785ed58d02e015, type: 3}

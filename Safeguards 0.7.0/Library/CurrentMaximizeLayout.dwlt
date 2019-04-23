@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 509, y: 494}
-  m_MaxSize: {x: 14004, y: 14044}
+  m_MinSize: {x: 509, y: 472}
+  m_MaxSize: {x: 14004, y: 14022}
   vertical: 0
-  controlID: 11228
+  controlID: 571
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -127,10 +127,10 @@ MonoBehaviour:
     y: 0
     width: 1493
     height: 947
-  m_MinSize: {x: 232, y: 494}
-  m_MaxSize: {x: 10002, y: 14044}
+  m_MinSize: {x: 232, y: 472}
+  m_MaxSize: {x: 10002, y: 14022}
   vertical: 1
-  controlID: 11208
+  controlID: 523
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -354,14 +354,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripts/Controllers
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: G:\GameCreation\Unity\Safeguards 0.5.0
+  m_LastProjectPath: G:\GameCreation\Unity\Safeguards 0.7.0
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 45.2}
+    scrollPos: {x: 0, y: 63}
     m_SelectedIDs: 682b0000
     m_LastClickedID: 11112
-    m_ExpandedIDs: 00000000d02a0000082b0000142b00005e2d00008e2d00007a2e00009031000000ca9a3b
+    m_ExpandedIDs: 00000000d02a0000082b0000142b00005e2d00008e2d00007a2e0000b430000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -389,7 +389,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d02a0000082b0000142b00005e2d00008e2d00007a2e00009031000000ca9a3b
+    m_ExpandedIDs: 00000000d02a0000082b0000142b00005e2d00008e2d00007a2e0000b430000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -414,9 +414,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: cad3ffff
-    m_LastClickedInstanceID: -11318
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: eef3ffff
+    m_LastClickedInstanceID: -3090
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -494,7 +494,7 @@ MonoBehaviour:
   m_MinSize: {x: 277, y: 294}
   m_MaxSize: {x: 4002, y: 8044}
   vertical: 1
-  controlID: 11229
+  controlID: 572
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -549,10 +549,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 170}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: cad3ffffd2ddffff00e2ffff44ebffff20eeffffecefffff2ef0ffff7cf1ffff3cf2ffff8cf8ffffd6faffff0efbffff8efbffff063200001232000056320000
+      m_ExpandedIDs: 8efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
