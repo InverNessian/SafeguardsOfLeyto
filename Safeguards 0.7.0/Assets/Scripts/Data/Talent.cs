@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Talent
+public struct Talent
 {
     public string talentName;
     public string effect;

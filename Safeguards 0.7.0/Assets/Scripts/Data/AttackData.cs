@@ -10,6 +10,7 @@ public class AttackData
     public bool executed = false;
     public bool hit = false;
     public bool crit = false; //these are for logging purposes.
+    public double advantage = 0.0;
 
     public int HitRate;
     public int CriticalRate; //set this to a negative value to represent Guard chance.

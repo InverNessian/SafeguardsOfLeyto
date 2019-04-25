@@ -19,15 +19,25 @@ public class StatsData : ScriptableObject
     public int armorValue = 0;
     public int wardValue = 0;
 
+    //meta info
     public string displayName = "";
-
     public List<string> status = new List<string>();
+
+    //inventory
+    public int maxInventory = 5;
+    public List<Weapon> weapons = new List<Weapon>(); //only people with Dual Wield or special weapons will ever have more than 1
+    public List<Item> accessories = new List<Item>(); //only people with Well-Equipped or similar will have more than 1.
     public List<Item> inventory = new List<Item>();
 
-    //not quite sure what to do with these three yet, putting them here for now.
+    //weapon training
+    public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF}
+    [SerializeField]
+    public Dictionary<TrainingTypes, int> training;
+
+    //talents and actions, stored here
     public List<Talent> talents = new List<Talent>();
-    public List<Training> mastery = new List<Training>();
     public List<string> actions = new List<string>();
+        //there are triggers we need to create on the gameobject.  see statsmanager
 
 
     void Start()
@@ -70,7 +80,14 @@ public class StatsData : ScriptableObject
     public int DeriveAttack(Weapon weapon)
     {
         int temp = 0;
-        temp += weapon.statMods[0];
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.statMods[0];
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.statMods[0];
+        }
         switch (weapon.damageType)
         {
             case "Physical":
@@ -91,11 +108,14 @@ public class StatsData : ScriptableObject
     public int DeriveDefense(Weapon weapon)
     {
         int temp = 0;
-        //temp += this.weapon.statModsValue;
-        //foreach (Item item in accessories)
-        //{
-        //    temp += item.statModsValue;
-        //}
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.statMods[1];
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.statMods[1];
+        }
         switch (weapon.damageType)
         {
             case "Physical":

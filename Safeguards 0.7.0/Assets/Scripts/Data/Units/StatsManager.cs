@@ -8,7 +8,7 @@ public class StatsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //add TalentTrigger MBs to parent GO based on statsData.talents
     }
 
     // Update is called once per frame

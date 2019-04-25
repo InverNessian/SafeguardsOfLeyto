@@ -12,4 +12,17 @@ public class Equip : MonoBehaviour
         
     }
 
+    public bool IsWeapon()
+    {
+        if (item.GetType().ToString().Equals("Weapon"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 }

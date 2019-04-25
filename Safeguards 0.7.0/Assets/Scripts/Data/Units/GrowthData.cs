@@ -9,6 +9,7 @@ public class GrowthData : ScriptableObject
     //public static Event LevelUp;
     //public static Event PlusStat;
 
+        //growths
     public int healthGrowth = 0;
     public int mightGrowth = 0;
     public int focusGrowth = 0;
@@ -18,6 +19,7 @@ public class GrowthData : ScriptableObject
     public int armorGrowth = 0;
     public int wardGrowth = 0;
 
+        //progress
     public int healthProgress = 0;
     public int mightProgress = 0;
     public int focusProgress = 0;
@@ -27,9 +29,12 @@ public class GrowthData : ScriptableObject
     public int armorProgress = 0;
     public int wardProgress = 0;
 
+        //level-related
     public int experience = 0;
     public int expToLevel = 100;
     public int progressToBump = 100;
+    public int talentPoints = 0; //this is incremented at every even level
+
 
     public Dictionary<string, int> supports = new Dictionary<string, int>();
 
@@ -47,6 +52,8 @@ public class GrowthData : ScriptableObject
 
     private void GrowStats()
     {
+        //check if level is even/odd
+        //either Invoke health or increase talentPoints
         healthProgress += healthGrowth;
         if(healthProgress >= progressToBump)
         {
