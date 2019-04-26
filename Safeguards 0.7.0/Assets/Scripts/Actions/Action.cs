@@ -13,5 +13,5 @@ public abstract class Action
 
     //public abstract void Initialize(GameObject obj);
     public abstract void ProcessAction(string target); //this method will be the generic one that each individual uses to call its processes.
-
+    public abstract void UndoAction(); //for use with the Action Log and undoing things with Caduceus
 }

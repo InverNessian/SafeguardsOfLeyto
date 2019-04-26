@@ -87,11 +87,12 @@
     <Compile Include="Assets\Scripts\Data\Weapon.cs" />
     <Compile Include="Assets\Scripts\Legacy\DataHolder.cs" />
     <Compile Include="Assets\Scripts\Legacy\UnitData.cs" />
-    <Compile Include="Assets\Scripts\Talents\ICombat.cs" />
-    <Compile Include="Assets\Scripts\Talents\IConditional.cs" />
-    <Compile Include="Assets\Scripts\Talents\IMovement.cs" />
-    <Compile Include="Assets\Scripts\Talents\ISquad.cs" />
-    <Compile Include="Assets\Scripts\Talents\TalentTrigger.cs" />
+    <Compile Include="Assets\Scripts\Talents\Helpers\ICombat.cs" />
+    <Compile Include="Assets\Scripts\Talents\Helpers\IConditional.cs" />
+    <Compile Include="Assets\Scripts\Talents\Helpers\IMovement.cs" />
+    <Compile Include="Assets\Scripts\Talents\Helpers\ISquad.cs" />
+    <Compile Include="Assets\Scripts\Talents\Helpers\TalentTrigger.cs" />
+    <Compile Include="Assets\Scripts\Talents\Lifetaker.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

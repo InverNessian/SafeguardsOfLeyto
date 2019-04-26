@@ -22,12 +22,6 @@ public class HealthManager : MonoBehaviour
         //set TakeDamage as a listener for DamageDealt Event?
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void TakeDamage(int amount)
     {
         if (amount > 0)
@@ -38,5 +32,15 @@ public class HealthManager : MonoBehaviour
         {
             //call "Down" event
         }
+    }
+
+    public void HealDamage(int amount)
+    {
+
+    }
+
+    public int CheckHP()
+    {
+        return hpNow;
     }
 }

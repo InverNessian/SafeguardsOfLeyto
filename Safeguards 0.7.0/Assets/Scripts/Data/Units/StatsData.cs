@@ -22,15 +22,19 @@ public class StatsData : ScriptableObject
     //meta info
     public string displayName = "";
     public List<string> status = new List<string>();
+    public int actionsPerTurn = 2;
+    public int followUpThreshold = 5;
+    public int maxFollowUpAttacks = 1;
 
     //inventory
     public int maxInventory = 5;
     public List<Weapon> weapons = new List<Weapon>(); //only people with Dual Wield or special weapons will ever have more than 1
     public List<Item> accessories = new List<Item>(); //only people with Well-Equipped or similar will have more than 1.
     public List<Item> inventory = new List<Item>();
+    //weapons can implement "talent triggers" too.
 
     //weapon training
-    public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF}
+    public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF }
     [SerializeField]
     public Dictionary<TrainingTypes, int> training;
 
@@ -75,7 +79,6 @@ public class StatsData : ScriptableObject
                 break;
         }
     }
-
 
     public int DeriveAttack(Weapon weapon)
     {

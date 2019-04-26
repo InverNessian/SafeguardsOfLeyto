@@ -88,7 +88,10 @@ public class InputController : MonoBehaviour
                     if (hit.collider.GetComponent<StatsManager>() != null && !hit.collider.gameObject.name.Equals(selected)) // && mDuelCombat != null
                     {
                         GameObject user = GameObject.Find(selected);
-                        mDuelCombat.Invoke(user.GetComponent<StatsManager>(), hit.collider.GetComponent<StatsManager>());
+                        DuelCombat combat = new DuelCombat(user.GetComponent<StatsManager>(), hit.collider.GetComponent<StatsManager>());
+                        combat.ExecuteCombat();
+                        //log combat, then delete it from RAM
+                        //mDuelCombat.Invoke();
                     }
                     else
                     {
