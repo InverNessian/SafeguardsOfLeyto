@@ -34,8 +34,8 @@ public abstract class AttackAction : Action
 
     protected void SetAttackerDelegates(StatsManager person)
     {
-        TalentTrigger[] triggers = person.gameObject.GetComponents<TalentTrigger>();
-        foreach (TalentTrigger trigger in triggers)
+        AbilityTrigger[] triggers = person.gameObject.GetComponents<AbilityTrigger>();
+        foreach (AbilityTrigger trigger in triggers)
         {
             if (trigger is ICombat)
             {
@@ -57,8 +57,8 @@ public abstract class AttackAction : Action
 
     protected void SetDefenderDelegates(StatsManager person)
     {
-        TalentTrigger[] triggers = person.gameObject.GetComponents<TalentTrigger>();
-        foreach (TalentTrigger trigger in triggers)
+        AbilityTrigger[] triggers = person.gameObject.GetComponents<AbilityTrigger>();
+        foreach (AbilityTrigger trigger in triggers)
         {
             if (trigger is ICombat)
             {

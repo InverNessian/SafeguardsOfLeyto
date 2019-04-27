@@ -44,8 +44,8 @@ public static CombatEnd EvCombatEnd = new CombatEnd();
         CombatEnd InitCombatEnd = new CombatEnd();
         */
 
-        TalentTrigger[] triggers = initiate.gameObject.GetComponents<TalentTrigger>();
-        foreach (TalentTrigger trigger in triggers)
+        AbilityTrigger[] triggers = initiate.gameObject.GetComponents<AbilityTrigger>();
+        foreach (AbilityTrigger trigger in triggers)
         {
             if (trigger is ICombat)
             {
@@ -116,7 +116,7 @@ public static CombatEnd EvCombatEnd = new CombatEnd();
 
         //then 
     }
-    */
+    
 
     public void DoCombat(UnitData attacker, UnitData defender)
     {
@@ -140,7 +140,7 @@ public static CombatEnd EvCombatEnd = new CombatEnd();
         }
         return attackData;
     }
-
+    
     private Weapon GetWeapon(GameObject guy)
     {
         Equip equipped = guy.GetComponent<Equip>();
@@ -150,5 +150,5 @@ public static CombatEnd EvCombatEnd = new CombatEnd();
         }
         return (Weapon)equipped.item;
     }
-
+    */
 }

@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\Actions\Action.cs" />
     <Compile Include="Assets\Scripts\Actions\Attack.cs" />
     <Compile Include="Assets\Scripts\Actions\DuelCombat.cs" />
+    <Compile Include="Assets\Scripts\Actions\Equip.cs" />
+    <Compile Include="Assets\Scripts\Actions\InterruptQuick.cs" />
     <Compile Include="Assets\Scripts\Actions\MovementController.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
@@ -72,27 +74,29 @@
     <Compile Include="Assets\Scripts\Controllers\MenuController.cs" />
     <Compile Include="Assets\Scripts\Controllers\UIHolder.cs" />
     <Compile Include="Assets\Scripts\Data\AttackData.cs" />
+    <Compile Include="Assets\Scripts\Data\EquipData.cs" />
     <Compile Include="Assets\Scripts\Data\Events.cs" />
     <Compile Include="Assets\Scripts\Data\Item.cs" />
     <Compile Include="Assets\Scripts\Data\Save_State.cs" />
     <Compile Include="Assets\Scripts\Data\Talent.cs" />
     <Compile Include="Assets\Scripts\Data\Training.cs" />
-    <Compile Include="Assets\Scripts\Data\Units\Equip.cs" />
     <Compile Include="Assets\Scripts\Data\Units\GrowthData.cs" />
     <Compile Include="Assets\Scripts\Data\Units\GrowthManager.cs" />
     <Compile Include="Assets\Scripts\Data\Units\HealthManager.cs" />
     <Compile Include="Assets\Scripts\Data\Units\StatsData.cs" />
     <Compile Include="Assets\Scripts\Data\Units\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Data\Weapon.cs" />
+    <Compile Include="Assets\Scripts\DisplayStats.cs" />
     <Compile Include="Assets\Scripts\Legacy\CombatController.cs" />
     <Compile Include="Assets\Scripts\Legacy\DataHolder.cs" />
     <Compile Include="Assets\Scripts\Legacy\UnitData.cs" />
-    <Compile Include="Assets\Scripts\Talents\Helpers\ICombat.cs" />
-    <Compile Include="Assets\Scripts\Talents\Helpers\IConditional.cs" />
-    <Compile Include="Assets\Scripts\Talents\Helpers\IMovement.cs" />
-    <Compile Include="Assets\Scripts\Talents\Helpers\ISquad.cs" />
-    <Compile Include="Assets\Scripts\Talents\Helpers\TalentTrigger.cs" />
-    <Compile Include="Assets\Scripts\Talents\Lifetaker.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\AbilityTrigger.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\ICombat.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\IConditional.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\IEquip.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\IMovement.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Helpers\ISquad.cs" />
+    <Compile Include="Assets\Scripts\Triggers\Lifetaker.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

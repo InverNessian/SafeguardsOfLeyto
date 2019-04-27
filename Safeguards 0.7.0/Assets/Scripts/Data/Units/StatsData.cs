@@ -49,6 +49,21 @@ public class StatsData : ScriptableObject
 
     }
 
+    public bool CheckEquippable(Item thing)
+    {
+        if(weapons.ToArray().Length + accessories.ToArray().Length + inventory.ToArray().Length >= maxInventory)
+        {
+            return false;
+        }
+        if(thing is Weapon)
+        {
+            //check against training types
+            //check if user already has one weapon
+            return false;
+        }
+        return true;
+    }
+
     public void PlusStat(string stat)
     {
         switch (stat)

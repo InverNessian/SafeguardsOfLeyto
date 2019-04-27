@@ -12,6 +12,8 @@ public abstract class Action
     //public float aCooldown = 1f;
 
     //public abstract void Initialize(GameObject obj);
-    public abstract void ProcessAction(string target); //this method will be the generic one that each individual uses to call its processes.
+    //public abstract void ProcessAction(string target); //this method will be the generic one that each individual uses to call its processes.
+    //since these are separate classes we don't need a unified method to call them all.
+
     public abstract void UndoAction(); //for use with the Action Log and undoing things with Caduceus
 }

@@ -6,12 +6,6 @@ using UnityEngine;
 public class DuelCombat : AttackAction
 {
 
-
-    public override void ProcessAction(string target)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void PreviewCombat()
     {
         //two standard hits
