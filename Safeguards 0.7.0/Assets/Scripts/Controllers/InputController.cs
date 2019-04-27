@@ -89,9 +89,10 @@ public class InputController : MonoBehaviour
                     {
                         GameObject user = GameObject.Find(selected);
                         DuelCombat combat = new DuelCombat(user.GetComponent<StatsManager>(), hit.collider.GetComponent<StatsManager>());
+                        combat.PreviewCombat();
                         combat.ExecuteCombat();
                         //log combat, then delete it from RAM
-                        //mDuelCombat.Invoke();
+                        playState = PlayStates.UNIT_SELECT;
                     }
                     else
                     {

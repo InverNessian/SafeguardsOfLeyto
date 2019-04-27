@@ -8,24 +8,24 @@ public abstract class AttackAction : Action
     //data
     public StatsManager initiator;
     public StatsManager receiver;
-    public List<AttackData> attacks; // the most recent attack should be the last in the list.
-    public AttackData recent;
+    public List<AttackData> attacks;
+    //public AttackData recent; // may notbe needed since we pass it as parameter
 
     //delegates
     public delegate void TriggerCombatEffect(AttackData combat);
-    public delegate int TriggerCombatBonus(AttackData combat);
-    public delegate double TriggerCombatMultiplier(AttackData combat);
+    //public delegate int TriggerCombatBonus(AttackData combat);
+    //public delegate double TriggerCombatMultiplier(AttackData combat);
 
     TriggerCombatEffect BeginAttack; //maybe use this to add to the attackData's list of onhit strings, but not actual stuff
-    TriggerCombatMultiplier FindAdvantage;
-    TriggerCombatBonus HitRate;
-    TriggerCombatBonus CritRate;
-    TriggerCombatBonus AttackStepB;
-    TriggerCombatMultiplier AttackStepM;
-    TriggerCombatBonus DefenseStepB;
-    TriggerCombatMultiplier DefenseStepM;
-    TriggerCombatBonus DamageStepB;
-    TriggerCombatMultiplier DamageStepM;
+    TriggerCombatEffect FindAdvantage;
+    TriggerCombatEffect HitRate;
+    TriggerCombatEffect CritRate;
+    TriggerCombatEffect AttackStepB;
+    TriggerCombatEffect AttackStepM;
+    TriggerCombatEffect DefenseStepB;
+    TriggerCombatEffect DefenseStepM;
+    TriggerCombatEffect DamageStepB;
+    TriggerCombatEffect DamageStepM;
     TriggerCombatEffect FinishAttack;
     TriggerCombatEffect CombatEnd;
 
@@ -34,7 +34,6 @@ public abstract class AttackAction : Action
 
     protected void SetAttackerDelegates(StatsManager person)
     {
-        Debug.Log("Test1");
         TalentTrigger[] triggers = person.gameObject.GetComponents<TalentTrigger>();
         foreach (TalentTrigger trigger in triggers)
         {
@@ -58,7 +57,6 @@ public abstract class AttackAction : Action
 
     protected void SetDefenderDelegates(StatsManager person)
     {
-        Debug.Log("Test2");
         TalentTrigger[] triggers = person.gameObject.GetComponents<TalentTrigger>();
         foreach (TalentTrigger trigger in triggers)
         {
@@ -81,85 +79,78 @@ public abstract class AttackAction : Action
     
     public AttackData GenerateHit(StatsManager attacker, StatsManager defender) 
     {
+        SetAttackerDelegates(attacker);
+        SetDefenderDelegates(defender);
         //create an AttackData object and invoke all our delegates
         //except for the FinishAttack delegate, since that one will likely call actual effects
-        AttackData attackData = new AttackData();
-        recent = attackData;
-        attackData.attacker = attacker.gameObject.name;
-        attackData.defender = defender.gameObject.name;
-        BeginAttack(attackData);
-        foreach (TriggerCombatMultiplier del in FindAdvantage.GetInvocationList())
+        AttackData attackData = new AttackData
         {
-            attackData.advantage += del.Invoke(attackData);
-        }
+            attacker = attacker.gameObject.name,
+            defender = defender.gameObject.name
+        };
+
+
+        //now create attack data based on talent calls and unit stats
+        BeginAttack?.Invoke(attackData);
+        FindAdvantage.Invoke(attackData);
+
+        //Hit Rate
         attackData.HitRate += attacker.statsData.DeriveAccuracy();
         attackData.HitRate -= defender.statsData.DeriveEvasion();
-        foreach (TriggerCombatBonus del in HitRate.GetInvocationList())
-        {
-            attackData.HitRate += del.Invoke(attackData);
-        }
+        HitRate?.Invoke(attackData);
+
+        //Crit Rate
         attackData.CriticalRate += attacker.statsData.DeriveCritical();
         attackData.CriticalRate -= defender.statsData.DeriveGuard();
-        foreach (TriggerCombatBonus del in CritRate.GetInvocationList())
-        {
-            attackData.CriticalRate += del.Invoke(attackData);
-        }
+        CritRate?.Invoke(attackData);
+
+        //Attack Step
+        attackData.DamageMultiplier = 1.0;
         attackData.DamageDealt += attacker.statsData.DeriveAttack(attacker.statsData.weapons[0]);
-        foreach (TriggerCombatBonus del in AttackStepB.GetInvocationList())
-        {
-            attackData.DamageDealt += del.Invoke(attackData);
-        }
-        double temp = 1.0;
-        foreach (TriggerCombatMultiplier del in AttackStepM.GetInvocationList())
-        { 
-            temp += del.Invoke(attackData);
-            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp)); //experimenting with rounding up
-        }
-        attackData.DamageDealt -= defender.statsData.DeriveAttack(attacker.statsData.weapons[0]);
-        foreach (TriggerCombatBonus del in DefenseStepB.GetInvocationList())
-        {
-            attackData.DamageDealt -= del.Invoke(attackData); //may need to check how this goes with the standard
-        }
-        temp = 1.0;
-        foreach (TriggerCombatMultiplier del in DefenseStepM.GetInvocationList())
-        {
-            temp += del.Invoke(attackData);
-            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp)); //experimenting with rounding up
-        }
-        foreach (TriggerCombatBonus del in DamageStepB.GetInvocationList())
-        {
-            attackData.DamageDealt -= del.Invoke(attackData); //may need to check how attackData goes with the standard
-        }
-        temp = 1.0;
-        foreach (TriggerCombatMultiplier del in DamageStepM.GetInvocationList())
-        {
-            temp += del.Invoke(attackData);
-            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp)); //experimenting with rounding up
-        }
+        AttackStepB?.Invoke(attackData);
+        AttackStepM?.Invoke(attackData);
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
+        //Defense Step
+        attackData.DamageMultiplier = 1.0;
+        attackData.DamageDealt -= defender.statsData.DeriveDefense(attacker.statsData.weapons[0]);
+        DefenseStepB?.Invoke(attackData);
+        DefenseStepM?.Invoke(attackData);
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
+        //Damage Step
+        attackData.DamageMultiplier = 1.0;
+        DamageStepB?.Invoke(attackData);
+        DamageStepM?.Invoke(attackData);
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
+        //now return data
         return attackData;
+        
     }
 
     public AttackData ExecuteHit(StatsManager attacker, StatsManager defender)
     {
-        //set up variables
-        AttackData attackData = new AttackData();
-        recent = attackData;
-        attackData.attacker = attacker.gameObject.name;
-        attackData.defender = defender.gameObject.name;
-
-        //call setup methods
-        Debug.Log(attackData);
-        BeginAttack(attackData); //for some reason this doesn't exist?  attackData is there, but something in it isn't
-        foreach (TriggerCombatMultiplier del in FindAdvantage.GetInvocationList())
+        SetAttackerDelegates(attacker);
+        SetDefenderDelegates(defender);
+        //create an AttackData object and invoke all our delegates
+        //except for the FinishAttack delegate, since that one will likely call actual effects
+        AttackData attackData = new AttackData
         {
-            attackData.advantage += del.Invoke(attackData);
-        }
+            attacker = attacker.gameObject.name,
+            defender = defender.gameObject.name
+        };
+
+
+        //now create attack data based on talent calls and unit stats
+        BeginAttack?.Invoke(attackData);
+        FindAdvantage?.Invoke(attackData);
+
+        //Hit Rate
         attackData.HitRate += attacker.statsData.DeriveAccuracy();
         attackData.HitRate -= defender.statsData.DeriveEvasion();
-        foreach (TriggerCombatBonus del in HitRate.GetInvocationList())
-        {
-            attackData.HitRate += del.Invoke(attackData);
-        }
+        HitRate?.Invoke(attackData);
+
 
         //work with RNG to determine Hit or Miss
         int HitRNG = Random.Range(1, 100);
@@ -175,13 +166,14 @@ public abstract class AttackAction : Action
         {
             //If attack hits, work with RNG to determine Crit, Guard, or None.
             attackData.hit = true;
+
+
+            //Crit Rate
             attackData.CriticalRate += attacker.statsData.DeriveCritical();
             attackData.CriticalRate -= defender.statsData.DeriveGuard();
-            foreach (TriggerCombatBonus del in CritRate.GetInvocationList())
-            {
-                attackData.CriticalRate += del.Invoke(attackData);
-            }
+            CritRate?.Invoke(attackData);
 
+            //check Crit RNG and set starting multiplier based on that
             int CritRNG = Random.Range(1, 100);
             if (attackData.advantage < 1)
             {
@@ -191,64 +183,151 @@ public abstract class AttackAction : Action
             {
                 CritRNG = (int)Mathf.Floor((float)(CritRNG * attackData.advantage));
             }
-            double temp;
             if (attackData.CriticalRate >= 0 && attackData.CriticalRate <= CritRNG)
             {
                 //successful crit
                 attackData.crit = true;
-                temp = 1.5;
+                attackData.DamageMultiplier = 1.5;
             }
             else if(attackData.CriticalRate < 0 && Mathf.Abs(attackData.CriticalRate) <= CritRNG)
             {
                 //successful guard
                 attackData.guard = true;
-                temp = 0.5;
+                attackData.DamageMultiplier = 0.5;
             }
             else
             {
                 //no crit OR guard
-                temp = 1.0;
+                attackData.DamageMultiplier = 1.0;
             }
 
             //now we calculate damage by calling methods
+
+            //Attack Step
             attackData.DamageDealt += attacker.statsData.DeriveAttack(attacker.statsData.weapons[0]);
-            foreach (TriggerCombatBonus del in AttackStepB.GetInvocationList())
-            {
-                attackData.DamageDealt += del.Invoke(attackData);
-            }
-            foreach (TriggerCombatMultiplier del in AttackStepM.GetInvocationList())
-            {
-                temp += del.Invoke(attackData);
-                attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp)); //experimenting with rounding up
-            }
-            attackData.DamageDealt -= defender.statsData.DeriveAttack(attacker.statsData.weapons[0]);
-            foreach (TriggerCombatBonus del in DefenseStepB.GetInvocationList())
-            {
-                attackData.DamageDealt -= del.Invoke(attackData); //may need to check how this goes with the standard
-            }
-            temp = 1.0;
-            foreach (TriggerCombatMultiplier del in DefenseStepM.GetInvocationList())
-            {
-                temp += del.Invoke(attackData);
-                attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp));
-            }
-            foreach (TriggerCombatBonus del in DamageStepB.GetInvocationList())
-            {
-                attackData.DamageDealt -= del.Invoke(attackData);
-            }
-            temp = 1.0;
-            foreach (TriggerCombatMultiplier del in DamageStepM.GetInvocationList())
-            {
-                temp += del.Invoke(attackData);
-                attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp));
-            }
+            AttackStepB?.Invoke(attackData);
+            AttackStepM?.Invoke(attackData);
+            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
+            //Defense Step
+            attackData.DamageMultiplier = 1.0;
+            attackData.DamageDealt -= defender.statsData.DeriveDefense(attacker.statsData.weapons[0]);
+            DefenseStepB?.Invoke(attackData);
+            DefenseStepM?.Invoke(attackData);
+            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
+            //Damage Step
+            attackData.DamageMultiplier = 1.0;
+            DamageStepB?.Invoke(attackData);
+            DamageStepM?.Invoke(attackData);
+            attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * attackData.DamageMultiplier));
+
 
             //once attack is done, call finishers.
             defender.GetComponentInParent<HealthManager>().TakeDamage(attackData.DamageDealt);
-            FinishAttack(attackData); //we call the take damage function first so that if the on hit happens to check HP, it's updated
+            FinishAttack?.Invoke(attackData); //we call the take damage function first so that if the on hit happens to check HP, it's updated
             //theoretically we could add the take damage thing to the delegate but that'd be weird and doesn't guarantee proper order.
         }
 
         return attackData;
     }
+
+
+    /*
+    old code, here for reference just in case
+
+
+
+        if(FindAdvantage != null)
+        {
+            foreach (TriggerCombatMultiplier del in FindAdvantage.GetInvocationList())
+                {
+                    attackData.advantage += del.Invoke(attackData);
+                }
+        }
+        
+        attackData.HitRate += attacker.statsData.DeriveAccuracy();
+        attackData.HitRate -= defender.statsData.DeriveEvasion();
+        if(HitRate != null)
+        {
+            foreach (TriggerCombatBonus del in HitRate.GetInvocationList())
+            {
+                attackData.HitRate += del.Invoke(attackData);
+            }
+        }
+
+        attackData.CriticalRate += attacker.statsData.DeriveCritical();
+        attackData.CriticalRate -= defender.statsData.DeriveGuard();
+        if(CritRate != null)
+        {
+            foreach (TriggerCombatBonus del in CritRate.GetInvocationList())
+            {
+                attackData.CriticalRate += del.Invoke(attackData);
+            }
+        }
+
+        attackData.DamageDealt += attacker.statsData.DeriveAttack(attacker.statsData.weapons[0]);
+        if(AttackStepB != null)
+        {
+            foreach (TriggerCombatBonus del in AttackStepB.GetInvocationList())
+            {
+                attackData.DamageDealt += del.Invoke(attackData);
+            }
+        }
+
+        double temp = 1.0;
+        if(AttackStepM != null)
+        {
+            foreach (TriggerCombatMultiplier del in AttackStepM.GetInvocationList())
+            {
+                temp += del.Invoke(attackData);
+            }
+        }
+
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp));
+        //do the multiplication outside of the loop
+
+        attackData.DamageDealt -= defender.statsData.DeriveAttack(attacker.statsData.weapons[0]);
+        if(DefenseStepB != null)
+        {
+            foreach (TriggerCombatBonus del in DefenseStepB.GetInvocationList())
+            {
+                try
+                {
+                     attackData.DamageDealt -= del.Invoke(attackData); //may need to check how this goes with the standard
+               }
+               catch { }
+            }
+        }
+        
+        temp = 1.0;
+        foreach (TriggerCombatMultiplier del in DefenseStepM.GetInvocationList())
+        {
+            try
+            {
+                temp += del.Invoke(attackData);
+            }
+            catch { }
+        }
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp));
+
+        foreach (TriggerCombatBonus del in DamageStepB.GetInvocationList())
+        {
+            try
+            {
+                attackData.DamageDealt -= del.Invoke(attackData); //may need to check how attackData goes with the standard
+            }
+            catch { }
+        }
+        temp = 1.0;
+        foreach (TriggerCombatMultiplier del in DamageStepM.GetInvocationList())
+        {
+            try
+            {
+                temp += del.Invoke(attackData);
+            }
+            catch { }
+        }
+        attackData.DamageDealt = (int)Mathf.Ceil((float)(attackData.DamageDealt * temp)); //experimenting with rounding up
+        */
 }

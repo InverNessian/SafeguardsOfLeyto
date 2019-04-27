@@ -13,30 +13,19 @@ public class CombatEvent : UnityEvent<StatsManager, StatsManager> //this will ne
     //I wonder if I could make a "StatsManager" for Squads? then I could just fire the same event but pass in the Squad's manager
 }
 
-public class BeginAttack : UnityEvent 
+public class DownEvent : UnityEvent<HealthManager>
 {
+
 }
-public class HitRate : UnityEvent
+public class DamageEvent : UnityEvent<HealthManager, int>
 {
+
 }
-public class CritRate : UnityEvent
+public class HealEvent : UnityEvent<HealthManager, int>
 {
+
 }
-public class AttackStep : UnityEvent
-{
-}
-public class DefenseStep : UnityEvent
-{
-}
-public class DamageStep : UnityEvent
-{
-}
-public class FinishAttack : UnityEvent
-{
-}
-public class CombatEnd : UnityEvent
-{
-}
+
 
 public class MovementEvent : UnityEvent<GameObject, Vector3>
 {

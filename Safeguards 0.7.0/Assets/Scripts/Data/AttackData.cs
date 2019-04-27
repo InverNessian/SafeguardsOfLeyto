@@ -15,6 +15,7 @@ public class AttackData //make this a struct?
     public int HitRate;
     public int CriticalRate; //set this to a negative value to represent Guard chance.
     public int DamageDealt;
+    public double DamageMultiplier;
     public List<string> OnHitEffects;
 
     public AttackData()
@@ -23,6 +24,7 @@ public class AttackData //make this a struct?
         HitRate = 60;
         CriticalRate = 0;
         DamageDealt = 0;
+        DamageMultiplier = 1.0;
     }
 
     public override string ToString()

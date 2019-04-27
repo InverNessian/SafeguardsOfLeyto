@@ -9,7 +9,9 @@ public class HealthManager : MonoBehaviour
     [SerializeField]
     private int hpNow;
 
-    //public static event Down;
+    public DamageEvent damageEvent = new DamageEvent();
+    public HealEvent healEvent = new HealEvent();
+    public DownEvent downEvent = new DownEvent();
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +29,21 @@ public class HealthManager : MonoBehaviour
         if (amount > 0)
         {
             hpNow -= amount;
-        }
-        if (hpNow <= 0)
-        {
-            //call "Down" event
+            damageEvent.Invoke(this, amount);
+            if (hpNow <= 0)
+            {
+                downEvent.Invoke(this);
+            }
         }
     }
 
     public void HealDamage(int amount)
     {
-
+        if(amount > 0)
+        {
+            hpNow += amount;
+            healEvent.Invoke(this, amount); //maybe I need to adjust these so they can leverage the Events better
+        }
     }
 
     public int CheckHP()

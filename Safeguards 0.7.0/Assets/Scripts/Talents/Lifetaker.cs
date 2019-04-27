@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Lifetaker : TalentTrigger, ICombat
 {
-    public int Accuracy(AttackData combat)
+    public void Accuracy(AttackData combat)
     {
-        throw new System.NotImplementedException();
+        
     }
 
-    public int AttackStepBonus(AttackData combat)
+    public void AttackStepBonus(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public double AttackStepMultiplier(AttackData combat)
+    public void AttackStepMultiplier(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void BeginAttack(AttackData combat)
@@ -26,47 +26,47 @@ public class Lifetaker : TalentTrigger, ICombat
 
     public void CombatEnd(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public int Critical(AttackData combat)
+    public void Critical(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public int DamageStepBonus(AttackData combat)
+    public void DamageStepBonus(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public double DamageStepMultiplier(AttackData combat)
+    public void DamageStepMultiplier(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public int DefenseStepBonus(AttackData combat)
+    public void DefenseStepBonus(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public double DefenseStepMultiplier(AttackData combat)
+    public void DefenseStepMultiplier(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public int Evasion(AttackData combat)
+    public void Evasion(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public double FindAdvantage(AttackData combat)
+    public void FindAdvantage(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public int Guard(AttackData combat)
+    public void Guard(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnHitEffect(AttackData combat)
@@ -78,11 +78,13 @@ public class Lifetaker : TalentTrigger, ICombat
             user.HealDamage((int)Mathf.Ceil((float)(target.GetComponentInParent<StatsManager>().statsData.healthValue * 0.1)));
         }
         Debug.Log("lifetaker!");
+
+        //alternatively, maybe we use this to set a listener for the target's DownEvent?
     }
 
     public void TakeDamage(AttackData combat)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UndoTrigger()

@@ -14,86 +14,63 @@ public class DuelCombat : AttackAction
 
     public override void PreviewCombat()
     {
-        SetAttackerDelegates(initiator);
-        SetDefenderDelegates(receiver);
+        //two standard hits
         attacks.Add(GenerateHit(initiator, receiver));
-
-        SetAttackerDelegates(receiver);
-        SetDefenderDelegates(initiator);
         attacks.Add(GenerateHit(receiver, initiator));
 
         //now check followup and stuff
-        if(initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold)
+        for(int i = 1; i <= initiator.statsData.maxFollowUpAttacks; i++)
         {
-            SetAttackerDelegates(initiator);
-            SetDefenderDelegates(receiver);
-            attacks.Add(GenerateHit(initiator, receiver));
-        }
-        if (initiator.statsData.maxFollowUpAttacks == 2 && initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold * 2)
-        {
-            SetAttackerDelegates(initiator);
-            SetDefenderDelegates(receiver);
-            attacks.Add(GenerateHit(initiator, receiver));
+            //check difference compared to threshold times number of attack
+            if (initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold * i)
+            {
+                attacks.Add(GenerateHit(initiator, receiver));
+                //actually the problem with this is that the follow-up hits will be out of order?  
+                //then again it's not very common to have more than 1 person following up
+            }
         }
 
         //check for extra followups
-        if (receiver.statsData.DeriveFollowup() - initiator.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold)
+        for (int i = 1; i <= receiver.statsData.maxFollowUpAttacks; i++)
         {
-            SetAttackerDelegates(receiver);
-            SetDefenderDelegates(initiator);
-            attacks.Add(GenerateHit(receiver, initiator));
+            if (receiver.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold * i)
+            {
+                attacks.Add(GenerateHit(receiver, initiator));
+            }
         }
-        if (receiver.statsData.maxFollowUpAttacks == 2 && receiver.statsData.DeriveFollowup() - initiator.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold * 2)
+        foreach (AttackData temp in attacks)
         {
-            SetAttackerDelegates(receiver);
-            SetDefenderDelegates(initiator);
-            attacks.Add(GenerateHit(receiver, initiator));
+            Debug.Log(temp.ToString()); //in actuality this should be a UI
         }
-
     }
 
     public override void ExecuteCombat()
     {
         //first we clear out the attacks list so we can do fresh
-        foreach(AttackData attack in attacks)
-        {
-            attacks.Remove(attack);
-        }
+        attacks = new List<AttackData>();
 
-        SetAttackerDelegates(initiator);
-        SetDefenderDelegates(receiver);
+        //two standard hits
         attacks.Add(ExecuteHit(initiator, receiver));
-
-        SetAttackerDelegates(receiver);
-        SetDefenderDelegates(initiator);
         attacks.Add(ExecuteHit(receiver, initiator));
 
         //now check followup and stuff
-        if (initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold)
+        for (int i = 1; i <= initiator.statsData.maxFollowUpAttacks; i++)
         {
-            SetAttackerDelegates(initiator);
-            SetDefenderDelegates(receiver);
-            attacks.Add(ExecuteHit(initiator, receiver));
-        }
-        if (initiator.statsData.maxFollowUpAttacks == 2 && initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold * 2)
-        {
-            SetAttackerDelegates(initiator);
-            SetDefenderDelegates(receiver);
-            attacks.Add(ExecuteHit(initiator, receiver));
+            if (initiator.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > initiator.statsData.followUpThreshold * i)
+            {
+                attacks.Add(ExecuteHit(initiator, receiver));
+                //actually the problem with this is that the follow-up hits will be out of order?  
+                //then again it's not very common to have more than 1 person following up
+            }
         }
 
         //check for extra followups
-        if (receiver.statsData.DeriveFollowup() - initiator.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold)
+        for (int i = 1; i <= receiver.statsData.maxFollowUpAttacks; i++)
         {
-            SetAttackerDelegates(receiver);
-            SetDefenderDelegates(initiator);
-            attacks.Add(ExecuteHit(receiver, initiator));
-        }
-        if (receiver.statsData.maxFollowUpAttacks == 2 && receiver.statsData.DeriveFollowup() - initiator.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold * 2)
-        {
-            SetAttackerDelegates(receiver);
-            SetDefenderDelegates(initiator);
-            attacks.Add(ExecuteHit(receiver, initiator));
+            if (receiver.statsData.DeriveFollowup() - receiver.statsData.DeriveFollowup() > receiver.statsData.followUpThreshold * i)
+            {
+                attacks.Add(ExecuteHit(receiver, initiator));
+            }
         }
     }
 

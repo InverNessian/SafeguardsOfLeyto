@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IMovement 
 {
     //EvBeginMove
-    int BonusMove();
+    void BonusMove();
 
     //EvWayPointSet
     void WayPointSet(Vector3 location); //useful for finding Opportunity triggers?

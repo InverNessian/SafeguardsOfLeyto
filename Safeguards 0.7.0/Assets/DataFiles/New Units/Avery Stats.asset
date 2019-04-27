@@ -24,4 +24,12 @@ MonoBehaviour:
   wardValue: 0
   displayName: Avery
   status: []
+  actionsPerTurn: 2
+  followUpThreshold: 5
+  maxFollowUpAttacks: 1
+  maxInventory: 5
+  weapons:
+  - {fileID: 11400000, guid: 7d4178b9913131f44a90fa90560e3181, type: 2}
+  accessories: []
   inventory: []
+  actions: []
