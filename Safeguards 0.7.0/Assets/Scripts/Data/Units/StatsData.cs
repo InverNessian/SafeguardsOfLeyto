@@ -28,10 +28,10 @@ public class StatsData : ScriptableObject
 
     //inventory
     public int maxInventory = 5;
+    public int maxAccessories = 1; //update this on learning relevant talents
     public List<Weapon> weapons = new List<Weapon>(); //only people with Dual Wield or special weapons will ever have more than 1
     public List<Item> accessories = new List<Item>(); //only people with Well-Equipped or similar will have more than 1.
     public List<Item> inventory = new List<Item>();
-    //weapons can implement "talent triggers" too.
 
     //weapon training
     public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF }

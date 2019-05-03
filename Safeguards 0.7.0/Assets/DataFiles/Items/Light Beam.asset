@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Light Beam
   type: Light
-  marketPrice: 0
-  statMods: 0300000000000000000000000000000000000000000000000a000000
-  effect: 
-  damageType: Magical
+  marketPrice: 2
+  statMods: 03000000000000000000000000000000000000000000000000000000
+  effect: --
+  damageType: 
   mastery: 0
-  ranged: 1
+  ranged: 0

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Equip : Action
 {
     //data
     public StatsManager user;
     public EquipData equipData;
+    public IPanel panel; //maybe needed to reference the equip panel
 
     //delegates
     public delegate void TriggerEquipEffect(EquipData equip);

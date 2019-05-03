@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DuelCombat : AttackAction
+public class NormalCombat : AttackAction
 {
 
     public override void PreviewCombat()
@@ -73,7 +73,7 @@ public class DuelCombat : AttackAction
         throw new System.NotImplementedException();
     }
 
-    public DuelCombat(StatsManager initiate, StatsManager counter)
+    public NormalCombat(StatsManager initiate, StatsManager counter)
     {
         initiator = initiate;
         receiver = counter;

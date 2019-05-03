@@ -5,30 +5,56 @@ using UnityEngine.UIElements;
 
 public class MenuController : MonoBehaviour
 {
-    public GameObject[] panels;
+    //prefabs, for instantiation
+    public IPanel itemElement;
+    public GameObject unitMenu;
+
+
+    public GameObject[] actionMenu;
     // Set the unit UI panels to these values in Editor
 
+    //I need to improve how I handle the menus
 
     void Start()
     {
-        InputController.mSelect.AddListener(ShowActionUI);
-        InputController.mDeselect.AddListener(HideActionUI);
+        //InputController.mSelect.AddListener(ShowActionUI);
+        //InputController.mDeselect.AddListener(HideActionUI);
+        InputController.SelectEvent.dynamicCalls += ShowActionUI;
+        InputController.DeselectEvent.dynamicCalls += HideActionUI;
     }
 
+    public void ShowEquipUI(StatsManager user)
+    {
+
+        foreach (Weapon item in user.statsData.weapons)
+        {
+            //create an instance of the weapon panel prefab
+            //set the instance's item value to item
+        }
+        foreach (Item item in user.statsData.accessories)
+        {
+
+        }
+        foreach (Item item in user.statsData.inventory)
+        {
+
+        }
+
+    }
 
     public void ShowActionUI(GameObject owner)
     {
-        //since we configure this in editor, assume panels[0] is always the OwnerPanel
-        panels[0].GetComponent<UIHolder>().target = owner;
-        panels[0].SetActive(true);
-        panels[1].SetActive(true);
+        //create new menu and attach it to the owner
+        GameObject newMenu = Instantiate(unitMenu);
+
+        newMenu.GetComponentInChildren<UIHolder>().target = owner;
+        //actionMenu[0].SetActive(true);
+        //actionMenu[1].SetActive(true);
     }
 
     public void HideActionUI()
     {
-        foreach(GameObject panel in panels)
-        {
-            panel.SetActive(false);
-        }
+        //Destroy(menu);
+        Destroy(GameObject.Find("UnitMenuCanvas(Clone)"));
     }
 }

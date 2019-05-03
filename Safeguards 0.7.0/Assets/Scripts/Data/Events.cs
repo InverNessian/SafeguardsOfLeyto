@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UltEvents;
 
 [System.Serializable]
 public class CombatEvent : UnityEvent<StatsManager, StatsManager> //this will need updating for Squads
@@ -11,6 +12,13 @@ public class CombatEvent : UnityEvent<StatsManager, StatsManager> //this will ne
     //but maybe I could leverage Inheritance here.  Specific events could inherit from CombatEvent?
 
     //I wonder if I could make a "StatsManager" for Squads? then I could just fire the same event but pass in the Squad's manager
+}
+
+public sealed class GameObjectEvent : UltEvent<GameObject> { }
+
+public class EquipEvent : UltEvent<int>
+{
+
 }
 
 public class DownEvent : UnityEvent<HealthManager>

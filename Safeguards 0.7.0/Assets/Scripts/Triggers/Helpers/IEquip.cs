@@ -4,8 +4,9 @@ using UnityEngine;
 
 public interface IEquip 
 {
-    
-    //Check Weapon Type
+
+    //Check Item Type
+    void ItemType();
 
     //honestly a lot of this can be handled via GUI
 }
