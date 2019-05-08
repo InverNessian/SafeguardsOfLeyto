@@ -28,8 +28,10 @@ MonoBehaviour:
   followUpThreshold: 5
   maxFollowUpAttacks: 1
   maxInventory: 5
+  maxAccessories: 1
   weapons:
   - {fileID: 11400000, guid: 5fcc89fd9ea50d34d9b709692517cc81, type: 2}
-  accessories: []
+  accessories:
+  - {fileID: 11400000, guid: 7d4178b9913131f44a90fa90560e3181, type: 2}
   inventory: []
   actions: []

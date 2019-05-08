@@ -2,42 +2,75 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ItemDragger : MonoBehaviour, IDragHandler, IEndDragHandler
+public class ItemDragger : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     public Item item; //on instantiating this prefab, set its item value
+    public static GameObject drag; //itemBeingDragged 
+    public static Vector3 startPosition;
+    public static Transform startParent;
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        drag = gameObject;
+        startPosition = transform.position;
+        startParent = transform.parent;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
     }
 
+
     public void OnEndDrag(PointerEventData eventData)
     {
-        //check against location to try and validate equip
-        //if equip validates, set new location and move old one to list
-        //otherwise, snap location back
-        if (false)
+
+        if (transform.parent == startParent) // || transform.parent == transform.root
         {
-            //swap
+            transform.position = startPosition;
+            transform.SetParent(startParent);
+        }
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //drag = null;
+    }
+
+    public void SetItem(Item thing)
+    {
+        item = thing;
+        gameObject.GetComponentInChildren<Text>().text = thing.itemName;
+    }
+
+
+    //check against location to try and validate equip
+    //if equip validates, set new location and move old one to list
+    //otherwise, snap location back
+
+    /*
+    RectTransform parent = GetComponentInParent<Transform>() as RectTransform;
+        ItemDragger target = null;
+        foreach (GameObject go in eventData.hovered)
+        {
+            if (go.GetComponentInChildren<ItemDragger>() != null)
+            {
+                target = go.GetComponentInChildren<ItemDragger>();
+            }
+        }
+
+        Debug.Log(RectTransformUtility.RectangleContainsScreenPoint(parent, Input.mousePosition));
+        if (target != null) //!RectTransformUtility.RectangleContainsScreenPoint(parent, Input.mousePosition) &&
+        {
+            //fire the equip validation events?
         }
         else
         {
-            transform.localPosition = Vector3.zero;
-
+            transform.localPosition = new Vector3(45, -5, 0);
         }
         
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    } */
 }
+
+

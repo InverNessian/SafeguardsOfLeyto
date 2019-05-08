@@ -39,14 +39,15 @@ public class StatsData : ScriptableObject
     public Dictionary<TrainingTypes, int> training;
 
     //talents and actions, stored here
-    public List<Talent> talents = new List<Talent>();
+    public List<string> talents = new List<string>(); //maybe this should be a List<string> or Dictionary?
     public List<string> actions = new List<string>();
         //there are triggers we need to create on the gameobject.  see statsmanager
 
 
-    void Start()
+    public bool CheckTalents(string tname)
     {
-
+        //check against the user's talents
+        return true;
     }
 
     public bool CheckEquippable(Item thing)

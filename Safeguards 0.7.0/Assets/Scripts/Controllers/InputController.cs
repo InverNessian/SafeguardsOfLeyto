@@ -20,14 +20,9 @@ public class InputController : MonoBehaviour
     public static string target = "none";
 
     //events
-    public static SelectionEvent mSelect = new SelectionEvent();
-    public static DeselectionEvent mDeselect = new DeselectionEvent();
-    public static CombatEvent mDuelCombat = new CombatEvent();
-    public static MovementEvent mNormalMove = new MovementEvent();
-
-
     public static GameObjectEvent SelectEvent = new GameObjectEvent();
     public static UltEvent DeselectEvent = new UltEvent();
+    public static GameObjectEvent MovementEvent = new GameObjectEvent();
 
     //experiment with non-static Events?
 
@@ -81,6 +76,24 @@ public class InputController : MonoBehaviour
         playState = statecode;
     }
 
+
+    public void ReceiveAction(string action)
+    {
+        switch (action)
+        {
+            case "NormalMove":
+                NormalMove move = new NormalMove(GameObject.Find(selected));
+                move.PreviewMove();
+                break;
+            case "Equip":
+                Equip equip = new Equip(GameObject.Find(selected).GetComponent<StatsManager>());
+                equip.PreviewLoadout();
+                break;
+        }
+        playState = PlayStates.UNIT_SELECT;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -106,7 +119,10 @@ public class InputController : MonoBehaviour
                     }
                     else
                     {
-                        mNormalMove.Invoke(GameObject.Find(selected), hit.point);
+                        //MovementEvent.Invoke(GameObject.Find(selected), hit.point);
+                        NormalMove move = new NormalMove(GameObject.Find(selected));
+                        move.CommitMove(GameObject.Find(selected), hit.point);
+                        playState = PlayStates.UNIT_SELECT;
                     }
 
                 }
@@ -127,8 +143,7 @@ public class InputController : MonoBehaviour
                     if (name.Equals(selected))
                     {
                         selected = "none";
-                        mDeselect.Invoke();
-                        SelectEvent.InvokeSafe(hit.collider.gameObject);
+                        DeselectEvent.Invoke();
                         playState = PlayStates.ACTIVE_PLAYER;
                         Debug.Log("Deselected " + name);
                     }

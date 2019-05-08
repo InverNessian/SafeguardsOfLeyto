@@ -8,14 +8,25 @@ public class Equip : Action
     //data
     public StatsManager user;
     public EquipData equipData;
-    public IPanel panel; //maybe needed to reference the equip panel
+
+    //events
+    public StatsManagerEvent BeginEquip = new StatsManagerEvent();
 
     //delegates
+    /*
     public delegate void TriggerEquipEffect(EquipData equip);
 
     TriggerEquipEffect MaxWeapons;
     TriggerEquipEffect MaxAccessories;
     TriggerEquipEffect TrainingType;
+    */
+
+    public Equip(StatsManager person)
+    {
+        user = person;
+        equipData = new EquipData();
+        BeginEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().ShowEquipUI;
+    }
 
     public void PreviewLoadout()
     {
@@ -24,6 +35,9 @@ public class Equip : Action
         //  the user can drag items between inventory and slots to equip/unequip
         //   the slots will turn red / not allow equips that are invalid
         //    also they will display stat changes / updated stats so the player can see before committing to the update.
+
+        //because of how the GUI works this method may not be necessary
+        BeginEquip.Invoke(user);
     }
 
     public void EquipLoadout()
