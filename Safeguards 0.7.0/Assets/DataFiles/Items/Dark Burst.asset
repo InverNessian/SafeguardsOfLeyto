@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9dcb1692c548c4f9327f7321c59cde, type: 3}
   m_Name: Dark Burst
   m_EditorClassIdentifier: 
-  itemName: Dark Burst
-  type: Dark
-  marketPrice: 2
-  statMods: 07000000000000000000000000000000000000000000000000000000
-  effect: --
-  damageType: 
-  mastery: 0
-  ranged: 0
+  ItemName: Dark Burst
+  Type: Dark
+  Subtype: --
+  Charges: 0
+  Attack: 7
+  Defense: 0
+  Followup: -15
+  Accuracy: 0
+  Evasion: 0
+  Critical: 0
+  Guard: 0
+  Description: --
+  Effects:
+  - --
+  Cost: 2
+  Damage: Magical
+  Mastery: 0
+  Ranged: 1

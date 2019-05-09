@@ -18,13 +18,18 @@ public class MenuController : MonoBehaviour
         InputController.DeselectEvent.dynamicCalls += HideActionUI;
     }
 
-    public void ShowEquipUI(StatsManager user)
+    public EquipData HideEquipUI()
+    {
+        return new EquipData();
+    }
+
+    public void ShowEquipUI(Equip equip)
     {
         //assume units have default, and allow triggers to hook in from BeginEquip?
         //this allows Well-equipped or Load Bearer to create/destroy extra slots as needed
 
         //activate the equip gui
-        itemElements[0].GetComponent<UIHolder>().target = user.gameObject;
+        itemElements[0].GetComponent<UIHolder>().target = equip.user.gameObject;
         itemElements[0].SetActive(true);
 
         //set all the texts to "none"
@@ -38,13 +43,47 @@ public class MenuController : MonoBehaviour
             element.SetActive(true);
         }
 
+        //then we set the items into the slots
+        try //try to get weapon and put it in the itemdragger
+        {
+            itemElements[0].transform.GetChild(0).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.weapons[0]);
+            //maybe fire an ItemEvent here?  could be useful for cleaning up this method
+        }
+        catch
+        {
+
+        }
+
+        try //try to get accessory and put it in itemdragger
+        {
+            itemElements[0].transform.GetChild(1).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.accessories[0]);
+        }
+        catch
+        {
+
+        }
+
+        try //try to set accessories
+        {
+            for (int i = 0; i < equip.user.statsData.inventory.ToArray().Length; i++)
+            {
+                //offset i by 2 to account for other slots
+                itemElements[0].transform.GetChild(i + 2).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.inventory[i]);
+            }
+        }
+        catch
+        {
+
+        }
+
+        /*
         //check for multiple weapons
-        if(user.statsData.weapons.ToArray().Length > 1)
+        if (user.statsData.weapons.ToArray().Length > 1)
         {
             for (int i = 0; i < user.statsData.weapons.ToArray().Length; i++)
             { //offset by 1 because of the master level panel
                 itemElements[i+1].GetComponentInChildren<ItemDragger>().item = user.statsData.weapons[i];
-                itemElements[i+1].GetComponentInChildren<Text>().text = user.statsData.weapons[i].itemName;
+                itemElements[i+1].GetComponentInChildren<Text>().text = user.statsData.weapons[i].ItemName;
                 //itemElements[i+1].SetActive(true);
             }
 
@@ -54,40 +93,25 @@ public class MenuController : MonoBehaviour
         else if (user.statsData.accessories.ToArray().Length > 1)
         {
             itemElements[1].GetComponentInChildren<ItemDragger>().item = user.statsData.weapons[0];
-            itemElements[1].GetComponentInChildren<Text>().text = user.statsData.weapons[0].itemName;
+            itemElements[1].GetComponentInChildren<Text>().text = user.statsData.weapons[0].ItemName;
             //itemElements[1].SetActive(true);
 
             for (int i = 0; i < user.statsData.accessories.ToArray().Length; i++)
             {
                 //offset i by 2 to account for weapon already being set
                 itemElements[i+2].GetComponentInChildren<ItemDragger>().item = user.statsData.accessories[i];
-                itemElements[i+2].GetComponentInChildren<Text>().text = user.statsData.accessories[i].itemName;
+                itemElements[i+2].GetComponentInChildren<Text>().text = user.statsData.accessories[i].ItemName;
                 //itemElements[i+2].SetActive(true);
             }
             
         }
         //normal equip
-        else if(user.statsData.weapons.ToArray().Length > 0)
+        else if(user.statsData.weapons.ToArray().Length > 0) //should I have the above ones just be Events?
         {
-            itemElements[0].transform.GetChild(0).gameObject.GetComponentInChildren<ItemDragger>().SetItem(user.statsData.weapons[0]);
-            //itemElements[1].SetActive(true);
-
-            //the below part is good, but will have to wait until I implement accessories
-            /*
-            itemElements[2].GetComponentInChildren<ItemDragger>().item = user.statsData.accessories[0];
-            itemElements[2].GetComponentInChildren<Text>().text = user.statsData.accessories[0].itemName;
-            itemElements[2].SetActive(true);
-
-            for (int i = 0; i < user.statsData.inventory.ToArray().Length; i++)
-            {
-                //offset i by 4 to account for other slots
-                itemElements[i + 4].GetComponentInChildren<ItemDragger>().item = user.statsData.accessories[i];
-                itemElements[i + 4].GetComponentInChildren<Text>().text = user.statsData.accessories[i].itemName;
-                itemElements[i + 4].SetActive(true);
-            }
-            */
+            
+            
         }
-
+        */
 
 
     }

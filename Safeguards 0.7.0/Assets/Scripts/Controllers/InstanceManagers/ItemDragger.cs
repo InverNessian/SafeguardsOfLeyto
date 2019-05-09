@@ -40,7 +40,8 @@ public class ItemDragger : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginD
     public void SetItem(Item thing)
     {
         item = thing;
-        gameObject.GetComponentInChildren<Text>().text = thing.itemName;
+        gameObject.GetComponentInChildren<Text>().text = thing.ItemName;
+        //Equip.UpdateEquip.Invoke();
     }
 
 

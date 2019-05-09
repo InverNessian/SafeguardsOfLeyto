@@ -101,13 +101,13 @@ public class StatsData : ScriptableObject
         int temp = 0;
         foreach (Weapon wep in weapons)
         {
-            temp += wep.statMods[0];
+            temp += wep.Attack;
         }
         foreach (Item item in accessories)
         {
-            temp += item.statMods[0];
+            temp += item.Attack;
         }
-        switch (weapon.damageType)
+        switch (weapon.Damage)
         {
             case "Physical":
                 temp += mightValue;
@@ -129,13 +129,13 @@ public class StatsData : ScriptableObject
         int temp = 0;
         foreach (Weapon wep in weapons)
         {
-            temp += wep.statMods[1];
+            temp += wep.Defense;
         }
         foreach (Item item in accessories)
         {
-            temp += item.statMods[1];
+            temp += item.Defense;
         }
-        switch (weapon.damageType)
+        switch (weapon.Damage)
         {
             case "Physical":
                 temp += armorValue;
@@ -155,6 +155,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += speedValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Followup;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Followup;
+        }
         return temp;
     }
 
@@ -163,6 +172,15 @@ public class StatsData : ScriptableObject
         int temp = 0;
         temp += skillValue * 2;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Accuracy;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Accuracy;
+        }
         return temp;
     }
 
@@ -171,6 +189,15 @@ public class StatsData : ScriptableObject
         int temp = 0;
         temp += speedValue * 2;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Evasion;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Evasion;
+        }
         return temp;
     }
 
@@ -178,6 +205,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += (int)Mathf.Floor(skillValue / 2);
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Critical;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Critical;
+        }
         return temp;
     }
 
@@ -185,6 +221,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Guard;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Guard;
+        }
         return temp;
     }
 }

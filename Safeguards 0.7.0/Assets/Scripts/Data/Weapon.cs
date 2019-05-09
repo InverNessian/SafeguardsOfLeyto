@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="Weapon",menuName ="Weapon")]
+[System.Serializable]
 public class Weapon : Item
 {
-    public string damageType;
-    public int mastery; //we'll need to adjust this for hybrid weapons
-    public bool ranged;
+    public string Damage;
+    public int Mastery;
+    public bool Ranged;
 }

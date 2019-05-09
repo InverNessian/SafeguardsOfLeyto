@@ -10,7 +10,9 @@ public class Equip : Action
     public EquipData equipData;
 
     //events
-    public StatsManagerEvent BeginEquip = new StatsManagerEvent();
+    public EquipEvent BeginEquip = new EquipEvent();
+    public EquipEvent UpdateEquip = new EquipEvent();
+    public EquipEvent FinishEquip = new EquipEvent();
 
     //delegates
     /*
@@ -26,6 +28,7 @@ public class Equip : Action
         user = person;
         equipData = new EquipData();
         BeginEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().ShowEquipUI;
+        FinishEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().HideEquipUI;
     }
 
     public void PreviewLoadout()
@@ -37,7 +40,7 @@ public class Equip : Action
         //    also they will display stat changes / updated stats so the player can see before committing to the update.
 
         //because of how the GUI works this method may not be necessary
-        BeginEquip.Invoke(user);
+        BeginEquip.Invoke(this);
     }
 
     public void EquipLoadout()

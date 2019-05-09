@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9dcb1692c548c4f9327f7321c59cde, type: 3}
   m_Name: Wind Orb
   m_EditorClassIdentifier: 
-  itemName: Wind Orb
-  type: Anima (Wind)
-  marketPrice: 2
-  statMods: 03000000000000000000000000000000000000000000000000000000
-  effect: --
-  damageType: 
-  mastery: 0
-  ranged: 0
+  ItemName: Wind Orb
+  Type: Anima
+  Subtype: Wind
+  Charges: 0
+  Attack: 3
+  Defense: -1
+  Followup: 0
+  Accuracy: 0
+  Evasion: 5
+  Critical: 0
+  Guard: 0
+  Description: --
+  Effects:
+  - --
+  Cost: 2
+  Damage: Magical
+  Mastery: 0
+  Ranged: 1

@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9dcb1692c548c4f9327f7321c59cde, type: 3}
   m_Name: Iron Fang
   m_EditorClassIdentifier: 
-  itemName: Iron Fang
-  type: Beast
-  marketPrice: 2
-  statMods: 05000000000000000000000000000000000000000000000000000000
-  effect: --
-  damageType: 
-  mastery: 0
-  ranged: 0
+  ItemName: Iron Fang
+  Type: Beast
+  Subtype: --
+  Charges: 0
+  Attack: 5
+  Defense: 4
+  Followup: 0
+  Accuracy: 0
+  Evasion: 0
+  Critical: 0
+  Guard: 0
+  Description: --
+  Effects:
+  - Extra Slot
+  Cost: 2
+  Damage: Physical
+  Mastery: 0
+  Ranged: 0

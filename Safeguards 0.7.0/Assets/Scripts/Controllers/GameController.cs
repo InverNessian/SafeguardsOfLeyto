@@ -5,6 +5,7 @@ using CsvHelper;
 using System.IO;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UltEvents;
 
 public class GameController : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class GameController : MonoBehaviour
 
     public Save_State save_file;
     //private enum character_list : int { Avery, Chalice, Crastos, Dondi, Eve, Faber, Fant, Ghar, Gradio, Hadrian, Jor, Kallen, Lena, Leonardo, Liliane, Litugenos, Lyra, Nora, Saph, Trinity, Vyka };
+
+    //events
+    public static UltEvent BeginScene = new UltEvent();
+    public static UltEvent EndScene = new UltEvent();
+
 
     //Awake is called even before Start()
     void Awake()
@@ -44,7 +50,9 @@ public class GameController : MonoBehaviour
 
         //actually, this is much easier now.  we can just put objects of the characters who belong in each scene, into that scene.
         //literally all we're doing is loading the scene.
+        EndScene.Invoke();
         SceneManager.LoadScene(sceneIndex);
+        BeginScene.Invoke();
     }
 
 
@@ -52,64 +60,6 @@ public class GameController : MonoBehaviour
 
     //basically we need to make a new folder in the asset menu and then fill it with Character objects and a SaveState
 
-    public void CreateWeapons()
-    {
-        //create streamreaders to get the data
-        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Weapons.csv");
-        CsvParser parser = new CsvParser(sr);
-        string[] temp = parser.Read();
-
-        Weapon weapon;
-        for (int i = 0; i < 21; i++)
-        {
-            temp = parser.Read();
-            weapon = ScriptableObject.CreateInstance<Weapon>();  //so we'll probably have to save the Manager classes
-
-            weapon.itemName = temp[0];
-            weapon.type = temp[1];
-            weapon.mastery = int.Parse(temp[2]);
-            string[] stats = temp[3].Split(',');
-            foreach(string stat in stats)
-            {
-                int plus = stat.IndexOf("+");
-                plus++;
-                switch (stat.Substring(0, stat.IndexOf(" ")))
-                {
-                    case "Attack":
-                        //it's fetching the + in this as well
-                        weapon.statMods[0] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                    case "Defense":
-                        weapon.statMods[1] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                    case "Followup":
-                        weapon.statMods[2] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                    case "Accuracy":
-                        weapon.statMods[3] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                    case "Evasion":
-                        weapon.statMods[4] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                    case "Critical":
-                        weapon.statMods[5] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-
-                    case "Guard":
-                        weapon.statMods[6] = int.Parse(stat.Substring(stat.Length - 1, 1));
-                        break;
-                        //weapon.statMods[5] = int.Parse(stat.Substring(stat.IndexOf("+"), stat.Length - stat.IndexOf("+") - 1));
-                }
-            }
-            //set range
-            weapon.effect = temp[5];
-            weapon.marketPrice = int.Parse(temp[6]);
-
-            AssetDatabase.CreateAsset(weapon, "Assets/DataFiles/Items/" + temp[0] + ".asset");
-            EditorUtility.SetDirty(weapon);
-        }
-        parser.Dispose();
-    }
 
     public void CreateNewSaveFile()
     {

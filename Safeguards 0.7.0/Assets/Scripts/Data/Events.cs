@@ -11,6 +11,10 @@ public sealed class StatsManagerEvent : UltEvent<StatsManager> { }
 
 public sealed class GameObjectEvent : UltEvent<GameObject> { }
 
+public sealed class ItemEvent : UltEvent<Item> { }
+
+public sealed class EquipEvent : UltEvent<Equip> { }
+
 
 public sealed class HPEvent : UltEvent<HealthManager, StatsManager, int> { } //maybe try to find a workaround for this
 
@@ -25,10 +29,6 @@ public sealed class HPEvent : UltEvent<HealthManager, StatsManager, int> { } //m
 
 //I wonder if I could make a "StatsManager" for Squads? then I could just fire the same event but pass in the Squad's manager
 
-public class EquipEvent : UltEvent<int>
-{
-
-}
 
 public class DownEvent : UnityEvent<HealthManager>
 {

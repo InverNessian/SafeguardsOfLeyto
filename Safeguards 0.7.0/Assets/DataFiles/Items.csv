@@ -1,0 +1,25 @@
+ItemName,Type,Subtype,Mastery,Charges,Attack,Defense,Followup,Accuracy,Evasion,Critical,Guard,Damage,Range,Description,Effects,Cost
+Iron Blade,Blades,--,0,--,5,0,0,0,0,10,0,Physical,Melee,--,--,2
+Iron Spear,Spears,--,0,--,5,0,0,10,0,0,0,Physical,Melee,--,--,2
+Iron Mace,Maces,--,0,--,7,0,0,0,0,0,0,Physical,Melee,--,--,2
+Iron Bow,Bows,--,0,--,3,0,3,0,0,0,0,Physical,Ranged,--,--,2
+Iron Knife,Knives,--,0,--,3,0,0,0,10,0,0,Physical,Ranged,--,--,2
+Iron Fang,Beast,--,0,--,5,4,0,0,0,0,0,Physical,Melee,--,Extra Slot,2
+Dark Burst,Dark,--,0,--,7,0,-15,0,0,0,0,Magical,Ranged,--,--,2
+Fire Orb,Anima,Fire,0,--,4,0,0,0,0,-5,0,Magical,Ranged,--,--,2
+Wind Orb,Anima,Wind,0,--,3,-1,0,0,5,0,0,Magical,Ranged,--,--,2
+Light Beam,Light,--,0,--,3,0,0,0,0,0,10,Magical,Ranged,--,--,2
+Ironwood Staff,Staff,--,0,--,5,2,0,0,0,0,0,Physical,Melee,--,--,2
+Basic Salve,Potion,--,--,5,0,0,0,0,0,0,0,--,--,"The user can take the ""Salve"" action to heal themselves for 10 HP.","Salve,BasicSalve",1
+Advanced Salve,Potion,--,--,2,0,0,0,0,0,0,0,--,--,"The user can take the ""Salve"" action to heal themselves for 25 HP.","Salve,AdvancedSalve",3
+Supreme Salve,Potion,--,--,1,0,0,0,0,0,0,0,--,--,"The user can take the ""Salve"" action to heal themselves for 50 HP.","Salve,SupremeSalve",5
+Antidote,Potion,--,--,3,0,0,0,0,0,0,0,--,--,"The user can take the ""Salve"" action to remove all Poison Debuffs from themselves.","Salve,Antidote",2
+Panacea,Potion,--,--,1,0,0,0,0,0,0,0,--,--,"The user can take the ""Salve"" action to remove all Debuffs from themselves.","Salve,Panacea",5
+Buckler,Shield,--,--,--,0,0,0,0,5,0,0,--,--,Physical Defense +1,"PhysicalAttack,Defense1",2
+Wooden Shield,Shield,--,--,--,0,0,0,0,0,0,0,--,--,Physical Defense +2,"PhysicalAttack,Defense2",3
+Metal Shield,Shield,--,--,--,0,0,0,0,-5,0,0,--,--,Physical Defense +3,"PhysicalAttack,Defense3",5
+Tower Shield,Shield,--,--,--,0,0,0,0,-10,0,0,--,--,Physical Defense +4,"PhysicalAttack,Defense4",6
+Scarf,Shroud,--,--,--,0,0,0,0,5,0,0,--,--,Magical Defense +1,"MagicalAttack,Defense1",2
+Fine Shroud,Shroud,--,--,--,0,0,0,0,0,0,0,--,--,Magical Defense +2,"MagicalAttack,Defense2",3
+Thick Shroud,Shroud,--,--,--,0,0,0,0,-5,0,0,--,--,Magical Defense +3,"MagicalAttack,Defense3",5
+Iron Curtain,Shroud,--,--,--,0,0,0,0,-10,0,0,--,--,Magical Defense +4,"MagicalAttack,Defense4",6

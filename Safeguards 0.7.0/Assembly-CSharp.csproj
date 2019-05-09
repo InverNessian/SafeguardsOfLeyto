@@ -93,9 +93,7 @@
     <Compile Include="Assets\Scripts\Data\Weapon.cs" />
     <Compile Include="Assets\Scripts\DisplayStats.cs" />
     <Compile Include="Assets\Scripts\Legacy\CombatController.cs" />
-    <Compile Include="Assets\Scripts\Legacy\DataHolder.cs" />
     <Compile Include="Assets\Scripts\Legacy\MovementController.cs" />
-    <Compile Include="Assets\Scripts\Legacy\UnitData.cs" />
     <Compile Include="Assets\Scripts\Legacy\UnitMenu.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\AbilityTrigger.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\ICombat.cs" />
@@ -104,6 +102,7 @@
     <Compile Include="Assets\Scripts\Triggers\Helpers\IMovement.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\ISquad.cs" />
     <Compile Include="Assets\Scripts\Triggers\Lifetaker.cs" />
+    <Compile Include="Assets\UnitPersistence.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
