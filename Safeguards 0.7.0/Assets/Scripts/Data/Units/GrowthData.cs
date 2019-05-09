@@ -6,8 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="GrowthData",menuName ="GrowthData")]
 public class GrowthData : ScriptableObject
 {
-    //public static Event LevelUp;
-    //public static Event PlusStat;
+    public string displayName;
 
         //growths
     public int healthGrowth = 0;

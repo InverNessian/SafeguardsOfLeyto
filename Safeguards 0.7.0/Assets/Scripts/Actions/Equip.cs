@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Equip : Action
 {
@@ -8,12 +9,27 @@ public class Equip : Action
     public StatsManager user;
     public EquipData equipData;
 
+    //events
+    public EquipEvent BeginEquip = new EquipEvent();
+    public EquipEvent UpdateEquip = new EquipEvent();
+    public EquipEvent FinishEquip = new EquipEvent();
+
     //delegates
+    /*
     public delegate void TriggerEquipEffect(EquipData equip);
 
     TriggerEquipEffect MaxWeapons;
     TriggerEquipEffect MaxAccessories;
     TriggerEquipEffect TrainingType;
+    */
+
+    public Equip(StatsManager person)
+    {
+        user = person;
+        equipData = new EquipData();
+        BeginEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().ShowEquipUI;
+        FinishEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().HideEquipUI;
+    }
 
     public void PreviewLoadout()
     {
@@ -22,6 +38,9 @@ public class Equip : Action
         //  the user can drag items between inventory and slots to equip/unequip
         //   the slots will turn red / not allow equips that are invalid
         //    also they will display stat changes / updated stats so the player can see before committing to the update.
+
+        //because of how the GUI works this method may not be necessary
+        BeginEquip.Invoke(this);
     }
 
     public void EquipLoadout()

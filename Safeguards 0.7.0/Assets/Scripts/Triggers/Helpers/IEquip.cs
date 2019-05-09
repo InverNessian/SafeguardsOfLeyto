@@ -4,8 +4,15 @@ using UnityEngine;
 
 public interface IEquip 
 {
-    
-    //Check Weapon Type
+    //BeginEquip
+    void ItemSlots(); //certain talents will add more slot panel prefabs
 
-    //honestly a lot of this can be handled via GUI
+    //Check Item Type
+    void ItemType();
+
+
+
+    //End Equip
+    void FinishEquip(); //use this to delete extra slots for those who added them
+
 }

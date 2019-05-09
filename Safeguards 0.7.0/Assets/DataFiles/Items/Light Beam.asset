@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9dcb1692c548c4f9327f7321c59cde, type: 3}
   m_Name: Light Beam
   m_EditorClassIdentifier: 
-  itemName: Light Beam
-  type: Light
-  marketPrice: 0
-  statMods: 0300000000000000000000000000000000000000000000000a000000
-  effect: 
-  damageType: Magical
-  mastery: 0
-  ranged: 1
+  ItemName: Light Beam
+  Type: Light
+  Subtype: --
+  Charges: 0
+  Attack: 3
+  Defense: 0
+  Followup: 0
+  Accuracy: 0
+  Evasion: 0
+  Critical: 0
+  Guard: 10
+  Description: --
+  Effects:
+  - --
+  Cost: 2
+  Damage: Magical
+  Mastery: 0
+  Ranged: 1

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9517bd4664d1ef14f95311e85483fff1, type: 3}
+  m_Name: Fant Stats
+  m_EditorClassIdentifier: 
+  level: 1
+  movement: 0
+  healthValue: 21
+  mightValue: 2
+  focusValue: 12
+  skillValue: 7
+  speedValue: 6
+  favorValue: 3
+  armorValue: 8
+  wardValue: 8
+  displayName: Fant
+  status: []
+  actionsPerTurn: 2
+  followUpThreshold: 5
+  maxFollowUpAttacks: 1
+  maxInventory: 5
+  maxAccessories: 1
+  weapons:
+  - {fileID: 11400000, guid: 5fcc89fd9ea50d34d9b709692517cc81, type: 2}
+  accessories:
+  - {fileID: 11400000, guid: 7d4178b9913131f44a90fa90560e3181, type: 2}
+  inventory: []
+  actions: []

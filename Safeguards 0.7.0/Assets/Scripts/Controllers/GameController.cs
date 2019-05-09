@@ -5,15 +5,20 @@ using CsvHelper;
 using System.IO;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UltEvents;
 
 public class GameController : MonoBehaviour
 {
     public static GameController master;
     public static InputController unitController;
 
-    public int active_player = 0;
     public Save_State save_file;
     //private enum character_list : int { Avery, Chalice, Crastos, Dondi, Eve, Faber, Fant, Ghar, Gradio, Hadrian, Jor, Kallen, Lena, Leonardo, Liliane, Litugenos, Lyra, Nora, Saph, Trinity, Vyka };
+
+    //events
+    public static UltEvent BeginScene = new UltEvent();
+    public static UltEvent EndScene = new UltEvent();
+
 
     //Awake is called even before Start()
     void Awake()
@@ -35,9 +40,91 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnGUI()
+
+    public void OpenScene(int sceneIndex)
     {
-        GUI.Label(new Rect(10, 10, 100, 30), "Active Player: " + active_player);
+        //basically, it will read in the info about each scene and which characters the player has access to.
+        //after it has a list of all the characters it needs, it will loop through and create an instance of the character object for each one.
+        //then it will assign some basic info to that object's DataManager component.  This will allow DataManager to handle importing the character's data when it loads.
+        //maybe I should store the info in a csv?  that makes it easier to modify after the fact?
+
+        //actually, this is much easier now.  we can just put objects of the characters who belong in each scene, into that scene.
+        //literally all we're doing is loading the scene.
+        EndScene.Invoke();
+        SceneManager.LoadScene(sceneIndex);
+        BeginScene.Invoke();
+    }
+
+
+
+
+    //basically we need to make a new folder in the asset menu and then fill it with Character objects and a SaveState
+
+
+    public void CreateNewSaveFile()
+    {
+        //create streamreaders to get the data
+        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Bases.csv");
+        CsvParser parser = new CsvParser(sr);
+        string[] temp = parser.Read();
+
+        StreamReader sr2 = new StreamReader(Application.dataPath + "/DataFiles/Growths.csv");
+        CsvParser parser2 = new CsvParser(sr2);
+        string[] temp2 = parser2.Read();
+
+
+        StatsData stats;
+        GrowthData growths;
+        for (int i = 0; i < 21; i++)
+        {
+            temp = parser.Read();
+            temp2 = parser2.Read();
+            stats = ScriptableObject.CreateInstance<StatsData>();  //so we'll probably have to save the Manager classes
+            growths = ScriptableObject.CreateInstance<GrowthData>(); //they can serve as wrappers
+            //create instances of our data files and iterate over them
+
+            stats.displayName = temp[0];
+            stats.healthValue = int.Parse(temp[1]);
+            stats.mightValue = int.Parse(temp[2]);
+            stats.focusValue = int.Parse(temp[3]);
+            stats.skillValue = int.Parse(temp[4]);
+            stats.speedValue = int.Parse(temp[5]);
+            stats.favorValue = int.Parse(temp[6]);
+            stats.armorValue = int.Parse(temp[7]);
+            stats.wardValue = int.Parse(temp[8]);
+
+            growths.healthGrowth = int.Parse(temp2[1]);
+            growths.mightGrowth = int.Parse(temp2[2]);
+            growths.focusGrowth = int.Parse(temp2[3]);
+            growths.skillGrowth = int.Parse(temp2[4]);
+            growths.speedGrowth = int.Parse(temp2[5]);
+            growths.favorGrowth = int.Parse(temp2[6]);
+            growths.armorGrowth = int.Parse(temp2[7]);
+            growths.wardGrowth = int.Parse(temp2[8]);
+
+            //add them as asset files and set dirty
+            AssetDatabase.CreateAsset(stats, "Assets/DataFiles/Units/" + temp[0] + " Stats.asset");
+            AssetDatabase.CreateAsset(growths, "Assets/DataFiles/Units/" + temp[0] + " Growths.asset");
+            EditorUtility.SetDirty(stats);
+            EditorUtility.SetDirty(growths);
+
+            //ideally we'd like to have a way to generate a new folder in here.
+
+
+            //so apparently this actually doesn't work.  ugh.
+        }
+        parser.Dispose();
+        parser2.Dispose();
+
+    }
+
+
+
+    /* Code used to create the UnitData asset objects and read from CSV
+     * 
+     * 
+     * 
+     * GUI.Label(new Rect(10, 10, 100, 30), "Active Player: " + active_player);
 
         if (GUI.Button(new Rect(10, 40, 150, 30), "Save and Quit"))
         {
@@ -51,84 +138,6 @@ public class GameController : MonoBehaviour
             }
             
         }
-        
-    }
-
-    public void OpenScene(int sceneIndex)
-    {
-        //basically, it will read in the info about each scene and which characters the player has access to.
-        //after it has a list of all the characters it needs, it will loop through and create an instance of the character object for each one.
-        //then it will assign some basic info to that object's DataManager component.  This will allow DataManager to handle importing the character's data when it loads.
-        //maybe I should store the info in a csv?  that makes it easier to modify after the fact?
-
-        //actually, this is much easier now.  we can just put objects of the characters who belong in each scene, into that scene.
-        //literally all we're doing is loading the scene.
-        SceneManager.LoadScene(sceneIndex);
-    }
-
-
-    /* Code used to create the UnitData asset objects and read from CSV
-     * 
-     * 
-     * 
-     * 
      * 
      */
-
-    //basically we need to make a new folder in the asset menu and then fill it with Character objects and a SaveState
-
-
-    public UnitData modify;
-    public Save_State CreateNewSaveFile()
-    {
-        
-        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Bases.csv");
-        CsvParser parser = new CsvParser(sr);
-        string[] temp = parser.Read();
-
-        StreamReader sr2 = new StreamReader(Application.dataPath + "/DataFiles/Growths.csv");
-        CsvParser parser2 = new CsvParser(sr2);
-        string[] temp2 = parser2.Read();
-
-        //string[] guids = AssetDatabase.FindAssets("t:UnitData", new[] { "Assets/DataFiles/Characters" });
-
-        Debug.Log(temp2);
-        for (int i = 0; i < 21; i++)
-        {
-            temp = parser.Read();
-            temp2 = parser2.Read();
-            modify = ScriptableObject.CreateInstance<UnitData>();
-            Debug.Log(modify);
-            //modify = (UnitData)AssetDatabase.LoadAssetAtPath(guids[i], typeof(UnitData));
-
-            modify.unit_name = temp[0];
-            modify.health[0] = int.Parse(temp[1]);
-            modify.health[1] = int.Parse(temp[1]);
-            modify.might[1] = int.Parse(temp[2]);
-            modify.focus[1] = int.Parse(temp[3]);
-            modify.skill[1] = int.Parse(temp[4]);
-            modify.speed[1] = int.Parse(temp[5]);
-            modify.favor[1] = int.Parse(temp[6]);
-            modify.armor[1] = int.Parse(temp[7]);
-            modify.ward[1] = int.Parse(temp[8]);
-
-            modify.health[2] = int.Parse(temp2[1]);
-            modify.might[2] = int.Parse(temp2[2]);
-            modify.focus[2] = int.Parse(temp2[3]);
-            modify.skill[2] = int.Parse(temp2[4]);
-            modify.speed[2] = int.Parse(temp2[5]);
-            modify.favor[2] = int.Parse(temp2[6]);
-            modify.armor[2] = int.Parse(temp2[7]);
-            modify.ward[2] = int.Parse(temp2[8]);
-
-            AssetDatabase.CreateAsset(modify, "Assets/DataFiles/Characters/" + temp[0] + ".asset");
-            EditorUtility.SetDirty(modify);
-        }
-        parser.Dispose();
-        parser2.Dispose();
-        //Debug.Log(parser.Read());
-        //EditorUtility.SetDirty(save_file); //this is necessary to force the Editor to see that this has changed.
-
-        return new Save_State(); 
-    }
 }

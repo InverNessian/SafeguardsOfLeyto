@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8173713c46fd5db428b7cd2024ad1d20, type: 3}
+  m_Name: Panacea
+  m_EditorClassIdentifier: 
+  ItemName: Panacea
+  Type: Potion
+  Subtype: --
+  Charges: 0
+  Attack: 0
+  Defense: 0
+  Followup: 0
+  Accuracy: 0
+  Evasion: 0
+  Critical: 0
+  Guard: 0
+  Description: The user can take the "Salve" action to remove all Debuffs from themselves.
+  Effects:
+  - Salve
+  - Panacea
+  Cost: 5

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1e580d8da64eb468b0f91d52cc7927, type: 3}
+  m_Name: Nora Growths
+  m_EditorClassIdentifier: 
+  healthGrowth: 35
+  mightGrowth: 50
+  focusGrowth: 15
+  skillGrowth: 50
+  speedGrowth: 45
+  favorGrowth: 20
+  armorGrowth: 45
+  wardGrowth: 20
+  healthProgress: 0
+  mightProgress: 0
+  focusProgress: 0
+  skillProgress: 0
+  speedProgress: 0
+  favorProgress: 0
+  armorProgress: 0
+  wardProgress: 0
+  experience: 0
+  expToLevel: 100
+  progressToBump: 100
+  talentPoints: 0

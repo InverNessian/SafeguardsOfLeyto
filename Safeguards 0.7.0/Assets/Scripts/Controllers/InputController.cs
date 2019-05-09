@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UltEvents;
 
 public class InputController : MonoBehaviour
 {
@@ -10,16 +11,19 @@ public class InputController : MonoBehaviour
     public enum PlayStates { ACTIVE_AI, ACTIVE_PLAYER, INACTIVE, UNIT_SELECT, UNIT_TARGET }
     public static PlayStates playState;
 
-    //static fields
-    //public static InputController controller;
+    //player data
+    public static ActivePlayers activePlayer = ActivePlayers.PLAYER1;
+    public enum ActivePlayers { AI1, AI2, AI3, PLAYER1, PLAYER2, PLAYER3 }
+
+    //other static fields
     public static string selected = "none";
+    public static string target = "none";
 
     //events
-    public static SelectionEvent mSelect = new SelectionEvent();
-    public static DeselectionEvent mDeselect = new DeselectionEvent();
-    public static CombatEvent mDuelCombat = new CombatEvent();
-    public static MovementEvent mNormalMove = new MovementEvent();
-    
+    public static GameObjectEvent SelectEvent = new GameObjectEvent();
+    public static UltEvent DeselectEvent = new UltEvent();
+    public static GameObjectEvent MovementEvent = new GameObjectEvent();
+
     //experiment with non-static Events?
 
 
@@ -28,6 +32,7 @@ public class InputController : MonoBehaviour
     {
         //this method is intended to be used with adding event listeners.
         GameController.unitController = this;
+
     }
 
     void Awake()
@@ -71,6 +76,24 @@ public class InputController : MonoBehaviour
         playState = statecode;
     }
 
+
+    public void ReceiveAction(string action)
+    {
+        switch (action)
+        {
+            case "NormalMove":
+                NormalMove move = new NormalMove(GameObject.Find(selected));
+                move.PreviewMove();
+                break;
+            case "Equip":
+                Equip equip = new Equip(GameObject.Find(selected).GetComponent<StatsManager>());
+                equip.PreviewLoadout();
+                break;
+        }
+        playState = PlayStates.UNIT_SELECT;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -88,7 +111,7 @@ public class InputController : MonoBehaviour
                     if (hit.collider.GetComponent<StatsManager>() != null && !hit.collider.gameObject.name.Equals(selected)) // && mDuelCombat != null
                     {
                         GameObject user = GameObject.Find(selected);
-                        DuelCombat combat = new DuelCombat(user.GetComponent<StatsManager>(), hit.collider.GetComponent<StatsManager>());
+                        NormalCombat combat = new NormalCombat(user.GetComponent<StatsManager>(), hit.collider.GetComponent<StatsManager>());
                         combat.PreviewCombat();
                         combat.ExecuteCombat();
                         //log combat, then delete it from RAM
@@ -96,7 +119,10 @@ public class InputController : MonoBehaviour
                     }
                     else
                     {
-                        mNormalMove.Invoke(GameObject.Find(selected), hit.point);
+                        //MovementEvent.Invoke(GameObject.Find(selected), hit.point);
+                        NormalMove move = new NormalMove(GameObject.Find(selected));
+                        move.CommitMove(GameObject.Find(selected), hit.point);
+                        playState = PlayStates.UNIT_SELECT;
                     }
 
                 }
@@ -117,17 +143,18 @@ public class InputController : MonoBehaviour
                     if (name.Equals(selected))
                     {
                         selected = "none";
-                        mDeselect.Invoke();
+                        DeselectEvent.Invoke();
                         playState = PlayStates.ACTIVE_PLAYER;
                         Debug.Log("Deselected " + name);
                     }
                     else
                     {
                         //by firing a deselect event, we clear out any lingering UI or whatnot
-                        mDeselect.Invoke();
+                        DeselectEvent.Invoke();
 
                         selected = name;
-                        mSelect.Invoke(hit.collider.gameObject);
+                        SelectEvent.Invoke(hit.collider.gameObject);
+                        //mSelect.Invoke(hit.collider.gameObject);
                         playState = PlayStates.UNIT_SELECT;
                         Debug.Log("Selected " + selected);
                     }

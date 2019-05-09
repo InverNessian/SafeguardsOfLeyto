@@ -28,10 +28,10 @@ public class StatsData : ScriptableObject
 
     //inventory
     public int maxInventory = 5;
+    public int maxAccessories = 1; //update this on learning relevant talents
     public List<Weapon> weapons = new List<Weapon>(); //only people with Dual Wield or special weapons will ever have more than 1
     public List<Item> accessories = new List<Item>(); //only people with Well-Equipped or similar will have more than 1.
     public List<Item> inventory = new List<Item>();
-    //weapons can implement "talent triggers" too.
 
     //weapon training
     public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF }
@@ -39,14 +39,15 @@ public class StatsData : ScriptableObject
     public Dictionary<TrainingTypes, int> training;
 
     //talents and actions, stored here
-    public List<Talent> talents = new List<Talent>();
+    public List<string> talents = new List<string>(); //maybe this should be a List<string> or Dictionary?
     public List<string> actions = new List<string>();
         //there are triggers we need to create on the gameobject.  see statsmanager
 
 
-    void Start()
+    public bool CheckTalents(string tname)
     {
-
+        //check against the user's talents
+        return true;
     }
 
     public bool CheckEquippable(Item thing)
@@ -100,13 +101,13 @@ public class StatsData : ScriptableObject
         int temp = 0;
         foreach (Weapon wep in weapons)
         {
-            temp += wep.statMods[0];
+            temp += wep.Attack;
         }
         foreach (Item item in accessories)
         {
-            temp += item.statMods[0];
+            temp += item.Attack;
         }
-        switch (weapon.damageType)
+        switch (weapon.Damage)
         {
             case "Physical":
                 temp += mightValue;
@@ -128,13 +129,13 @@ public class StatsData : ScriptableObject
         int temp = 0;
         foreach (Weapon wep in weapons)
         {
-            temp += wep.statMods[1];
+            temp += wep.Defense;
         }
         foreach (Item item in accessories)
         {
-            temp += item.statMods[1];
+            temp += item.Defense;
         }
-        switch (weapon.damageType)
+        switch (weapon.Damage)
         {
             case "Physical":
                 temp += armorValue;
@@ -154,6 +155,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += speedValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Followup;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Followup;
+        }
         return temp;
     }
 
@@ -162,6 +172,15 @@ public class StatsData : ScriptableObject
         int temp = 0;
         temp += skillValue * 2;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Accuracy;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Accuracy;
+        }
         return temp;
     }
 
@@ -170,6 +189,15 @@ public class StatsData : ScriptableObject
         int temp = 0;
         temp += speedValue * 2;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Evasion;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Evasion;
+        }
         return temp;
     }
 
@@ -177,6 +205,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += (int)Mathf.Floor(skillValue / 2);
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Critical;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Critical;
+        }
         return temp;
     }
 
@@ -184,6 +221,15 @@ public class StatsData : ScriptableObject
     {
         int temp = 0;
         temp += favorValue;
+
+        foreach (Weapon wep in weapons)
+        {
+            temp += wep.Guard;
+        }
+        foreach (Item item in accessories)
+        {
+            temp += item.Guard;
+        }
         return temp;
     }
 }

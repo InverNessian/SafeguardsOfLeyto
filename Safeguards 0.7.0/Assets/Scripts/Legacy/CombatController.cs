@@ -26,7 +26,7 @@ public static CombatEnd EvCombatEnd = new CombatEnd();
 
     void Start()
     {
-        InputController.mDuelCombat.AddListener(DuelCombat);
+        //InputController.mDuelCombat.AddListener(DuelCombat);
     }
     //do we want to have events just for combat?  might make things easier since we could have each special combat really just call some Events.
         //these could be non-static events!
