@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class SlotDragger : MonoBehaviour, IDropHandler
 {
+    //reference
+    public static Equip equip;
+    public string SlotType;
+
     public GameObject ItemElement
     { get
         {
@@ -18,12 +22,19 @@ public class SlotDragger : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        //we have to work with this one because if we don't, then the way we return ItemElement gets fucked because we have 2 children
-        ItemElement.transform.position = ItemDragger.startPosition;
-        ItemElement.transform.SetParent(ItemDragger.startParent);
+        if (equip.ValidateEquip(ItemDragger.drag.GetComponent<ItemDragger>().item, ItemElement.GetComponent<ItemDragger>().item, SlotType, ItemDragger.drag.transform.parent.GetComponent<SlotDragger>().SlotType))
+        {
 
-        //now we can set new parent and position
-        ItemDragger.drag.transform.SetParent(gameObject.transform);
-        ItemDragger.drag.transform.position = ItemDragger.drag.transform.parent.position;
+            //we have to work with this one because if we don't, then the way we return ItemElement gets fucked because we have 2 children
+            ItemElement.transform.position = ItemDragger.startPosition;
+            ItemElement.transform.SetParent(ItemDragger.startParent);
+
+            //now we can set new parent and position
+            ItemDragger.drag.transform.SetParent(gameObject.transform);
+            ItemDragger.drag.transform.position = ItemDragger.drag.transform.parent.position;
+
+        }
+
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName ="StatData",menuName ="StatData")]
 public class StatsData : ScriptableObject
@@ -34,14 +35,16 @@ public class StatsData : ScriptableObject
     public List<Item> inventory = new List<Item>();
 
     //weapon training
-    public enum TrainingTypes { BLADE, SPEAR, MACE, BOW, KNIFE, BEAST, DARK, ANIMA, LIGHT, STAFF }
-    [SerializeField]
-    public Dictionary<TrainingTypes, int> training;
+    public static List<string> trainingTypes = new List<string> { "Blade", "Spear", "Mace", "Bow", "Knife", "Beast", "Dark", "Anima", "Light", "Staff" };
+    //public Dictionary<string, int> training; //unity is dumb and doesn't let us use dictionaries
+    public List<string> training;
+    public List<int> mastery;
+
 
     //talents and actions, stored here
     public List<string> talents = new List<string>(); //maybe this should be a List<string> or Dictionary?
     public List<string> actions = new List<string>();
-        //there are triggers we need to create on the gameobject.  see statsmanager
+    //there are triggers we need to create on the gameobject.  see statsmanager
 
 
     public bool CheckTalents(string tname)
@@ -50,19 +53,20 @@ public class StatsData : ScriptableObject
         return true;
     }
 
-    public bool CheckEquippable(Item thing)
+    public bool CheckTraining(string type)
     {
-        if(weapons.ToArray().Length + accessories.ToArray().Length + inventory.ToArray().Length >= maxInventory)
-        {
-            return false;
-        }
-        if(thing is Weapon)
-        {
-            //check against training types
-            //check if user already has one weapon
-            return false;
-        }
-        return true;
+        return training.Contains(type);
+    }
+
+    public void GainTraining(string type)
+    {
+        training.Add(type);
+        mastery.Add(0);
+    }
+
+    public int CheckMastery(string type)
+    {
+        return mastery[training.IndexOf(type)];
     }
 
     public void PlusStat(string stat)

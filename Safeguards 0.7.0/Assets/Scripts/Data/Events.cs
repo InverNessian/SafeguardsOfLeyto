@@ -13,7 +13,7 @@ public sealed class GameObjectEvent : UltEvent<GameObject> { }
 
 public sealed class ItemEvent : UltEvent<Item> { }
 
-public sealed class EquipEvent : UltEvent<Equip> { }
+public sealed class EquipEvent : UltEvent<EquipData> { }
 
 
 public sealed class HPEvent : UltEvent<HealthManager, StatsManager, int> { } //maybe try to find a workaround for this

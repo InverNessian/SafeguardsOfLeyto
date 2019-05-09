@@ -32,10 +32,14 @@ MonoBehaviour:
   weapons:
   - {fileID: 11400000, guid: 68f3122e4c215f743a896fb98bdebc5b, type: 2}
   accessories:
-  - {fileID: 11400000, guid: 80bd8f8098f7d9f4f907f44d452018e7, type: 2}
-  inventory:
   - {fileID: 11400000, guid: 784d145485e6cd64bbb25b779899de90, type: 2}
+  inventory:
   - {fileID: 11400000, guid: 3388163250ae28b49ab91317ca578fee, type: 2}
   - {fileID: 11400000, guid: f060bc35407be18499e1cbfe9ae71690, type: 2}
+  - {fileID: 11400000, guid: 80bd8f8098f7d9f4f907f44d452018e7, type: 2}
+  training:
+  - Light
+  - Anima
+  mastery: 1900000005000000
   talents: []
   actions: []

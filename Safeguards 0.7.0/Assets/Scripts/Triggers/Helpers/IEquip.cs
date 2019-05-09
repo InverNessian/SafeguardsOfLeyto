@@ -7,9 +7,11 @@ public interface IEquip
     //BeginEquip
     void ItemSlots(); //certain talents will add more slot panel prefabs
 
-    //Check Item Type
-    void ItemType();
+    //ItemSlot
+    void ItemSlot();
 
+    //TrainingType
+    void TrainingType();
 
 
     //End Equip

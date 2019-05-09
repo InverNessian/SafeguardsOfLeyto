@@ -30,8 +30,11 @@ MonoBehaviour:
   maxInventory: 5
   maxAccessories: 1
   weapons:
-  - {fileID: 11400000, guid: 5fcc89fd9ea50d34d9b709692517cc81, type: 2}
+  - {fileID: 11400000, guid: 1b35f2d2afc2b3e4ea6c0e03a66def11, type: 2}
   accessories:
-  - {fileID: 11400000, guid: 7d4178b9913131f44a90fa90560e3181, type: 2}
+  - {fileID: 11400000, guid: 68f3122e4c215f743a896fb98bdebc5b, type: 2}
   inventory: []
+  keys: []
+  values: 
+  talents: []
   actions: []

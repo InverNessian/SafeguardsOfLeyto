@@ -8,7 +8,9 @@ public class MenuController : MonoBehaviour
 {
     //set these to the menu items
     public GameObject[] unitMenu;
-    public GameObject[] itemElements;
+    public GameObject equipMenu;
+
+    public static Action action;
 
     //I need to improve how I handle the menus
 
@@ -18,35 +20,49 @@ public class MenuController : MonoBehaviour
         InputController.DeselectEvent.dynamicCalls += HideActionUI;
     }
 
-    public EquipData HideEquipUI()
-    {
-        return new EquipData();
-    }
 
-    public void ShowEquipUI(Equip equip)
+    public void ShowEquipUI(EquipData equipData)
     {
         //assume units have default, and allow triggers to hook in from BeginEquip?
         //this allows Well-equipped or Load Bearer to create/destroy extra slots as needed
 
         //activate the equip gui
-        itemElements[0].GetComponent<UIHolder>().target = equip.user.gameObject;
-        itemElements[0].SetActive(true);
+        equipMenu.GetComponent<UIHolder>().target = (action as Equip).user.gameObject;
+        equipMenu.SetActive(true);
 
-        //set all the texts to "none"
-        for(int i=0; i<itemElements[0].transform.childCount; i++)
+        //initial setup of slots
+        for(int i=0; i<equipMenu.transform.childCount; i++)
         {
-            GameObject element = itemElements[0].transform.GetChild(i).gameObject;
+            GameObject element = equipMenu.transform.GetChild(i).gameObject;
             if(!(element.name == "BackButton" || element.name == "ConfirmButton")) //tried to do this using "is Button" but it doesn't work
             {
                 element.GetComponentInChildren<Text>().text = "None";
             }
             element.SetActive(true);
+            switch (i)
+            {
+                case 0: //maybe add a color change too
+                    equipMenu.transform.GetChild(i).gameObject.GetComponent<SlotDragger>().SlotType = "Weapon";
+                    break;
+                case 1:
+                    equipMenu.transform.GetChild(i).gameObject.GetComponent<SlotDragger>().SlotType = "Accessory";
+                    break;
+                case 2:
+                    equipMenu.transform.GetChild(i).gameObject.GetComponent<SlotDragger>().SlotType = "Inventory";
+                    break;
+                case 3:
+                    equipMenu.transform.GetChild(i).gameObject.GetComponent<SlotDragger>().SlotType = "Inventory";
+                    break;
+                case 4:
+                    equipMenu.transform.GetChild(i).gameObject.GetComponent<SlotDragger>().SlotType = "Inventory";
+                    break;
+            } 
         }
 
         //then we set the items into the slots
         try //try to get weapon and put it in the itemdragger
         {
-            itemElements[0].transform.GetChild(0).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.weapons[0]);
+            equipMenu.transform.GetChild(0).gameObject.GetComponentInChildren<ItemDragger>().SetItem((action as Equip).user.statsData.weapons[0]);
             //maybe fire an ItemEvent here?  could be useful for cleaning up this method
         }
         catch
@@ -56,7 +72,7 @@ public class MenuController : MonoBehaviour
 
         try //try to get accessory and put it in itemdragger
         {
-            itemElements[0].transform.GetChild(1).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.accessories[0]);
+            equipMenu.transform.GetChild(1).gameObject.GetComponentInChildren<ItemDragger>().SetItem((action as Equip).user.statsData.accessories[0]);
         }
         catch
         {
@@ -65,10 +81,10 @@ public class MenuController : MonoBehaviour
 
         try //try to set accessories
         {
-            for (int i = 0; i < equip.user.statsData.inventory.ToArray().Length; i++)
+            for (int i = 0; i < (action as Equip).user.statsData.inventory.ToArray().Length; i++)
             {
                 //offset i by 2 to account for other slots
-                itemElements[0].transform.GetChild(i + 2).gameObject.GetComponentInChildren<ItemDragger>().SetItem(equip.user.statsData.inventory[i]);
+                equipMenu.transform.GetChild(i + 2).gameObject.GetComponentInChildren<ItemDragger>().SetItem((action as Equip).user.statsData.inventory[i]);
             }
         }
         catch
@@ -116,6 +132,14 @@ public class MenuController : MonoBehaviour
 
     }
 
+    public void HideEquipUI()
+    {
+        (action as Equip).EquipLoadout();
+        HideActionUI();
+        ShowActionUI((action as Equip).user.gameObject);
+        //action = null;
+    }
+
     public void ShowActionUI(GameObject owner)
     {
         //[0] always is the higher level panel, and [1] is the action panel
@@ -135,9 +159,9 @@ public class MenuController : MonoBehaviour
         {
             panel.SetActive(false);
         }
-        for (int i = 0; i < itemElements[0].transform.childCount; i++)
+        for (int i = 0; i < equipMenu.transform.childCount; i++)
         {
-            itemElements[0].transform.GetChild(i).gameObject.SetActive(false);
+            equipMenu.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
 
