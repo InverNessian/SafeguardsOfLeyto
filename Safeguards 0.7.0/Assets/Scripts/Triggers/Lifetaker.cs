@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lifetaker : AbilityTrigger, ICombat
+public class Lifetaker : AbilityTrigger, ICombat, IConditional
 {
     public void Accuracy(AttackData combat)
     {
@@ -22,6 +22,18 @@ public class Lifetaker : AbilityTrigger, ICombat
     public void BeginAttack(AttackData combat)
     {
         combat.OnHitEffects.Add("Lifetaker");
+    }
+
+    public bool CheckCondition(StatsManager user = null, StatsManager opponent = null, int value = -1)
+    {
+        if(value <= 0 && !opponent.statsData.CheckTalents("Nihil"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void CombatEnd(AttackData combat)
@@ -73,7 +85,7 @@ public class Lifetaker : AbilityTrigger, ICombat
     {
         HealthManager target = GameObject.Find(combat.defender).GetComponent<HealthManager>();
         HealthManager user = GameObject.Find(combat.attacker).GetComponent<HealthManager>();
-        if(target.CheckHP() <= 0)
+        if(CheckCondition(GameObject.Find(combat.defender).GetComponent<StatsManager>(), value:target.CheckHP())) //named parameters!!
         {
             user.HealDamage((int)Mathf.Ceil((float)(target.GetComponentInParent<StatsManager>().statsData.healthValue * 0.1)));
         }

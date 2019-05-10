@@ -32,10 +32,17 @@ public class GrowthData : ScriptableObject
     public int experience = 0;
     public int expToLevel = 100;
     public int progressToBump = 100;
+
+    //talents
     public int talentPoints = 0; //this is incremented at every even level
+    public string naturalTalents; //this holds a list of the natural talent list the user has
+    public string acquiredTalents; //for adding/removing talents based on supports, etc
 
-
-    public Dictionary<string, int> supports = new Dictionary<string, int>();
+        //supports
+    public int maxSupportTicks;
+    public List<string> friends;
+    public List<int> ticks;
+    //public Dictionary<string, int> supports = new Dictionary<string, int>();
 
     //methods
     public void GainExperience(int amount)
