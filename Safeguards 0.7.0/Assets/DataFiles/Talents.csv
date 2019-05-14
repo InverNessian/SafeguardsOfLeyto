@@ -1,0 +1,11 @@
+TalentName,Prerequisites,Cost,Description,Tags,Notes,Effects
+Blade Training,None,1,The user can equip Blade weapons and gain up to 100 Mastery with them.,Field,,Training-Blade
+Blade Specialization,Blade Training,1,"While wielding a Blade weapon, the user gets +1 Attack and +5 Critical.","Combat, Conditional",,
+Attack Rush,Blade Training,1,"While wielding a Blade weapon, the user can take the ""Attack Rush"" action to replace their Normal Attacks with 2x Quick Attacks.","Combat, Action, Attack","If the user is somehow making a Power Attack, they convert the Power Attack into 4x Quick Attacks.",Action-AttackRush
+Duel Master,50 Blade Mastery,2,"While alone and fighting an enemy who is alone, the user gets +30% Advantage.","Combat, Conditional, Solo",A unit is alone when it is not in a Squad.,
+Parry & Riposte,50 Blade Mastery,3,"While wielding a Blade weapon, if the user takes no damage from an attack, the user makes an immediate Quick Attack against that enemy.","Combat, Conditional","In this case, taking no damage can be achieved either by dodging the attack or by having enough defense.",Trigger-ParryRiposte
+Light Training,None,1,The user can equip Light weapons and gain up to 100 Mastery with them.,Field,,Training-Light
+Light Specialization,Light Training,1,"While wielding a Light weapon, the user gains +1 Attack and +5 Guard.","Combat, Conditional",,
+Flash,Light Training,1,"While wielding a Light weapon, the user can take the ""Flash"" action to apply Blind 2 and Slow 2 to all enemies in a large area.","Field, Action","Blinded units have -20 Accuracy.,Slowed units move at half their normal amount.",Action-Flash
+Effective (Monster),50 Light Mastery,2,"While wielding a Light weapon, the user gains +10 Attack against Monster units.","Combat, Conditional",,
+Sanctuary,50 Light Mastery,3,The user gains 20% Damage Reduction.,Combat,Damage Reduction is applied after Attack and Defense.,

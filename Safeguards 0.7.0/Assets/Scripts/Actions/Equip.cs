@@ -13,19 +13,11 @@ public class Equip : Action
 
     //events
     public EquipEvent BeginEquip = new EquipEvent();
-    public EquipEvent ItemSlot = new EquipEvent();
+    public EquipEvent ItemType = new EquipEvent();
     public EquipEvent TrainingType = new EquipEvent();
-    public EquipEvent UpdateEquip = new EquipEvent();
+    //public EquipEvent UpdateEquip = new EquipEvent();
     public EquipEvent FinishEquip = new EquipEvent();
 
-    //delegates
-    /*
-    public delegate void TriggerEquipEffect(EquipData equip);
-
-    TriggerEquipEffect MaxWeapons;
-    TriggerEquipEffect MaxAccessories;
-    TriggerEquipEffect TrainingType;
-    */
 
     public Equip(StatsManager person)
     {
@@ -37,18 +29,25 @@ public class Equip : Action
         equipData = new EquipData(person);
         SlotDragger.equip = this;
         MenuController.action = this;
-        BeginEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().ShowEquipUI;
-        //FinishEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().HideEquipUI;
+
+        SetEquipDelegates();
+
     }
 
     public void SetEquipDelegates()
     {
+        BeginEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().ShowEquipUI;
+        //FinishEquip.dynamicCalls += GameObject.Find("MenuController").GetComponent<MenuController>().HideEquipUI;
+
         AbilityTrigger[] triggers = user.gameObject.GetComponents<AbilityTrigger>();
         foreach (AbilityTrigger trigger in triggers)
         {
             if (trigger is IEquip)
             {
-                
+                BeginEquip.dynamicCalls += (trigger as IEquip).ItemSlots;
+                ItemType.dynamicCalls += (trigger as IEquip).ItemType;
+                TrainingType.dynamicCalls += (trigger as IEquip).TrainingType;
+                FinishEquip.dynamicCalls += (trigger as IEquip).Cleanup;
             }
         }
     }
@@ -79,7 +78,7 @@ public class Equip : Action
         }
         //set values for processing
         equipData.equippable = check;
-        ItemSlot.InvokeSafe(equipData);
+        ItemType.InvokeSafe(equipData);
         check = equipData.equippable;
 
         //TrainingType step; here we only check that the user matches the training types
@@ -161,15 +160,19 @@ public class Equip : Action
         //    also they will display stat changes / updated stats so the player can see before committing to the update.
 
         //because of how the GUI works this method may not be necessary
-        BeginEquip.Invoke(equipData);
+        BeginEquip.InvokeSafe(equipData);
     }
 
     public void EquipLoadout()
     {
-        //user equip method, replace existing ones and move them back to inventory
+        //replace existing lists with the new ones from equipData
         user.statsData.weapons = equipData.weapons;
         user.statsData.accessories = equipData.accessories;
         user.statsData.inventory = equipData.inventory;
+
+        //clean up last steps
+        equipData.success = true;
+        FinishEquip.InvokeSafe(equipData);
     }
 
 

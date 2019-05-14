@@ -8,7 +8,7 @@ using UltEvents;
 public class InputController : MonoBehaviour
 {
     //Finite State Machine
-    public enum PlayStates { ACTIVE_AI, ACTIVE_PLAYER, INACTIVE, UNIT_SELECT, UNIT_TARGET }
+    public enum PlayStates { ACTIVE_AI, ACTIVE_PLAYER, INACTIVE, TARGET_MOVE, TARGET_ATTACK, UNIT_SELECT } //target area? //target env?
     public static PlayStates playState;
 
     //player data
@@ -62,13 +62,17 @@ public class InputController : MonoBehaviour
         {
             playState = PlayStates.INACTIVE;
         }
+        if (statecode == (int)PlayStates.TARGET_MOVE)
+        {
+            playState = PlayStates.TARGET_MOVE;
+        }
+        if (statecode == (int)PlayStates.TARGET_ATTACK)
+        {
+            playState = PlayStates.TARGET_ATTACK;
+        }
         if (statecode == (int)PlayStates.UNIT_SELECT)
         {
             playState = PlayStates.UNIT_SELECT;
-        }
-        if (statecode == (int)PlayStates.UNIT_TARGET)
-        {
-            playState = PlayStates.UNIT_TARGET;
         }
     }
     public static void SetState(PlayStates statecode)
@@ -91,6 +95,7 @@ public class InputController : MonoBehaviour
                 break;
         }
         playState = PlayStates.UNIT_SELECT;
+        //I think I want the actions themselves to return control back when they are finished
     }
 
 
@@ -98,7 +103,7 @@ public class InputController : MonoBehaviour
     void Update()
     {
         //if the player clicks while they are active player.
-        if (Input.GetButtonDown("Act1") && playState == PlayStates.UNIT_TARGET) //for multiplayer, add a check for which player is active.
+        if (Input.GetButtonDown("Act1") && playState == PlayStates.TARGET_MOVE) //for multiplayer, add a check for which player is active.
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))

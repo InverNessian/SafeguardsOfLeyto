@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,8 +14,10 @@ public class StatsManager : MonoBehaviour
         GameController.EndScene.dynamicCalls += EndScene;
     }
 
-    void StartScene()
+    void Start() //used to be StartScene, but this honestly seems easier
     {
+        //by using editor design to our advantage, we can control when this needs to attempt to load data.
+        // all we have to do is not assign a value to statsData for characters who need to load data.
         if (statsData == null)
         {
             //load from memory
@@ -30,13 +33,13 @@ public class StatsManager : MonoBehaviour
         //then add trigger components to gameObject based on statsData.talents
         foreach(string talent in statsData.talents)
         {
-            switch (talent)
+            try //as long as we keep the names of talents the same as their trigger classes, we can do a GetType for easy matching.
+            { //this method is tested and works, just make sure you call StartScene
+                gameObject.AddComponent(Type.GetType(talent));
+            }
+            catch(TypeLoadException TLE)
             {
-                case "Lifetaker":
-                    gameObject.AddComponent<Lifetaker>();
-                    break;
-
-                    //etc
+                Debug.Log("No trigger exists for " + talent + ": " + TLE);
             }
         }
     }
@@ -57,6 +60,8 @@ public class StatsManager : MonoBehaviour
         file.Close();
 
         Debug.Log(statSaver);
+
+        GameController.EndScene.dynamicCalls -= EndScene; //then we remove this from the dynamic call list
     }
 }
 

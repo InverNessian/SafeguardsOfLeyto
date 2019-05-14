@@ -1164,12 +1164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee23e683f01c03a4fb984a19f337380f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitMenu:
-  - {fileID: 5120321132911596261}
-  - {fileID: 5120321133912545948}
-  - {fileID: 5120321134439236235}
-  - {fileID: 5120321133781415310}
-  - {fileID: 5120321132819280882}
+  unitMenu: {fileID: 0}
   equipMenu: {fileID: 5120321132814979109}
 --- !u!4 &755715338
 Transform:
@@ -1604,7 +1599,6 @@ GameObject:
   - component: {fileID: 1633246439}
   - component: {fileID: 1633246438}
   - component: {fileID: 1633246437}
-  - component: {fileID: 1633246446}
   m_Layer: 0
   m_Name: Fant
   m_TagString: Unit
@@ -1755,18 +1749,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1633246446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633246436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dabc2a709323ec0468bd4474b6d90bbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1692619912
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct Talent
 {
     public string TalentName;
@@ -10,7 +11,7 @@ public struct Talent
     public string Description;
     public List<string> Tags;
     public List<string> Notes;
-    public bool native; //this allows us to know if it's learned from other units.
     public List<string> Effects;
+    public bool native; //this allows us to know if it's learned from other units.
 
 }

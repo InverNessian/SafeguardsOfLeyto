@@ -34,7 +34,8 @@ MonoBehaviour:
   accessories:
   - {fileID: 11400000, guid: 68f3122e4c215f743a896fb98bdebc5b, type: 2}
   inventory: []
-  keys: []
-  values: 
-  talents: []
+  training: []
+  mastery: 
+  talents:
+  - Lifetaker
   actions: []

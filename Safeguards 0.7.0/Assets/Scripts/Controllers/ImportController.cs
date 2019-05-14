@@ -21,11 +21,40 @@ public class ImportController : MonoBehaviour
     {
         Talent info = new Talent();
 
+        //import from csv
+        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Talents.csv");
+        CsvParser parser = new CsvParser(sr);
+        string[] temp;
+        do
+        {
+            try //attempt to read a new record
+            {
+                temp = parser.Read();
+                if (temp[0].Equals(tname)) //compare the record to passed in value
+                {
+                    info.TalentName = temp[0];
+                    info.Prerequisites = new List<string>(temp[1].Split(','));
+                    info.Cost = int.Parse(temp[2]);
+                    info.Description = temp[3];
+                    info.Tags = new List<string>(temp[4].Split(','));
+                    info.Notes = new List<string>(temp[5].Split(','));
+                    info.Effects = new List<string>(temp[6].Split(','));
+                    //native currently doesn't have a value
+                }
+            }
+            catch
+            {
+                break; //on the off chance it doesn't work, break out so the code doesn't crash
+            }
+        } while (info.TalentName == null); //go until we find the right item
+
+
+        parser.Dispose();
 
         return info;
     }
 
-    public void CreateItems()
+    public void CreateItems() //charges need fixing
     {
         StreamReader reader = new StreamReader(Application.dataPath + "/DataFiles/Items.csv");
         CsvReader csv = new CsvReader(reader);
@@ -73,7 +102,7 @@ public class ImportController : MonoBehaviour
 
     }
 
-    public static Item GetItemInfo(string iname) 
+    public static Item GetItemInfo(string iname) //needs to be updated with actual data values
     {
         Item info = new Item();
 

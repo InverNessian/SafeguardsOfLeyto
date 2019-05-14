@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class MenuController : MonoBehaviour
 {
     //set these to the menu items
-    public GameObject[] unitMenu;
+    public GameObject unitMenu;
     public GameObject equipMenu;
 
     public static Action action;
@@ -143,9 +143,9 @@ public class MenuController : MonoBehaviour
     public void ShowActionUI(GameObject owner)
     {
         //[0] always is the higher level panel, and [1] is the action panel
-        unitMenu[0].GetComponent<UIHolder>().target = owner;
-        unitMenu[0].SetActive(true);
-        unitMenu[1].SetActive(true);
+        unitMenu.GetComponent<UIHolder>().target = owner;
+        unitMenu.SetActive(true);
+        unitMenu.transform.GetChild(0).gameObject.SetActive(true);
 
         //create new menu and attach it to the owner
         //GameObject newMenu = Instantiate(unitMenu);
@@ -155,9 +155,9 @@ public class MenuController : MonoBehaviour
 
     public void HideActionUI()
     {
-        foreach(GameObject panel in unitMenu)
+        for (int i = 0; i < unitMenu.transform.childCount; i++)
         {
-            panel.SetActive(false);
+            unitMenu.transform.GetChild(i).gameObject.SetActive(false);
         }
         for (int i = 0; i < equipMenu.transform.childCount; i++)
         {
