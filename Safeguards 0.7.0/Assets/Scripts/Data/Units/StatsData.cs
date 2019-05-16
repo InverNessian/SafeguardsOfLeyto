@@ -47,10 +47,19 @@ public class StatsData : ScriptableObject
     //there are triggers we need to create on the gameobject.  see statsmanager
 
 
+    public void LearnTalent(string tname)
+    {
+        talents.Add(tname);
+    }
+
     public bool CheckTalents(string tname)
     {
-        //check against the user's talents
-        return true;
+        bool check = false;
+        if (talents.Contains(tname))
+        {
+            check = true;
+        }
+        return check;
     }
 
     public bool CheckTraining(string type)

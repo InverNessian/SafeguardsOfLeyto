@@ -4,8 +4,143 @@ Blade Specialization,Blade Training,1,"While wielding a Blade weapon, the user g
 Attack Rush,Blade Training,1,"While wielding a Blade weapon, the user can take the ""Attack Rush"" action to replace their Normal Attacks with 2x Quick Attacks.","Combat, Action, Attack","If the user is somehow making a Power Attack, they convert the Power Attack into 4x Quick Attacks.",Action-AttackRush
 Duel Master,50 Blade Mastery,2,"While alone and fighting an enemy who is alone, the user gets +30% Advantage.","Combat, Conditional, Solo",A unit is alone when it is not in a Squad.,
 Parry & Riposte,50 Blade Mastery,3,"While wielding a Blade weapon, if the user takes no damage from an attack, the user makes an immediate Quick Attack against that enemy.","Combat, Conditional","In this case, taking no damage can be achieved either by dodging the attack or by having enough defense.",Trigger-ParryRiposte
+Spear Training,None,1,The user can equip Spear weapons and gain up to 100 Mastery with them.,Field,,Training-Spear
+Spear Specialization,Spear Training,1,"While wielding a Spear weapon, the user gets +1 Attack and +5 Accuracy.","Combat, Conditional",,
+Brace,Spear Training,1,"The user can take the ""Brace"" action to gain Tough 1 and Keen 1.","Field, Action",,Action-Brace
+Reach,50 Spear Mastery,2,"While wielding a Spear weapon, the user gains +100 Attack Range.",Field,,
+Pike Wall,50 Spear Mastery,3,"While wielding a Spear weapon, the user gains 20% Opportunity.",Combat,,
+Mace Training,None,1,The user can equip Mace weapons and gain up to 100 Mastery with them.,Field,,Training-Mace
+Mace Specialization,Mace Training,1,"While wielding a Mace weapon, the user gets +2 Attack.","Combat, Conditional",,
+Smash,Mace Training,1,"While wielding a Mace weapon, the user can take the ""Smash"" action to attack an obstacle or Heavy unit and deal +50% Damage.","Combat, Action, Attack",,Action-Smash
+Effective (Heavy),50 Mace Mastery,2,"While wielding a Mace weapon, the user gains +10 Attack against Heavy units.","Combat, Conditional",,
+Breakthrough,50 Mace Mastery,3,The user ignores Attack penalties against them.,Combat,This applies to things like Critical Guards and from things like the Weak Debuff.,
+Bow Training,None,1,The user can equip Bow weapons and gain up to 100 Mastery with them.,Field,,Training-Bow
+Bow Specialization,Bow Training,1,"While wielding a Bow weapon, the user gets +1 Attack and +2 Follow-up.","Combat, Conditional",,
+Snipe,Bow Training,2,"While wielding a Bow weapon, the user can take the Snipe action to attack an enemy with +200 Range, but makes Quick Attacks with -10 Accuracy.","Combat, Action, Attack",,Action-Snipe
+Effective (Flying),50 Bow Mastery,2,"While wielding a Bow weapon, the user gains +10 Attack against Flying units.","Combat, Conditional",,
+Precision,50 Bow Mastery,2,"If the user's attacks exceed 100% Hit Rate, convert excess Accuracy to Attack.",Combat,The exchange rate is 5:1 (Accuracy:Attack).  Round up.,
+Knife Training,None,1,The user can equip Knife weapons and gain up to 100 Mastery with them.,Field,,Training-Knife
+Knife Specialization,Knife Training,1,"While wielding a Knife weapon, the user gets +1 Attack and +5 Evasion.","Combat, Conditional",,
+Weaken,Knife Training,1,"While wielding a Knife weapon, the user's attacks apply Frail 2 On-Hit.","Combat, Conditional, On-Hit",[Stacks],
+Poke,50 Knife Mastery,2,"While wielding a Knife weapon, the user can take the ""Poke"" action to make a Quick Map attack against an enemy within range.","Combat, Action, Attack",Map attacks don't allow Counters or Follow-ups.,Action-Poke
+Assassinate,50 Knife Mastery,3,The user gains +5 Damage against enemies who can't counterattack.,"Combat, Conditional",Applied during the Damage Step.,
+Beast Training,None,1,The user can equip Beast Weapons and gain up to 100 Mastery with them.,Field,,Training-Beast
+Beast Specialization,Beast Training,1,"While wielding a Beast weapon, the user gets +1 Attack and +1 Defense.","Combat, Conditional",,
+Rage,Beast Training,1,"While wielding a Beast weapon, the user can take the ""Rage"" action to gain Strong 2, Zeal 2, Haste 2, and Berserk 2.","Field, Action",,Action-Rage
+Effective (Mount),50 Beast Mastery,2,"While wielding a Beast weapon, the user gains +10 Attack against Mount units.","Combat, Conditional",,
+Unnatural,50 Beast Mastery,3,Buffs give the user twice the effect.,"Field, Combat",,Trigger-Buffs
+Dark Training,None,1,The user can equip Dark weapons and gain up to 100 Mastery with them.,Field,,Training-Dark
+Dark Specialization,Dark Training,1,"While wielding a Dark weapon, the user gets +2 Attack.","Combat, Conditional",,
+Surge,Dark Training,2,"While wielding a Dark weapon, the user can take the ""Surge"" action to damage themselves and make a Map attack against each enemy in range.","Combat, Action, Attack",The user deals 50% of their max HP to themselves.,Action-Surge
+Vengeance,50 Dark Mastery,2,"While wielding a Dark weapon, the user adds 20% of their lost HP to their Attack.","Combat, Conditional",,
+Massive Damage,50 Dark Mastery,2,"When the user deals at least 80% of an enemy's max HP in one attack, that enemy is automatically Downed.","Combat, Conditional",,
+Anima Training,None,1,The user can equip Anima weapons and gain up to 100 Mastery with them.,Field,,Training-Anima
+Anima Specialization,Anima Training,1,"While wielding an Anima weapon, the user gets +1 Attack and +1 equivalent of their element's stat.","Combat, Conditional",,
+Environmentalist,Anima Training,2,"While wielding an Anima weapon, the user gains bonuses based on the element(s) of their equipped weapon(s).","Field, Conditional",,
+Terraform,50 Anima Mastery,2,"While wielding an Anima weapon, the user can take any of the special actions based on the element(s) of their equipped weapon(s).","Field, Action, Conditional",,Action-Anima
+Shift,50 Anima Mastery,2,The user gains +1 Extra Action (Equip) and +1 Extra Action (Weapon).,Field,,
 Light Training,None,1,The user can equip Light weapons and gain up to 100 Mastery with them.,Field,,Training-Light
 Light Specialization,Light Training,1,"While wielding a Light weapon, the user gains +1 Attack and +5 Guard.","Combat, Conditional",,
 Flash,Light Training,1,"While wielding a Light weapon, the user can take the ""Flash"" action to apply Blind 2 and Slow 2 to all enemies in a large area.","Field, Action","Blinded units have -20 Accuracy.,Slowed units move at half their normal amount.",Action-Flash
 Effective (Monster),50 Light Mastery,2,"While wielding a Light weapon, the user gains +10 Attack against Monster units.","Combat, Conditional",,
 Sanctuary,50 Light Mastery,3,The user gains 20% Damage Reduction.,Combat,Damage Reduction is applied after Attack and Defense.,
+Staff Training,None,1,The user can equip Staff weapons and gain up to 100 Mastery with them.,Field,,Training-Staff
+Staff Specialization,Staff Training,1,"While wielding a Staff weapon, the user gets +1 Attack and +1 Defense.","Combat, Conditional",,
+Heal,Staff Training,1,"While wielding a Staff weapon, the user can take the ""Heal"" action to heal an ally for 1/2 the user's magical attack.","Field, Action, Conditional","This must target a unit besides the user within attack range.,Heal actions also Spare the target if it is Down.",Action-Heal
+Stasis,50 Staff Mastery,2,"While wielding a Staff weapon, the user gets Status Resistance 1.","Field, Combat, Conditional",,
+Renewal,50 Staff Mastery,3,"At the beginning of Player Phase, the user heals for 30% of their maximum HP.",Field,,
+HP+,None,1,The user gains +5 HP.  Increases their HP growth by 5%.,Inherent,,Trigger-HealthPlus
+Might+,None,1,The user gains +2 Might.  Increases their Might growth by 5%.,Inherent,,Trigger-MightPlus
+Focus+,None,1,The user gains +2 Focus.  Increases their Focus growth by 5%.,Inherent,,Trigger-FocusPlus
+Skill+,None,1,The user gains +2 Skill.  Increases their Skill growth by 5%.,Inherent,,Trigger-SkillPlus
+Speed+,None,1,The user gains +2 Speed.  Increases their Speed growth by 5%.,Inherent,,Trigger-SpeedPlus
+Favor+,None,1,The user gains +3 Favor.  Increases their Favor growth by 5%.,Inherent,,Trigger-FavorPlus
+Armor+,None,1,The user gains +2 Armor.  Increases their Armor growth by 5%.,Inherent,,Trigger-ArmorPlus
+Ward+,None,1,The user gains +2 Ward.  Increases their Ward growth by 5%.,Inherent,,Trigger-WardPlus
+Quick Study,None,1,"When the user gains Weapon Experience at the end of each mission, they gain twice as much as they normally would.",Inherent,,
+Aptitude,None,1,"When the user purchases talents from an ally, they ignore the usual 1 point tax.",Inherent,,
+Word of Mouth,None,1,The user increases their maximum support point total by 50%.,Inherent,This means they will have 300 ticks to work with.,Trigger-WordOfMouth
+Archivist,None,1,The user gains an additional Inventory slot.,Field,,
+Resolve,None,1,"While the user is Injured, they gain +10 Evasion and +2 Defense.","Combat, Conditional",,
+Full Power,None,1,"While the user is at full HP, they gain +1 Attack, Defense, and Follow-up.","Combat, Conditional",,
+Buffer,None,1,"While the user is at full HP, if they are healed, they can overfill their HP bar by up to 20%.","Field, Conditional",The user must start at full HP and then be healed further.,
+Tomb Raider,None,1,The user deals 50% more damage to Obstacles.  The user takes 4 less damage from any Environment effects.,"Field, Combat","This effect applies to all out-of-combat damage, such as from poison, fire, lava, traps, and so forth.",
+Acrobatics,None,1,"The user can take the ""Acrobatics"" action to leap a short distance or to climb over obstacles.","Field, Action, Movement",This effect allows the user to climb Major obstacles and leap over any terrain/Minor obstacles.,"Action-Acrobatics,Action-Climb"
+Mount(Horse),None,1,"The user gains the Mount type, 200 Movement speed, and +1 Token Size.",Field,,Trigger-Mount-Horse
+First Responder,None,1,The user begins each Mission with Haste 3.,Field,,
+Lone Wanderer,None,1,"While the user is alone, they gain +100 Movement.","Field, Conditional, Solo",,
+Strength in Numbers,None,1,The user's Squad gains +1 Defense.,"Combat, Squad",Squad talents stack with themselves if multiple units carry them.,
+Organize,None,1,The user's Squad gains +1 Extra Action (Squad) each turn.,"Field, Squad",,
+Instructor,None,1,The user's Squad gains 20% increased Experience.,"Field, Squad",,
+Heart to Heart,None,1,Enemies within Aura radius get -5/10/15 Evasion.,"Field, Aura",Aura talents stack with themselves if multiple units carry them.,
+Radiance,None,1,Enemies within Aura radius get -5/10/15 Accuracy.,"Field, Aura",Aura talents stack with themselves if multiple units carry them.,
+Precise Positioning,None,1,The user gains +1 Extra Action (Move).,Field,The user can't take the same Movement action unless they have Practice Makes Perfect or a similar effect.,
+Sticky Fingers,None,1,The user gains +1 Extra Action (Loot) and +100 Range when using Loot actions.,Field,,
+Rescue,None,1,"The user can use the ""Spare"" action to save a Downed unit from death.  They can also use the ""Rescue"" action on an allied unit to pull it into their Squad.","Field, Action","If the user is not in a Squad when they Rescue an ally, one will be formed.","Action-Spare,Action-Rescue"
+Battle Formations,None,1,"The user can use the ""Push"" action to push any unit away from them.  They can use the ""Pull"" action to pull an allied unit to the opposite side of themselves.","Field, Action","The distance traveled by Push is based on the difference in token sizes between the user and the target.,The bigger the user is than the target, the further the target is pushed.","Action-Push,Action-Pull"
+Lockpicking,None,1,"The user can use the ""Pick"" action to open locked doors or chests.  They can use the ""Disarm"" action to disarm traps.","Field, Action",,"Action-Pick,Action-Disarm"
+Duel,None,1,"The user can take the ""Duel"" action to begin a special combat.  The enemy counts as initiating combat, and the user gets +6 Follow-up and +2 Max Follow-up Attacks.","Combat, Action, Attack","Must target an enemy who can counterattack.,If the user has Bravado active, they initiate combat and still get the extra Follow-up.",Action-Duel
+Shade,None,1,The user is less likely to be attacked by enemy units.,Field,,Special
+Roll With It,None,1,Enemies have -5 Attack on Critical Hits.  The user has +5 Defense on Critical Guards.,Combat,,
+Darting Blow,None,1,"When the user initiates combat, they gain +5 Follow-up.","Combat, Conditional",,
+Zeal,None,1,"When the user initiates combat, they gain +10 Critical.","Combat, Conditional",,
+Patience,None,1,"When an enemy initiates combat, the user gains +20 Accuracy.","Combat, Conditional",,
+Catalog,None,1,"Before combats an enemy initiates, the user may choose to equip a different weapon.","Field, Conditional",This occurs after the enemy has locked in their weapon but before the combat begins.,
+Full Coverage,None,1,The user gains +15 Accuracy if their enemy is fully within their threat range.,"Combat, Conditional",,
+Insult to Injury,None,1,"When the enemy is Injured, the user gains +10 Accuracy and +10 Critical.","Combat, Conditional",,
+Incapacitate,None,1,The user increases the duration of Debuffs they apply to enemies by 2 rounds.,Field,,
+Double Jeopardy,None,1,"If the user's Squad has both attack types, the user's Squad gains +1 Attack.","Combat, Conditional, Squad",This means that the user's Squad must have at least one unit with a physical weapon equipped and at least one with a magical weapon.,
+Staff Adept,None,1,"When the user takes the ""Heal"" special action of a Staff, they increase the healing by 4.",Field,,
+Nullify,None,1,The user reduces enemy effectiveness damage by 5.,Combat,,
+Well-Equipped,None,2,The user gains an additional Accessory slot.,Field,,
+Recovery,None,2,"When the user is Rescued by an ally, they return to the Mission instead of leaving.",Field,"They come back with HP = 20% of their max HP, plus any healing (IE, if they were Rescued by a healing staff).",
+Miracle,None,2,"While the user is at 5% HP or less, they gain +20 Accuracy, Evasion, Critical, and Guard.","Combat, Conditional",,
+Revenge,None,2,"While the user is Injured and/or when an enemy initiates combat, the user gains +3 Attack.","Combat, Conditional","Both can be active at once, for a total of +6 Attack.",
+Second Wind,None,2,"While the user is Injured, they heal 5 HP each time they attack.","Combat, Conditional, On-Hit",Does not heal the user if they miss.,
+Fresh Fighter,None,2,"While the user is at Full HP, they get +1 Action per Turn.","Combat, Conditional, Solo",,
+Untouchable,None,2,"While the user is at Full HP, they get +20 Guard.","Combat, Conditional",,
+Attuned,None,2,The user gains bonuses based on the solar and lunar cycles.,Combat,"Day: +2 Defense, Night: +2 Attack, Full Moon: +10 Crit, Waning Moon: +10 Guard, New Moon: +10 Evasion, Waxing Moon: +10 Accuracy",Special
+Trample,None,2,The user gains +3 Attack for each token size they are larger than their enemy.,"Combat, Scaling",,
+Nimble Moves,None,2,The user can move through through enemies.  Reduce negative effects of terrain by 1 step.,"Field, Solo","Basic obstacles include things like Bushes and Rocks.  Large obstacles like Trees, Boulders, and Houses remain impassable.",
+Mount(Pegasus),None,2,"The user gains the Mount and Flying types, 200 Movement speed, and +1 Token Size.",Field,,Trigger-Mount-Pegasus
+Mount(Wolf),None,2,"The user gains the Mount type, 200 Movement speed, and +1 Token Size.  Reduce enemy effectiveness damage by 5.",Field,,Trigger-Mount-Wolf
+Mount(Wyvern),None,2,"The user gains the Mount and Flying types, +100 Movement speed, and +1 Token Size.  Reduce enemy effectiveness damage by 5.",Field,,Trigger-Mount-Wyvern
+Refreshing Dance,None,2,"The user can use the ""Dance"" action to make target Inactive unit Active.","Field, Action",Cannot target other units who possess this talent.  They know how this song and dance goes.,Action-Dance
+Personal Space,None,2,"When the user is alone and/or when an enemy initiates combat, the user gets +3 Follow-up and +10 Evasion.","Combat, Conditional, Solo","Both can be active at once, for a total of +6 Follow-up and +20 Evasion.",
+Life of the Party,None,2,The user increases the Support bonuses for their Squad by 50%.,"Field, Squad","If multiple units have talents with this effect, the % bonuses stack fully.  If effects aren't flat numeric bonuses, assume that the effect is boosted in some way.",
+Pack Tactics,None,2,"When making Squad attacks, the user can make Follow-up attacks.","Combat, Squad",,
+Coordinated Assault,None,2,The user's Squad gets +1 Attack.,"Combat, Squad",,
+Intimidator,None,2,Enemies within Aura radius get -1/2/3 Attack.,"Field, Aura",Aura talents stack with themselves if multiple units carry them.,
+Nova,None,2,"While alone, the user can take the “Nova” action to get +2 Actions, but also gain Stun 2 when they become Inactive.","Field, Action, Conditional, Solo",[Stacks],Action-Nova
+Lead by Example,None,2,"When the user takes an action, they give allies affected by that action a random Buff: Strong 2, Tough 2, Keen 2, or Agile 2.",Field,,
+Embody,None,2,"The user can take the ""Embody"" action to increase their token size by 1 step and the range of their Melee weapons by 50.","Field, Action",The user can increase up to 4 token sizes this way.  The user also has the ability to shrink back by using a separate action.,"Action-Embody,Action-Disembody"
+Steal,None,2,"The user can take the ""Steal"" action to take an item of their choice from an enemy's Inventory.  Against Downed enemies, Loot them.","Field, Action",Looting a Downed enemy gives you the option to take raw gold instead of an item.,Action-Steal
+Inspire Boldness,None,2,"The user can take the ""Inspire"" action to give allied units Strong 1 and Keen 1. [Stacks]","Field, Action","If the user has multiple talents that trigger off of the same action, the user gains the benefits of all those talents when using that action.",Action-Inspire
+Inspire Toughness,None,2,"The user can take the ""Inspire"" action to give allied units Tough 1 and Agile 1. [Stacks]","Field, Action","If the user has multiple talents that trigger off of the same action, the user gains the benefits of all those talents when using that action.",Action-Inspire
+Inspire Swiftness,None,2,"The user can take the ""Inspire"" action to give allied units Haste 1 and Zeal 1. [Stacks]","Field, Action","If the user has multiple talents that trigger off of the same action, the user gains the benefits of all those talents when using that action.",Action-Inspire
+Charge,None,2,"The user can take the ""Charge"" action to move up to their movement and then attack an enemy within range.","Field, Combat, Action, Movement, Attack",,Action-Charge
+Merchant Marine,None,2,"The user can take the ""Attack"" action to equip, then initiate combat against an enemy in range.  If they Down that enemy, they loot it.","Combat, Action, Attack, Conditional","This modifies the base Attack action, so it can't be used to attack more than once unless the user has another Attack action.",Action-Attack
+Provoke,None,2,The user is more likely to be attacked by enemies.,Field,This is achieved through stat deception.  The user's stats appear lower than they really are.,Special
+Unit Type(Heavy),None,2,The user gains the Heavy type.  They take 20% less damage.,Field,"Applies to out-of-combat damage as well.  Rounds up, so minimum 1.",Trigger-Heavy
+Unit Type(Monster),None,2,The user gains the Monster type.  They deal 20% more damage.,Field,"Applies to out-of-combat damage as well.  Rounds up, so minimum 1.",Trigger-Monster
+Flashing Blade,None,2,The user deals +10% Damage on Quick Attacks.,Combat,,
+Quick Draw,None,2,"When the user initiates combat, they gain +4 Attack.","Combat, Conditional",,
+Duelist's Blow,None,2,"When the user initiates combat, they gain +20 Evasion.","Combat, Conditional",,
+Bastion,None,2,"When an enemy inititates combat, the user gains +2 Defense and +10 Guard.","Combat, Conditional",,
+Poison Strike,None,2,The user’s attacks apply Poison 3 On-Hit.,"Combat, Conditional, On-Hit",Stacks.,
+Lifetaker,None,2,"When the user deals a fatal blow to an enemy, the user heals equal to 10% of the enemy's maximum HP.","Combat, Conditional, On-Hit","""Fatal Blows"" are attacks that Down or Kill a unit.",
+Impasse,None,2,The user gains 10% Opportunity.,Field,It's AoOs.  See revision 4 for details.,
+Elder Sign,None,2,All combatants gain +20 Accuracy and +5 Attack.,"Combat, Sign","If multiple combatants possess this talent, they only gain the effect once.",
+Holy Sign,None,2,All combatants gain +20 Evade and +20 Guard.,"Combat, Sign","If multiple combatants possess this talent, they only gain the effect once.",
+Chaos Sign,None,2,All combatants gain +20 Critical and +5 Defense.,"Combat, Sign","If multiple combatants possess this talent, they only gain the effect once.",
+Code of Honor,None,2,"When the enemy is at Full HP, the user gains +2 Attack and Defense.","Combat, Conditional",,
+Sneak Attack,None,2,"When the enemy is affected by a Debuff, the user gains +2 Follow-up and +2 Max Follow-up Attacks.","Combat, Conditional","This condition is checked in between each attack, so if a unit is wielding a dagger and hits an enemy, they would gain the extra Follow-up in the middle of combat and potentially get the extra attack.",
+Splash Damage,None,2,"When the user uses the ""Attack"" action, if they have a magical weapon equipped, they deal damage to enemies within 100 range of the target.","Combat, Conditional, Action, Attack",The damage dealt is 10% of the user's Attack and occurs after combat.  If the user is Downed or Killed during combat this damage will not occur.,Action-Attack
+Cleave,None,2,"When the user uses the ""Attack"" action, if they have a physical weapon equipped, they deal damage to enemies within 100 range of themselves.","Combat, Conditional, Action, Attack",The damage dealt is 10% of the user's Attack and occurs after combat.  If the user is Downed or Killed during combat this damage will not occur.,Action-Attack
+Hybrid Strike,None,2,The user's attacks are both magical and physical.,Combat,"This means the user adds both Might and Focus, and the enemy adds both Armor and Ward.,Effects that trigger off of either type will trigger.",
+Arms Adept,None,2,"The user can take the ""Lunge"" action with any Blade, Spear, or Mace weapon.","Combat, Action, Attack, Conditional",Using Lunge gives +50 attack range but -5 Accuracy and -1 Attack.,Action-Lunge
+Wild Adept,None,2,"While the user has a Bow, Knife, or Beast weapon equipped, their attacks apply Vulnerable to enemies with Weaknesses.","Combat, Conditional, On-Hit","Vulnerable is a Debuff that makes all attacks against that unit Effective.,Effectiveness damage from multiples sources stacks.",
+Spell Adept,None,2,"The range of the user's Dark, Anima, or Light Spell actions are increased by 100.",Field,These actions can only be used while equipped so this is technically a conditional talent even though it's not.,
+Enmity,None,2,"If the enemy has the opposite attack type of the user, the user gains +2 Attack, Defense, and Follow-up.","Combat, Conditional",The two attack types are physical and magical.,
+Staff Slayer,None,2,"While the enemy has a Staff equipped, the user gains +25 Accuracy, Evasion, Critical, and Guard.","Combat, Conditional",,
+Exploit Weakness,None,2,The user's Effectiveness Damage is increased by 10.,Combat,,

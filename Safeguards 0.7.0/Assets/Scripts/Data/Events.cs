@@ -9,6 +9,8 @@ using UltEvents;
 
 public sealed class StatsManagerEvent : UltEvent<StatsManager> { }
 
+public sealed class GrowthManagerEvent : UltEvent<GrowthManager> { }
+
 public sealed class GameObjectEvent : UltEvent<GameObject> { }
 
 public sealed class ItemEvent : UltEvent<Item> { }

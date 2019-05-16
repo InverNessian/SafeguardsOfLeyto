@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1e580d8da64eb468b0f91d52cc7927, type: 3}
   m_Name: Fant Growths
   m_EditorClassIdentifier: 
+  displayName: 
   healthGrowth: 50
   mightGrowth: 10
   focusGrowth: 60
@@ -32,3 +33,12 @@ MonoBehaviour:
   expToLevel: 100
   progressToBump: 100
   talentPoints: 0
+  naturalTalents:
+  - Lifetaker
+  - Dark Training
+  - Revenge
+  acquiredTalents:
+  - Nihil
+  maxSupportTicks: 0
+  friends: []
+  ticks: 

@@ -42,8 +42,9 @@ public class ImportController : MonoBehaviour
                     //native currently doesn't have a value
                 }
             }
-            catch
+            catch(System.Exception e)
             {
+                Debug.Log(e);
                 break; //on the off chance it doesn't work, break out so the code doesn't crash
             }
         } while (info.TalentName == null); //go until we find the right item

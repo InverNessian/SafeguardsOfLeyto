@@ -35,8 +35,8 @@ public class GrowthData : ScriptableObject
 
     //talents
     public int talentPoints = 0; //this is incremented at every even level
-    public string naturalTalents; //this holds a list of the natural talent list the user has
-    public string acquiredTalents; //for adding/removing talents based on supports, etc
+    public List<string> naturalTalents; //this holds a list of the natural talent list the user has
+    public List<string> acquiredTalents; //for adding/removing talents based on supports, etc
 
         //supports
     public int maxSupportTicks;

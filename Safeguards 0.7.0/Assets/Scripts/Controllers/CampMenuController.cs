@@ -17,7 +17,7 @@ public class CampMenuController : MonoBehaviour
     void Start()
     {
         CampController.SelectEvent.dynamicCalls += ShowCampUI;
-        CampController.DeselectEvent.dynamicCalls += HideActionUI;
+        CampController.DeselectEvent.dynamicCalls += HideCampUI;
     }
 
 
@@ -135,7 +135,7 @@ public class CampMenuController : MonoBehaviour
     public void HideEquipUI()
     {
         (action as Equip).EquipLoadout();
-        HideActionUI();
+        HideCampUI();
         ShowCampUI((action as Equip).user.gameObject);
         //action = null;
     }
@@ -145,7 +145,11 @@ public class CampMenuController : MonoBehaviour
         //[0] always is the higher level panel, and [1] is the action panel
         unitMenu.GetComponent<UIHolder>().target = owner;
         unitMenu.SetActive(true);
-        unitMenu.transform.GetChild(0).gameObject.SetActive(true);
+        for(int i = 0; i< unitMenu.transform.childCount; i++)
+        {
+            unitMenu.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        
 
         //create new menu and attach it to the owner
         //GameObject newMenu = Instantiate(unitMenu);
@@ -153,7 +157,7 @@ public class CampMenuController : MonoBehaviour
         //newMenu.GetComponentInChildren<UIHolder>().target = owner;
     }
 
-    public void HideActionUI()
+    public void HideCampUI()
     {
         for (int i = 0; i < unitMenu.transform.childCount; i++)
         {
