@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Actions\Camp\LearnAction.cs" />
+    <Compile Include="Assets\Scripts\Actions\DataTypes\AttackData.cs" />
+    <Compile Include="Assets\Scripts\Actions\DataTypes\EquipData.cs" />
+    <Compile Include="Assets\Scripts\Actions\DataTypes\MoveData.cs" />
     <Compile Include="Assets\Scripts\Actions\Equip.cs" />
     <Compile Include="Assets\Scripts\Actions\Helpers\Action.cs" />
     <Compile Include="Assets\Scripts\Actions\Helpers\Attack.cs" />
@@ -77,15 +79,17 @@
     <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\InstanceManagers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\InstanceManagers\ItemDragger.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InstanceManagers\SelectObject.cs" />
     <Compile Include="Assets\Scripts\Controllers\InstanceManagers\SlotDragger.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InstanceManagers\SupportButton.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InstanceManagers\TalentButton.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InstanceManagers\TalentBuyButton.cs" />
     <Compile Include="Assets\Scripts\Controllers\InstanceManagers\UIHolder.cs" />
     <Compile Include="Assets\Scripts\Controllers\MenuController.cs" />
-    <Compile Include="Assets\Scripts\Data\ActionTypes\AttackData.cs" />
-    <Compile Include="Assets\Scripts\Data\ActionTypes\EquipData.cs" />
-    <Compile Include="Assets\Scripts\Data\ActionTypes\MoveData.cs" />
     <Compile Include="Assets\Scripts\Data\Events.cs" />
     <Compile Include="Assets\Scripts\Data\Item.cs" />
     <Compile Include="Assets\Scripts\Data\Save_State.cs" />
+    <Compile Include="Assets\Scripts\Data\Support.cs" />
     <Compile Include="Assets\Scripts\Data\Talent.cs" />
     <Compile Include="Assets\Scripts\Data\Training.cs" />
     <Compile Include="Assets\Scripts\Data\Units\GrowthData.cs" />
@@ -98,18 +102,16 @@
     <Compile Include="Assets\Scripts\Legacy\CombatController.cs" />
     <Compile Include="Assets\Scripts\Legacy\MovementController.cs" />
     <Compile Include="Assets\Scripts\Legacy\UnitMenu.cs" />
+    <Compile Include="Assets\Scripts\Menus\SupportMenu.cs" />
+    <Compile Include="Assets\Scripts\Menus\TalentMenu.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\AbilityTrigger.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\IAura.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\ICombat.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\IConditional.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\IEquip.cs" />
-    <Compile Include="Assets\Scripts\Triggers\Helpers\ILearn.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\IMovement.cs" />
     <Compile Include="Assets\Scripts\Triggers\Helpers\ISquad.cs" />
     <Compile Include="Assets\Scripts\Triggers\Lifetaker.cs" />
-    <Compile Include="Assets\TalentButton.cs" />
-    <Compile Include="Assets\TalentMenu.cs" />
-    <Compile Include="Assets\UnitPersistence.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>G:/GameCreation/Unity/Safeguards 0.7.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

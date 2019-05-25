@@ -47,6 +47,19 @@ public class StatsData : ScriptableObject
     //there are triggers we need to create on the gameobject.  see statsmanager
 
 
+    public void ApplySupportBonuses(Support support)
+    {
+        List<int> statMods = ImportController.ConvertSupportToValues(support);
+        healthValue += statMods[0];
+        mightValue += statMods[1];
+        focusValue += statMods[2];
+        skillValue += statMods[3];
+        speedValue += statMods[4];
+        favorValue += statMods[5];
+        armorValue += statMods[6];
+        wardValue += statMods[7];
+    }
+
     public void LearnTalent(string tname)
     {
         talents.Add(tname);

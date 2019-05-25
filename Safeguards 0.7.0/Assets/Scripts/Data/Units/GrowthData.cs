@@ -42,9 +42,59 @@ public class GrowthData : ScriptableObject
     public int maxSupportTicks;
     public List<string> friends;
     public List<int> ticks;
+    public List<int> ranks; //noted separately in case they don't want to commit to a support
     //public Dictionary<string, int> supports = new Dictionary<string, int>();
 
     //methods
+    public bool LearnTalent(string tname)
+    {
+        //check if talent is native
+        int temp = ImportController.GetTalentInfo(tname).Cost;
+        if (!naturalTalents.Contains(tname))
+        {
+            temp++;
+        }
+        //check if unit has enough talent points
+        if (talentPoints >= temp)
+        {
+            talentPoints -= temp;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void ApplySupportBonuses(Support support)
+    {
+        List<int> growthMods = ImportController.ConvertSupportToGrowths(support);
+        healthGrowth += growthMods[0];
+        mightGrowth += growthMods[1];
+        focusGrowth += growthMods[2];
+        skillGrowth += growthMods[3];
+        speedGrowth += growthMods[4];
+        favorGrowth += growthMods[5];
+        armorGrowth += growthMods[6];
+        wardGrowth += growthMods[7];
+    }
+
+    public bool GainSupportRank(string sname) //needs some adjusting; the logic doesn't quite work?
+    {
+        int temp = friends.IndexOf(sname);
+        //elegant way to avoid a double condition
+        //  if they have a higher rank in the ticks, they are guaranteed to have enough ticks to get that rank
+        if (ImportController.GetRankFromTicks(ticks[temp]) > ranks[temp]) //to avoid a null error maybe set these initially to 0
+        {
+            ranks[temp] += 1;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void GainExperience(int amount)
     {
         experience += amount;

@@ -11,12 +11,12 @@ public class GrowthManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.BeginScene.dynamicCalls += StartScene;
+        //GameController.BeginScene.dynamicCalls += StartScene;
         GameController.EndScene.dynamicCalls += EndScene;
     }
 
 
-    void StartScene()
+    void Start()
     {
         if(growthData == null)
         {
@@ -28,6 +28,27 @@ public class GrowthManager : MonoBehaviour
             file.Close();
 
             growthData = growthSaver.GetGrowthData();
+        }
+
+        //set natural talent lists
+        if(growthData.naturalTalents.ToArray().Length == 0)
+        {
+            growthData.naturalTalents = ImportController.GetTalentList(gameObject.name);
+        }
+        
+
+        //load support lists if they're empty
+        if (growthData.friends.ToArray().Length == 0)
+        {
+            growthData.friends = ImportController.GetSupportList(gameObject.name); //load friends list
+            growthData.ticks.Clear(); //clear previous values.
+            growthData.ranks.Clear();
+            int temp = 0;
+            foreach(string friend in growthData.friends)
+            {
+                growthData.ticks.Add(temp); //also set each other list to have default values.
+                growthData.ranks.Add(temp);
+            }
         }
     }
 

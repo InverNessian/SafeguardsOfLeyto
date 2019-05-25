@@ -7,7 +7,7 @@ using UnityEditor;
 using System.Text;
 using CsvHelper.Configuration;
 
-public class ImportController : MonoBehaviour
+public class ImportController //: MonoBehaviour
 {
 
     public static StringBuilder GetEventDialogue(string ename)
@@ -15,6 +15,602 @@ public class ImportController : MonoBehaviour
         //check the list of events & supports for matching name, then return dialogue
         StringBuilder sb = new StringBuilder();
         return sb;
+    }
+
+    public static List<int> ConvertSupportToValues(Support info)
+    {
+        //initialize a list with 8 values of 0
+        List<int> values = new List<int>{0, 0, 0, 0, 0, 0, 0, 0};
+
+        //try this sometime later?
+        /*
+        switch (info.HP)
+        {
+            case "Primary":
+                int temp = 1;
+                do
+                {
+                    temp++;
+                } while (info.Ticks < GetTicksFromRank(temp));
+                values[0] = temp;
+                break;
+        }
+        */
+        //we check to see if the value for each stat is null
+        if(info.HP != null)
+        {
+            //if it's not null, we increment the value by 1 per support rank if it's primary, or 1 per support rank -1 if it's secondary
+            int temp = 0;
+            if(info.Ticks > 10)
+            {
+                temp += info.HP.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.HP.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.HP.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.HP.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.HP.Equals("Primary") ? 1 : 0;
+            }
+            values[0] = temp;
+        }
+        if (info.Might != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Might.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Might.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Might.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Might.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Might.Equals("Primary") ? 1 : 0;
+            }
+            values[1] = temp;
+        }
+        if (info.Focus != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Focus.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Focus.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Focus.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Focus.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Focus.Equals("Primary") ? 1 : 0;
+            }
+            values[2] = temp;
+        }
+        if (info.Skill != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Skill.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Skill.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Skill.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Skill.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Skill.Equals("Primary") ? 1 : 0;
+            }
+            values[3] = temp;
+        }
+        if (info.Speed != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Speed.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Speed.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Speed.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Speed.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Speed.Equals("Primary") ? 1 : 0;
+            }
+            values[4] = temp;
+        }
+        if (info.Favor != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Favor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Favor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Favor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Favor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Favor.Equals("Primary") ? 1 : 0;
+            }
+            values[5] = temp;
+        }
+        if (info.Armor != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Armor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Armor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Armor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Armor.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Armor.Equals("Primary") ? 1 : 0;
+            }
+            values[6] = temp;
+        }
+        if (info.Ward != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Ward.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Ward.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Ward.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Ward.Equals("Primary") ? 1 : 0;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Ward.Equals("Primary") ? 1 : 0;
+            }
+            values[7] = temp;
+        }
+        return values;
+    }
+
+    public static List<int> ConvertSupportToGrowths(Support info)
+    {
+        //initialize a list with 8 values of 0
+        List<int> values = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        //we check to see if the value for each stat is null
+        if (info.HP != null)
+        {
+            //if it's not null, we increment the value according to the chart, it's a bit weird sorry
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.HP.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.HP.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.HP.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.HP.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.HP.Equals("Primary") ? 10 : 0;
+            }
+            values[0] = temp;
+        }
+        if (info.Might != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Might.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Might.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Might.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Might.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Might.Equals("Primary") ? 10 : 0;
+            }
+            values[1] = temp;
+        }
+        if (info.Focus != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Focus.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Focus.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Focus.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Focus.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Focus.Equals("Primary") ? 10 : 0;
+            }
+            values[2] = temp;
+        }
+        if (info.Skill != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Skill.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Skill.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Skill.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Skill.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Skill.Equals("Primary") ? 10 : 0;
+            }
+            values[3] = temp;
+        }
+        if (info.Speed != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Speed.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Speed.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Speed.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Speed.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Speed.Equals("Primary") ? 10 : 0;
+            }
+            values[4] = temp;
+        }
+        if (info.Favor != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Favor.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Favor.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Favor.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Favor.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Favor.Equals("Primary") ? 10 : 0;
+            }
+            values[5] = temp;
+        }
+        if (info.Armor != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Armor.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Armor.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Armor.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Armor.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Armor.Equals("Primary") ? 10 : 0;
+            }
+            values[6] = temp;
+        }
+        if (info.Ward != null)
+        {
+            int temp = 0;
+            if (info.Ticks > 10)
+            {
+                temp += info.Ward.Equals("Primary") ? 10 : 5;
+            }
+            if (info.Ticks > 20)
+            {
+                temp += info.Ward.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 40)
+            {
+                temp += info.Ward.Equals("Primary") ? 10 : 0;
+            }
+            if (info.Ticks > 70)
+            {
+                temp += info.Ward.Equals("Primary") ? 0 : 5;
+            }
+            if (info.Ticks > 100)
+            {
+                temp += info.Ward.Equals("Primary") ? 10 : 0;
+            }
+            values[7] = temp;
+        }
+        return values;
+    }
+
+    public static int GetRankFromTicks(int ticks)
+    {
+        int temp = 0;
+        if(ticks > 10)
+        {
+            temp++;
+        }
+        if (ticks > 20)
+        {
+            temp++;
+        }
+        if (ticks > 40)
+        {
+            temp++;
+        }
+        if (ticks > 70)
+        {
+            temp++;
+        }
+        if (ticks > 100)
+        {
+            temp++;
+        }
+        return temp;
+    }
+
+    public static int GetTicksFromRank(int rank)
+    {
+        int temp = 0;
+        switch (rank)
+        {
+            case 1:
+                temp = 10;
+                break;
+            case 2:
+                temp = 20;
+                break;
+            case 3:
+                temp = 40;
+                break;
+            case 4:
+                temp = 70;
+                break;
+            case 5:
+                temp = 100;
+                break;
+        }
+        return temp;
+    }
+
+    public static List<string> GetSupportList(string person) //uses the revised CSV helper wording.  this should be the new standard.
+    {
+        List<string> supports = new List<string>();
+
+        //read in from Supports
+        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Supports.csv");
+        CsvReader csv = new CsvReader(sr);
+        csv.Read();
+        csv.ReadHeader();
+
+        while(csv.Read())
+        {
+            string user = csv.GetField<string>("Primary");
+            string friend = csv.GetField<string>("Secondary");
+            if (user.Equals(person) && friend != "")//if the user matches and the friend column exists
+            {
+                supports.Add(friend);
+            }
+        }
+
+        csv.Dispose();
+
+        return supports;
+    }
+
+    public static Support GetSupportInfo(string user, string friend)
+    {
+        //set up the Support object
+        GrowthManager gm = GameObject.Find(user).GetComponent<GrowthManager>();
+        Support info = new Support
+        {
+            User = user,
+            Friend = friend,
+            Ticks = gm.growthData.ticks[gm.growthData.friends.IndexOf(friend)]
+        };
+
+        //read in from Supports
+        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/Supports.csv");
+        CsvReader csv = new CsvReader(sr);
+        csv.Read();
+        csv.ReadHeader();
+
+        while (csv.Read())
+        {
+            string col1 = csv.GetField<string>("Primary");
+            string col2 = csv.GetField<string>("Secondary");
+            if (col1.Equals(user) && col2.Equals(friend))//if the user and friend column both match
+            {
+                info.HP = csv.GetField<string>("HP");
+                info.Might = csv.GetField<string>("Might");
+                info.Focus = csv.GetField<string>("Focus");
+                info.Skill = csv.GetField<string>("Skill");
+                info.Speed = csv.GetField<string>("Speed");
+                info.Favor = csv.GetField<string>("Favor");
+                info.Armor = csv.GetField<string>("Armor");
+                info.Ward = csv.GetField<string>("Ward");
+            }
+        }
+
+        //now we finish up
+        csv.Dispose();
+        
+        return info;
+    }
+
+    public static List<string> GetTalentList(string charname)
+    {
+        //read in from NaturalTalents to get talent lists
+        List<string> info = new List<string>();
+        //import from csv
+        StreamReader sr = new StreamReader(Application.dataPath + "/DataFiles/NaturalTalents.csv");
+        CsvParser parser = new CsvParser(sr);
+        string[] record;
+        do
+        {
+            try //attempt to read a new record
+            {
+                record = parser.Read();
+                if (record[0].Equals(charname)) //compare the name to passed in value
+                {
+                    for(int i=1; i<record.Length; i++) //if the name matches, iterate through each value in the line
+                    {
+                        string temp = record[i];
+                        //if the value is separated by commas, add each value
+                        if(temp.Split(',').Length > 1)
+                        {
+                            foreach(string splitter in temp.Split(','))
+                            {
+                                info.Add(splitter.Trim());
+                            }
+                        } //otherwise, we just add the value normally
+                        else if (!temp.Equals(""))
+                        {
+                            info.Add(temp);
+                        }
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e);
+                break; //on the off chance it doesn't work, break out so the code doesn't crash
+            }
+        } while (info.ToArray().Length < 1); //go until we find the right item
+
+
+        parser.Dispose();
+
+
+        return info;
     }
 
     public static Talent GetTalentInfo(string tname) //clone from GetItemInfo
@@ -27,6 +623,7 @@ public class ImportController : MonoBehaviour
         string[] temp;
         do
         {
+
             try //attempt to read a new record
             {
                 temp = parser.Read();

@@ -12,6 +12,6 @@ public struct Talent
     public List<string> Tags;
     public List<string> Notes;
     public List<string> Effects;
-    public bool native; //this allows us to know if it's learned from other units.
-
+    //public bool native; //this allows us to know if it's learned from other units.
+    // this is actually unnecessary since we have lists to show native vs shared
 }

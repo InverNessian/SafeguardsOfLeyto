@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Fant Growths
   m_EditorClassIdentifier: 
   displayName: 
-  healthGrowth: 50
-  mightGrowth: 10
-  focusGrowth: 60
-  skillGrowth: 35
-  speedGrowth: 30
-  favorGrowth: 15
-  armorGrowth: 40
-  wardGrowth: 40
+  healthGrowth: 55
+  mightGrowth: 15
+  focusGrowth: 65
+  skillGrowth: 40
+  speedGrowth: 35
+  favorGrowth: 25
+  armorGrowth: 45
+  wardGrowth: 50
   healthProgress: 0
   mightProgress: 0
   focusProgress: 0
@@ -32,13 +32,34 @@ MonoBehaviour:
   experience: 0
   expToLevel: 100
   progressToBump: 100
-  talentPoints: 0
+  talentPoints: 5
   naturalTalents:
-  - Lifetaker
   - Dark Training
+  - Focus+
+  - Elder Sign
+  - Enervate
+  - Enmity
+  - He Speaks My Name
+  - Heart to Heart
+  - HP+
+  - In Dreams He Came
+  - Intimidator
+  - Lifetaker
+  - Patience
+  - Ranged Counter
   - Revenge
+  - Shadow Walk
+  - Thoughtcasting
   acquiredTalents:
   - Nihil
   maxSupportTicks: 0
-  friends: []
-  ticks: 
+  friends:
+  - Avery
+  - Hadrian
+  - Kallen
+  - Lena
+  - Leonardo
+  - Liliane
+  - Lyra
+  ticks: 14000000000000000000000000000000000000000000000000000000
+  ranks: 01000000000000000000000000000000000000000000000000000000
