@@ -1,0 +1,285 @@
+<div>
+
+    <div>
+
+    	<label>Name:</label><input type="text" name="attr_character_name" value="" />
+		<label>Level:</label><input type="number" name="attr_lvl" value="0"  style="width: 60px;"/>
+		<label>EXP:</label><input type="number" name="attr_xp" value="0" style="width: 60px;"/> /
+		<input type="number" name="attr_xp_max" float=left value="100" style="width: 60px;" />
+
+	</div>
+
+	<div>
+
+		<label style="padding-left: 0.0cm;">Movement:</label><input type="number" name="attr_movement" value="5" style="width: 60px;" />
+		<label style="padding-left: 0.5cm;" width=120px>AttackType:</label><select name="attr_atktype" style="width: 80px;">
+				<option value="Physical">Physical</option>
+				<option value="Magical">Magical</option>
+				<option value="Hybrid">Hybrid</option>
+				<option value="Adaptive">Adaptive</option>
+			</select>
+		<label style="padding-left: 0.8cm;">MaxAttacks:</label><input type="number" name="attr_max_attacks" value="2" style="width: 60px;" />
+		<label style="padding-left: 0.2cm;" width=120px>Faction:</label><select name="attr_faction" style="width: 80px;">
+			<option value="Allied">Allied</option>
+			<option value="Enemy">Enemy</option>
+			<option value="Neutral">Neutral</option>
+		</select>
+
+	</div>
+
+	<div>
+
+		<label>Modifiers:</label><input type="text" name="attr_auras" value=""  style="width: 600px;"/>
+
+	</div>
+</div>
+
+<hr/>
+
+<div class="sheet-2colrow">
+	
+    <div class="sheet-col">
+		<div class="sheet-2colrow">
+			<div class="sheet-col">
+				<h3 style="text-align: left;">Attributes</h3><br />
+				
+				<table>
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Value</th>
+							<th>Growth</th>
+							<th>Progress</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">HP</td>
+							<td><input type="number" name="attr_HP_max" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_HP_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_HP_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Str</td>
+							<td><input type="number" name="attr_Str" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Str_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Str_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Mag</td>
+							<td><input type="number" name="attr_Mag" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Mag_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Mag_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Skl</td>
+							<td><input type="number" name="attr_Skl" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Skl_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Skl_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Spd</td>
+							<td><input type="number" name="attr_Spd" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Spd_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Spd_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Lck</td>
+							<td><input type="number" name="attr_Lck" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Lck_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Lck_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Def</td>
+							<td><input type="number" name="attr_Def" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Def_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Def_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Res</td>
+							<td><input type="number" name="attr_Res" class="sheet-short" value="0" /></td>
+							<td><input type="text" name="attr_Res_growth" class="sheet-short" value="0%" /></td>
+							<td><input type="text" name="attr_Res_progress" class="sheet-short" value="0%" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="sheet-col" align="right">
+				<h3 style="text-align: left;">Derived Statistics</h3><br />
+				
+				<table>
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Base</th>
+							<th>Bonus</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Attack</td>
+							<td><input type="number" name="attr_Dmg" class="sheet-short" value="0" /></td>
+							<td><input type="number" name="attr_Dmg_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Accuracy</td>
+							<td><input type="number" name="attr_Acc" class="sheet-short" disabled="true" value="@{Skl}*2+@{Lck}+@{Acc_bonus}" /></td>
+							<td><input type="number" name="attr_Acc_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Evade</td>
+							<td><input type="number" name="attr_Evade" class="sheet-short" disabled="true" value="@{Spd}*2+@{Lck}+@{Evade_bonus}" /></td>
+							<td><input type="number" name="attr_Evade_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Critical Rate</td>
+							<td><input type="number" name="attr_Crit" class="sheet-short" disabled="true" value="@{Skl}/2+@{Crit_bonus}" /></td>
+							<td><input type="number" name="attr_Crit_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Guard</td>
+							<td><input type="number" name="attr_Guard" class="sheet-short" disabled="true" value="@{Lck}+@{CritEvade_bonus}" /></td>
+							<td><input type="number" name="attr_Guard_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+						<tr>
+							<td style="font-size: 1.2em; font-weight: bold; text-align: center;">Damage Reduction</td>
+							<td><input type="number" name="attr_DR" class="sheet-short" value="0" /></td>
+							<td><input type="number" name="attr_DR_bonus" class="sheet-short" value="0" /></td>
+						</tr>
+					</tbody>
+				</table>
+				
+
+		
+			</div>
+			
+			
+		</div>
+		
+		<hr/>
+		
+		<div class="sheet-2colrow">
+			<div class="sheet-col">
+				<h3 style="text-align: left;">Support Ranks</h3><br />
+				
+				<fieldset class="repeating_supports">
+					<input type="text" name="attr_support_name" style="width: 120px;" value="Character" />
+					<input type="number" name="attr_support" class="sheet-short" value="0" style="width: 50px;"/>
+				</fieldset>
+			</div>
+			<div class="sheet-col">
+				<h3 style="text-align: left;">Weapon Experience</h3><br />
+				
+				<fieldset class="repeating_weapons">
+					<input type="text" name="attr_weapon_rank_name" style="width: 120px;" value="Swords" />
+					<input type="number" name="attr_weapon_experience" class="sheet-short" value="0" style="width: 50px;"/>
+				</fieldset>
+			</div>
+		</div>
+		
+<div>
+    <hr/>
+    <label style="text-align: left; font-size: large;">Skills</label>
+    <label style="font-size: small;" align="right">Skill Points</label><input type="number" name="attr_skillpoints" value="0" style="width: 40px;" />
+    <br />
+    <fieldset name="repeating_skills" class="repeating_skills" style="align: center">
+        <input type='text' name='attr_skillname' style="width: 150px;" value="Skill Name" />
+		<select name="attr_skilltype" class="dtype" style="width: 120px;">                
+			<option value="Inherent">Inherent</option>            
+			<option value="Field">Field</option>                
+			<option value="Combat">Combat</option>
+			<option value="Action">Action</option>       
+			<option value="Aura">Aura</option> 
+		</select>
+		
+		<br/>
+		<textarea name="attr_skilldesc" style="width: 265px; height: 60px;">Skill Description Here</textarea>
+		<hr/>
+    </fieldset>
+</div>
+
+	</div>
+	
+	<!--
+	
+	<div class="split-layout__divider">
+        <div class="split-layout__rule"></div>
+    </div>
+	
+	-->
+	
+    <div class="sheet-col">
+		<h3 style="text-align: left;">Inventory</h3><br />
+				
+		<fieldset name="repeating_items" class="repeating_items" style="align: right">            
+			<!--
+			<input type='checkbox' name='attr_equipped' checked='true' style="vertical-align: 5%;" />
+			<select name="attr_weptype" class="dtype">
+				<option value="Sword">Sword</option>
+				<option value="Axe">Axe</option>
+				<option value="Spear">Spear</option>
+				<option value="Bow">Bow</option>
+				<option value="Knife">Knife</option>
+				<option value="Beast">Beast</option>
+				<option value="Light">Light</option>
+				<option value="Anima">Anima</option>
+				<option value="Dark">Dark</option>
+				<option value="Staff">Staff</option>
+				<option value="Item">Item</option>
+			</select>
+			-->
+			
+			<input type="text" name="attr_itemname" class="wname" value="Weapon Name" />  
+			<input type="text" name="attr_weptypes" class="wname" value="Physical, Sword..." />  
+			<select name="attr_weprank" style="width: 80px;">
+				<option value="0">0 exp</option>
+				<option value="1">25 exp</option>
+				<option value="2">50 exp</option>
+				<option value="3">75 exp</option>
+				<option value="4">100 exp</option>
+			</select>
+			<br/>
+			<textarea name="attr_itemdesc" style="width: 400px; height: 60px;">Weapon Ability and Description Here</textarea>
+			
+			<table style="width: 100%;">
+					<tbody>
+                        <tr>
+                            <td align="center">Might</td>
+                            <td align="center">Accuracy</td> 
+                            <td align="center">Evade</td>
+                            <td align="center">Critical</td>
+                            <td align="center">Guard</td>
+                            <td align="center">Follow</td>
+                            <td align="center">DR</td>
+                            <td align="center">Range</td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" name="attr_wepmt" class="sheet-short" value="0" /></td> 
+                            <td><input type="number" name="attr_wepacc" class="sheet-short" value="0" /></td>
+                            <td><input type="number" name="attr_wepeva" class="sheet-short" value="0" /></td>   
+                            <td><input type="number" name="attr_wepcrt" class="sheet-short" value="0" /></td>  
+                            <td><input type="number" name="attr_wepgrd" class="sheet-short" value="0" /></td>
+                            <td><input type="number" name="attr_wepflw" class="sheet-short" value="0" /></td>   
+                            <td><input type="number" name="attr_wepdr" class="sheet-short" value="0" /></td>  
+                            <td><input type="text" name="attr_weprng" class="sheet-short" value="1" /></td>
+                        </tr>
+                    </tbody>
+                </table> 
+			
+			<!--
+			<div>
+				<div><input type="number" name="attr_wepacc" class="sheet-short" value="0" /></div>
+				<div><input type="number" name="attr_wepmt" class="sheet-short" value="0" /></div>
+				<div><input type="number" name="attr_wepcrt" class="sheet-short" value="0" /></div>
+				<div><input type="number" name="attr_wepeva" class="sheet-short" value="0" /></div>
+			</div>
+			-->
+			<hr/>
+			   
+		</fieldset>
+		
+		
+	</div>
+</div>
+
+
