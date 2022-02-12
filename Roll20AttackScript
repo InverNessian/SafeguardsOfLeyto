@@ -109,9 +109,9 @@
   --:showGuard|
   
   --/| Apply the damage to the token
+  --!a:[%2%]|hp:-=[$attackDmg]
   --!t:[%2%]|t-bar1_value:-=[$attackDmg]
-  --+hp|[*[%2%]:t-bar1_value]
-  --?[*[%2%]:bar1_value] -gt 0 -or "[*[%2%]:auras]" -inc "Stand"|survived
+  --?[*[%2%]:t-bar1_value] -gt 0 -or "[*[%2%]:auras]" -inc "Stand"|survived
   --=massiveDamage|[*[%2%]:t-bar1_max] * 0.8
   --"?[*[%1%]:auras]" -ninc "Massive" -or [$attackDmg] -lt [$massiveDamage]|survived
   --!t:[%2%]|t-bar1_value:0
