@@ -1,0 +1,178 @@
+!script {{
+
+  --#sourceToken|@{selected|token_id}
+  --#targetToken|@{target|token_id}
+  
+  --/|
+  --/|       Now we start doing the attack logic
+  --/|    Could be really interesting to do prompts asking the user what kind of attack to make
+  --/|               Loop until the user stops clicking "more attacks"
+  
+  -->ExecuteAttack|@{selected|token_id};@{target|token_id};Normal
+  --+secondAttack|
+  -->ExecuteAttack|@{target|token_id};@{selected|token_id};Normal
+  
+  
+  --/|  This is a subroutine to execute an attack
+  --/|       attackClass is whether the attack is Normal, Power, or Quick
+  --:ExecuteAttack|attacker;defender;attackClass
+  
+  --/| First we get the attack's damage type
+  --&dType|[*[%1%]:atktype]
+  
+  --/| Also important is to find all the combatants' buffs and debuffs.
+  --~|array;statusmarkers;Conditions1;[%1%]
+  --~|array;statusmarkers;Conditions2;[%2%]
+  
+  
+  
+  
+  
+  --/| Next we find the net Advantage value (add the auras in the base definition)
+  --=netAdv|0
+  --?"[*[%1%]:auras]" -inc "Cert"|=netAdv;[$netAdv] + 20
+  --?"[*[%2%]:auras]" -inc "Cert"|=netAdv;[$netAdv] - 20
+  --?"[*[%1%]:auras]" -inc "Plan"|=netAdv;[$netAdv] + [*[%1%]:Skl] / 3 {FLOOR}
+  --=netAdv|[$netAdv] / 100
+  --=netAdv|1 - [$netAdv]
+  
+  --/| Now we calculate the total chance to hit and find our roll
+  --=baseRate|50
+  --/|     need to get RFirst and RFind working so I can fetch weapon EXP
+  --=Acc|[*[%1%]:Skl] * 2 + [*[%1%]:Lck] + [*[%1%]:Acc_bonus]
+  --?[*[%1%]:t-name] -ne [*S:t-name] -and "[*[%1%]:auras]" -inc "Patience"|=Acc;[$Acc] + 20
+  --=Evade|[*[%2%]:Spd] * 2 + [*[%2%]:Lck] + [*[%2%]:Evade_bonus]
+  --=hitRate|50 + [$Acc] - [$Evade]
+  --/|  add a line here to check for Precision
+  --=hitRoll|2d100 / 2 {CEIL}
+  --?[$netAdv] -ne 0|=hitRoll;[$hitRoll] * [$netAdv] {ROUND}
+  --?[$hitRoll] -gt [$hitRate]|>ShowMiss;[$hitRate];[$hitRoll];[%1%]
+  --?[$hitRoll] -gt [$hitRate]|Miss
+  
+  --/| The attack hit, so now we determine critical or guard
+  --=Crit|[*[%1%]:Skl] / 2 + [*[%1%]:Crit_bonus]
+  --=Guard|[*[%2%]:Lck] + [*[%2%]:Evade_bonus]
+  --=critRate|[$Crit] - [$Guard]
+  --=critRoll|2d100 / 2 {CEIL}
+  --?[$netAdv] -ne 0|=critRoll;[$critRoll] * [$netAdv] {ROUND}
+  --&critType|Crit
+  --?[$critRate] -ge 0|guardCheck
+  --&critType|Guard
+  --=critRate|[$critRate] {ABS}
+  --:guardCheck|
+  --&critSuccess|No
+  --?"[&critType]" -eq "Crit" -and [$critRoll] -le [$critRate]|&critSuccess;Crit
+  --?"[&critType]" -eq "Guard" -and [$critRoll] -le [$critRate]|&critSuccess;Guard
+  
+  --/| With the result of the crit check, now we can calculate damage.
+  --C[%3%]|Normal:=atkMult;1.0|Power:=atkMult;1.5|Quick:=atkMult;0.5
+  --?"[&critSuccess]" -eq "Crit"|=atkMult;[$atkMult] + 0.5
+  --?"[&critSuccess]" -eq "Guard"|=atkMult;[$atkMult] - 0.5
+  --=Dmg|[*[%1%]:Dmg] + [*[%1%]:Dmg_bonus]
+  --=DR|[*[%2%]:DR] + [*[%2%]:DR_bonus]
+  --/| Now we determine which stat(s) to use based on the damage type
+  --=dMag|[*[%1%]:Mag] - [*[%2%]:Res]
+  --=dPhys|[*[%1%]:Str] - [*[%2%]:Def]
+  --?"[&dType]" -eq "Adaptive" -and [$dMag] -ge [$dPhys] -or "[&dType]" -eq "Magical"|physical
+  --=Dmg|[$Dmg] + [*[%1%]:Str]
+  --=DR|[$DR] + [*[%2%]:Def]
+  --:physical|
+  --?"[&dType]" -eq "Adaptive" -and [$dMag] -lt [$dPhys] -or "[&dType]" -eq "Physical"|magical
+  --=Dmg|[$Dmg] + [*[%1%]:Mag]
+  --=DR|[$DR] + [*[%2%]:Res]
+  --:magical|
+  --=Dmg|[$Dmg] * [$atkMult] {FLOOR}
+  --=attackDmg|[$Dmg] - [$DR]
+  
+  --/| Check for any types that might be relevant, like Armor or Monster
+  --=hpMult|1.0
+  --?"[*[%2%]:auras]" -inc "Armor"|=hpMult;[$hpMult] - 0.2
+  --?"[*[%1%]:auras]" -inc "Monster"|=hpMult;[$hpMult] + 0.2
+  --=attackDmg|[$attackDmg] * [$hpMult] {ROUND}
+  
+  
+  --/| Later on, add a check here for Buffer that fetches Bar2 or Bar3 and caps damage at that amount if it's greater than 0
+  --/|   Or, we could have it all in Bar1 and just do some math with the hp value vs hpmax (written as hp^)
+  
+  --/| Display the card to the players
+  --+ShowHit|[*[%1%]:t-name] had a(n) [$hitRate]% chance to hit and succeeded with a roll of [$hitRoll]!
+  --?"[&critSuccess]" -ne "Crit"|showCrit
+  --+ShowCrit|Critical chance [$critRate]% resulted in a crit! [$critRoll]
+  --+ShowDamage|Dealing critical damage: [$attackDmg]
+  --:showCrit|
+  --?"[&critSuccess]" -ne "No"|showNorm
+  --+ShowDamage|Dealing normal damage: [$attackDmg]
+  --:showNorm|
+  --?"[&critSuccess]" -ne "Guard"|showGuard
+  --+ShowGuard|Guard chance [$critRate]% resulted in a guard! [$critRoll]
+  --+ShowDamage|Dealing reduced damage: [$attackDmg]
+  --:showGuard|
+  
+  --/| Apply the damage to the token
+  --!t:[%2%]|t-bar1_value:-=[$attackDmg]
+  --+hp|[*[%2%]:t-bar1_value]
+  --?[*[%2%]:bar1_value] -gt 0 -or "[*[%2%]:auras]" -inc "Stand"|survived
+  --=massiveDamage|[*[%2%]:t-bar1_max] * 0.8
+  --"?[*[%1%]:auras]" -ninc "Massive" -or [$attackDmg] -lt [$massiveDamage]|survived
+  --!t:[%2%]|t-bar1_value:0
+  -->EndBattle|[%1%];[%2%]
+  --:survived|
+  
+  --/| The attack hit, so let's apply On-Hit effects?
+  
+  --/| 
+  --/|
+  --:Miss|
+  --<|
+  
+  --/|
+  --:ShowMiss|chance;result;person
+  --+showmiss|[*[%3%]:t-name] had a [%1%]% chance to hit, but missed on a roll of [%2%]...
+  --<|
+  
+  
+  --/|
+  --:EndBattle|winner;loser
+  --=expAward|5
+  --?[*[%2%]:bar1_value] -gt 0|death
+  -->AwardEXP|[%1%];[$expAward] * 4
+  --/| apply the big red X status marker to the loser
+  --X|
+  --:death|
+  -->AwardEXP|[%1%];[$expAward];1.0
+  -->AwardEXP|[%2%];[$expAward];1.0
+  --/| in the future, could modify this to factor in xp adjustments
+  --<|
+  
+  --/|
+  --:AwardEXP|person;amount;xpMult
+  --!a:[%1%]|xp:+=[%2%]*[%3%]
+  --?[*[%1%]:xp] -lt [*[%1%]:xp_max]|levelUP
+  --~|array;define;Stats;HP;Str;Mag;Skl;Spd;Lck;Def;Res
+  --~statName|array;getfirst;Stats
+  
+  --:statLoop|
+  --~[&statName]Growth|string;before;%;[*@{selected|token_id}:[&statName]_growth]
+  --=[&statName]Growth|[&[&statName]Growth]
+  --~[&statName]Progress|string;before;%;[*@{selected|token_id}:[&statName]_progress]
+  --=[&statName]Progress|[&[&statName]Progress]
+  --~[&statName]value|string;before;%;[*@{selected|token_id}:[&statName]]
+  --?"[&statName]" -ne "HP"|hpMax
+  --~[&statName]value|string;before;%;[*@{selected|token_id}:[&statName]_max]
+  --:hpMax|
+  --=[&statName]value|[&[&statName]value]
+  --=[&statName]Progress|[$[&statName]Progress] + [$[&statName]Growth]
+  
+  --?[[&statName]Progress] -lt 100|statbump
+  --=[&statName]Progress|[$[&statName]Progress] - 100
+  --!a:[%1%]|[&statName]:+=1
+  --+[&statName]Bump|You gained [&statName]!
+  --:statbump|
+  
+  --~statName|array;getnext;Stats
+  --?[&statName] -ne ArrayError|statLoop
+  
+  --:levelUP|
+  --<|
+  
+}}
