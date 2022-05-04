@@ -1,0 +1,459 @@
+!script {{
+
+  --#sourceToken|@{selected|token_id}
+  --#targetToken|@{target|token_id}
+  --#titleCardBackground|#606060
+  --#title|Preview
+  --#leftsub|Single Attack
+  --#rightsub|Detailed
+  --#nominmaxhighlight|1
+  
+  --/|  set the initiator and battle values on the sheets
+  --&aFighting|[*S:fighting]
+  --&dFighting|[*T:fighting]
+  
+  --/|  Have to calculate speed modifiers before starting attacks
+  --/| Calculate all our aura values for each team
+  --=AlliedFlankingMan|0
+  --=AlliedStrInNumbers|0
+  --=AlliedHeart2Heart|0
+  --=AlliedRadiance|0
+  --=AlliedCoordinatedAss|0
+  --=AlliedIntimidator|0
+  --=AlliedEnervate|0
+  --=AlliedInstructor|0
+  --=EnemyFlankingMan|0
+  --=EnemyStrInNumbers|0
+  --=EnemyHeart2Heart|0
+  --=EnemyRadiance|0
+  --=EnemyCoordinatedAss|0
+  --=EnemyIntimidator|0
+  --=EnemyEnervate|0
+  --=EnemyInstructor|0
+  
+  -->GetTokenAuras|@{selected|token_id}
+  -->GetTokenAuras|@{target|token_id}
+
+
+  --/| Now we concat all their skill names into strings
+  --&aName|[*S:t-name]
+  --Rfirst|[*S:character_id];repeating_skills
+  --:TalentLoop|
+  --?"[*R:skill_name]" -eq NoRepeatingAttributeLoaded|Done
+  --&[&aName]Talents|+ [*R:skillname]
+  --Rnext|
+  -->TalentLoop|
+  --:Done|
+  
+  --&dName|[*T:t-name]
+  --Rfirst|[*T:character_id];repeating_skills
+  --:TalentLoop2|
+  --?"[*R:skill_name]" -eq NoRepeatingAttributeLoaded|Done2
+  --&[&dName]Talents|+ [*R:skillname]
+  --Rnext|
+  -->TalentLoop2|
+  --:Done2|
+  
+  --/|Set our sign variables here and check for them
+  --/| These indicate presence or absence of the signs, since they don't stack.
+  --=ElderSign|0
+  --=HolySign|0
+  --=ChaosSign|0
+  
+  --?"[&[&aName]Talents]" -inc "Elder" -or "[&[&dName]Talents]" -inc "Elder"|=ElderSign;1
+  --?"[&[&aName]Talents]" -inc "Holy" -or "[&[&dName]Talents]" -inc "Holy"|=HolySign;1
+  --?"[&[&aName]Talents]" -inc "Chaos" -or "[&[&dName]Talents]" -inc "Chaos"|=ChaosSign;1
+
+  
+  --/|
+  --/|       Now we start doing the attack logic
+  --/|    Could be really interesting to do prompts asking the user what kind of attack to make
+  --/|               Loop until the user stops clicking "more attacks"
+  
+  --=[&aName]totaldamage|0
+  --=[&dName]totaldamage|0
+  
+  --~|array;statusmarkers;ConditionsA;@{selected|token_id}
+  --~|array;statusmarkers;ConditionsD;@{target|token_id}
+  --~aStatus|array;stringify;ConditionsA
+  --~dStatus|array;stringify;ConditionsD
+  
+  
+  --&attackClass|Normal
+  --&attackCost|1
+  
+  -->ExecuteAttack|"@{selected|token_id}";"@{target|token_id}";[&attackClass];[&attackCost]
+  --X|
+  
+  
+  
+  --/|  This is a subroutine to execute an attack
+  --/|       attackClass is whether the attack is Normal, Power, or Quick
+  
+  
+  --:ExecuteAttack|Parameters are attacker;defender;attackClass;durability
+  
+  --/| Set the stage by finding all the combatants' buffs and debuffs.
+  --~|array;statusmarkers;Conditions1;[%1%]
+  --~|array;statusmarkers;Conditions2;[%2%]
+  --~atkStatus|array;stringify;Conditions1
+  --~defStatus|array;stringify;Conditions2
+  
+  --/| Find the weapon that the attacker is using
+  --Rfirst|[*[%1%]:character_id];repeating_items
+  --&wepName|[*R:itemname]
+  --&atkweptypes|[*R:weptypes]
+  --~wepTypes|string;split;, ;[*R:weptypes]
+  --&wepRank|[*R:weprank]
+  --&wepRange|[*R:wep_range_type]
+  --&wepDesc|[*R:itemdesc]
+  --=wepDurable|[*R:durability]
+  
+  --=wepAcc|[*R:wepacc]
+  --=wepCrt|[*R:wepcrt]
+  --=wepMt|[*R:wepmt]
+  
+  
+  --/| Get the attack's damage type
+  --&dType|[&wepTypes1]
+  --?"[&dType]" -eq "Adaptive" -and "[&atkStatus]" -inc "interdiction" -and "[&atkStatus]" -ninc "chained-heart"|=dType;"Physical"
+  --?"[&dType]" -eq "Adaptive" -and "[&atkStatus]" -ninc "interdiction" -and "[&atkStatus]" -inc "chained-heart"|=dType;"Magical"
+  
+  --/| Calculate some percentages for our HP values
+  --=injuredA|[*[%1%]:t-bar1_max] * 0.5 {FLOOR}
+  --=injuredD|[*[%2%]:t-bar1_max] * 0.5 {FLOOR}
+  --=miracleA|[*[%1%]:t-bar1_max] * 0.05 {CEIL}
+  --=miracleD|[*[%2%]:t-bar1_max] * 0.05 {CEIL}
+  
+  --/| Next we find the net Advantage value (add the auras in the base definition)
+  --=atkAdv|[$[*[%1%]:faction]Enervate] {NEG}
+  --=defAdv|[$[*[%2%]:faction]Enervate] {NEG}
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Certainty"|=netAdv;[$atkAdv] + 20
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Certainty"|=netAdv;[$defAdv] + 20
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Miracle" -and [*[%1%]:t-bar1_value] -le [$miracleA] -and "[&[*[%2%]:t-name]Talents]" -ninc "Nihil"|=netAdv;[$atkAdv] + 40
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Miracle" -and [*[%2%]:t-bar1_value] -le [$miracleD] -and "[&[*[%1%]:t-name]Talents]" -ninc "Nihil"|=netAdv;[$defAdv] + 40
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Plan"|=netAdv;[$atkAdv] + [*[%1%]:Skl] / 3 {FLOOR}
+  --=netAdv|[$atkAdv] - [$defAdv] / 100
+  --=netAdv|1 - [$netAdv]
+  --+Advantage|[$netAdv]
+  
+  --/|   compare wepRank vs Rfind weapon exp
+  --=mastery|0
+  --%LoopCounter|2;[$wepTypesCount]
+    --Rfind|[*[%1%]:character_id];[&wepTypes[&LoopCounter]];repeating_weapons;weapon_rank_name
+	--=mastery|[$mastery] + [*R:weapon_experience]
+  --%|
+  --=mastery|[$mastery] - [&wepRank] {FLOOR}
+  --?[$mastery] -gt 100|=mastery;100
+  --?[$mastery] -lt -100|=mastery;-100
+  --=baseRate|[$mastery] / 2 {FLOOR} + 55
+  
+  
+  --/| Load the defender's weapon so we can pull its stats (and type)
+  --Rfirst|[*[%2%]:character_id];repeating_items
+  --=wepEva|[*R:wepeva]
+  --=wepGrd|[*R:wepgrd]
+  --=wepDR|[*R:wepdr]
+  --&defweptypes|[*R:weptypes]
+  
+  --/| Find the weapon triangle modifier
+  --=triangle|0
+  --~Arms|array;define;Arms;Sword;Mace;Spear;Sword;Mace
+  --~Wild|array;define;Wild;;Knife;Bow;Beast;Knife;Bow
+  --~Spells|array;define;Spells;Light;Dark;Anima;Light;Dark
+  --%LoopCounter2|2;4
+	--~ArmsIndex|array;setindex;Arms;[$LoopCounter2]
+	--~WildIndex|array;setindex;Wild;[$LoopCounter2]
+	--~SpellsIndex|array;setindex;Spells;[$LoopCounter2]
+	--~ArmsPrev|array;getprevious;Arms
+	--~ArmsCur|array;getnext;Arms
+	--~ArmsNext|array;getnext;Arms
+	--?"[&atkweptypes]" -inc "[&ArmsCur]" -and "[&defweptypes]" -inc "[&ArmsNext]"|=triangle;[$triangle] + 10
+	--?"[&atkweptypes]" -inc "[&ArmsCur]" -and "[&defweptypes]" -inc "[&ArmsPrev]"|=triangle;[$triangle] - 10
+	--~WildPrev|array;getprevious;Wild
+	--~WildCur|array;getnext;Wild
+	--~WildNext|array;getnext;Wild
+	--?"[&atkweptypes]" -inc "[&WildCur]" -and "[&defweptypes]" -inc "[&WildNext]"|=triangle;[$triangle] + 10
+	--?"[&atkweptypes]" -inc "[&WildCur]" -and "[&defweptypes]" -inc "[&WildPrev]"|=triangle;[$triangle] - 10
+	--~SpellsPrev|array;getprevious;Spells
+	--~SpellsCur|array;getnext;Spells
+	--~SpellsNext|array;getnext;Spells
+	--?"[&atkweptypes]" -inc "[&SpellsCur]" -and "[&defweptypes]" -inc "[&SpellsNext]"|=triangle;[$triangle] + 10
+	--?"[&atkweptypes]" -inc "[&SpellsCur]" -and "[&defweptypes]" -inc "[&SpellsPrev]"|=triangle;[$triangle] - 10
+  --%|
+  
+  --&atkcat|test
+  --&defcat|test
+  --?"[&defweptypes]" -inc "Sword" -or "[&defweptypes]" -inc "Spear" -or "[&defweptypes]" -inc "Mace"|&defcat;+ Arms
+  --?"[&defweptypes]" -inc "Bow" -or "[&defweptypes]" -inc "Beast" -or "[&defweptypes]" -inc "Knife"|&defcat;+ Wild
+  --?"[&defweptypes]" -inc "Dark" -or "[&defweptypes]" -inc "Light" -or "[&defweptypes]" -inc "Anima"|&defcat;+ Spell
+  --?"[&atkweptypes]" -inc "Sword" -or "[&atkweptypes]" -inc "Spear" -or "[&atkweptypes]" -inc "Mace"|&atkcat;+ Arms
+  --?"[&atkweptypes]" -inc "Bow" -or "[&atkweptypes]" -inc "Beast" -or "[&atkweptypes]" -inc "Knife"|&atkcat;+ Wild
+  --?"[&atkweptypes]" -inc "Dark" -or "[&atkweptypes]" -inc "Light" -or "[&atkweptypes]" -inc "Anima"|&atkcat;+ Spell
+  --?"[&atkcat]" -inc "Arms" -and "[&defcat]" -inc "Wild"|=triangle;[$triangle] + 10
+  --?"[&atkcat]" -inc "Wild" -and "[&defcat]" -inc "Spell"|=triangle;[$triangle] + 10
+  --?"[&atkcat]" -inc "Spell" -and "[&defcat]" -inc "Arms"|=triangle;[$triangle] + 10
+  --?"[&defcat]" -inc "Arms" -and "[&atkcat]" -inc "Wild"|=triangle;[$triangle] - 10
+  --?"[&defcat]" -inc "Wild" -and "[&atkcat]" -inc "Spell"|=triangle;[$triangle] - 10
+  --?"[&defcat]" -inc "Spell" -and "[&atkcat]" -inc "Arms"|=triangle;[$triangle] - 10
+  
+  --/| maybe triangle could be advantage
+  
+  --/| Now we calculate the total chance to hit and find our roll
+  --=Acc|[*[%1%]:Skl] * 2 + [*[%1%]:Lck] + [*[%1%]:Acc_bonus] - [$[*[%1%]:faction]Radiance] + [$wepAcc]
+  --?"[&atkStatus]" -inc "bleeding-eye"|=Acc;[$Acc] - 20
+  --?"[&atkStatus]" -inc "archery-target"|=Acc;[$Acc] + 20
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Nihil"|aNihil2
+  --?"[*[%1%]:initiating]" -ne "on" -and "[&[*[%1%]:t-name]Talents]" -inc "Patience"|=Acc;[$Acc] + 20
+  --?[*[%2%]:t-bar1_value] -le [$injuredD] -and "[&[*[%1%]:t-name]Talents]" -inc "Insult to Injury"|=Acc;[$Acc] + 10
+  --:aNihil2|
+  --=Evade|[*[%2%]:Spd] * 2 + [*[%2%]:Lck] + [*[%2%]:Evade_bonus] - [$[*[%2%]:faction]Heart2Heart] + [$wepEva]
+  --?"[&defStatus]" -inc "fishing-net"|=Evade;[$Evade] - 20
+  --?"[&defStatus]" -inc "ninja-mask"|=Evade;[$Evade] + 20
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Nihil"|dNihil2
+  --?"[*[%2%]:initiating]" -ne "on" -and "[&[*[%2%]:t-name]Talents]" -inc "Personal Space"|=Evade;[$Evade] + 10
+  --?"[*[%2%]:initiating]" -eq "on" -and "[&[*[%2%]:t-name]Talents]" -inc "Duelist's Blow"|=Evade;[$Evade] + 20
+  --?[*[%2%]:t-bar1_value] -le [$injuredD] -and "[&[*[%2%]:t-name]Talents]" -inc "Resolve"|=Evade;[$Evade] + 10
+  --:dNihil2|
+  --=hitRate|[$baseRate] + [$Acc] - [$Evade] + [$triangle]
+  --/|  add a line here to check for Precision
+  --=hitRoll|2d100 / 2 {CEIL}
+  --?[$netAdv] -ne 1|=hitRoll;[$hitRoll] * [$netAdv] {ROUND}
+  
+  --/| The attack hit, so now we determine critical or guard
+  --=Crit|[*[%1%]:Skl] / 2 + [*[%1%]:Crit_bonus] + [$wepCrt] {FLOOR}
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Nihil"|aNihil3
+  --?"[*[%1%]:initiating]" -eq "on" -and "[&[*[%1%]:t-name]Talents]" -inc "Zeal"|=Crit;[$Crit] + 10
+  --?[*[%2%]:t-bar1_value] -le [$injuredD] -and "[&[*[%1%]:t-name]Talents]" -inc "Insult to Injury"|=Crit;[$Crit] + 10
+  --?[*[%1%]:t-bar1_value] -le [$injuredA] -and "[&[*[%1%]:t-name]Talents]" -inc "Frenzy"|=Crit;[$Crit] + 20
+  --:aNihil3|
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Guiding Hand"|=Crit;[$Crit] + [*[%1%]:Lck] / 2 {FLOOR}
+  --=Guard|[*[%2%]:Lck] + [*[%2%]:Evade_bonus] + [$wepGrd]
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Nihil"|dNihil3
+  --?"[*[%2%]:initiating]" -ne "on" -and "[&[*[%2%]:t-name]Talents]" -inc "Bastion"|=Guard;[$Guard] + 10
+  --?[*[%2%]:t-bar1_value] -ge [*[%2%]:t-bar1_max] -and "[&[*[%2%]:t-name]Talents]" -inc "Untouchable"|=Guard;[$Guard] + 20
+  --:dNihil3|
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Guiding Hand"|=Guard;[$Guard] + [*[%1%]:Lck] / 2 {FLOOR}
+  --=critRate|[$Crit] - [$Guard]
+  --=critRoll|1d100
+  --?[$netAdv] -ne 1|=critRoll;[$critRoll] * [$netAdv] {ROUND}
+  --&critType|Crit
+  --?[$critRate] -ge 0|guardCheck
+  --&critType|Guard
+  --=critRoll|[$critRoll] {NEG}
+  --:guardCheck|
+  --&critSuccess|No
+  --?"[&critType]" -eq "Crit" -and [$critRoll] -le [$critRate]|&critSuccess;Crit
+  --?"[&critType]" -eq "Guard" -and [$critRoll] -ge [$critRate]|&critSuccess;Guard
+  
+  --/| With the result of the crit check, now we can calculate damage.
+  --C[%3%]|Normal:=atkMult;1.0|Power:=atkMult;1.5|Quick:=atkMult;0.5
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Flashing Blade" -and "[%3%]" -eq "Quick"|=atkMult;[$atkMult] + 0.1
+  --?"[&critSuccess]" -eq "Crit"|=atkMult;[$atkMult] + 0.5
+  --?"[&critSuccess]" -eq "Guard"|=atkMult;[$atkMult] - 0.5
+  --=Dmg|[*[%1%]:Dmg] + [*[%1%]:Dmg_bonus] + [$[*[%1%]:faction]CoordinatedAss] - [$[*[%1%]:faction]Intimidator] + [$wepMt]
+  --?"[&atkStatus]" -inc "grab"|=Dmg;[$Dmg] - 4
+  --?"[&atkStatus]" -inc "strong"|=Dmg;[$Dmg] + 4
+  --+Dmg|[$Dmg]
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Nihil"|aNihil4
+  --?"[*[%1%]:initiating]" -ne "on" -and "[&[*[%1%]:t-name]Talents]" -inc "Revenge"|=Dmg;[$Dmg] + 3
+  --?[*[%1%]:t-bar1_value] -le [$injuredA] -and "[&[*[%1%]:t-name]Talents]" -inc "Revenge"|=Dmg;[$Dmg] + 3
+  --?"[*[%1%]:initiating]" -eq "on" -and "[&[*[%1%]:t-name]Talents]" -inc "Quick Draw"|=Dmg;[$Dmg] + 4
+  --?"[&defweptypes]" -ninc "[&dType]" -and "[&[*[%1%]:t-name]Talents]" -inc "Enmity"|=Dmg;[$Dmg] + 2
+  --?[*[%1%]:t-bar1_value] -ge [*[%1%]:t-bar1_max] -and "[&[*[%1%]:t-name]Talents]" -inc "Full Power"|=Dmg;[$Dmg] + 1
+  --?"[&critSuccess]" -eq "Crit" -and "[&[*[%1%]:t-name]Talents]" -inc "Lethality"|=Dmg;[$Dmg] + 10
+  --:aNihil4|
+  --?"[&ATalents]" -ninc "Trample"|trample
+  --=sizeDiff|[*[%1%]:size] - [*[%2%]:size]
+  --?[$sizeDiff] -lt 0|=sizeDiff;0
+  --=Dmg|[$sizeDiff] * 3 + [$Dmg]
+  --:trample|
+  --=DR|[$[*[%2%]:faction]StrInNumbers] + [$wepDR]
+  --?"[&defStatus]" -inc "broken-shield"|=DR;[$DR] - 4
+  --?"[&defStatus]" -inc "white-tower"|=DR;[$DR] + 4
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Nihil"|dNihil4
+  --?"[*[%2%]:initiating]" -ne "on" -and "[&[*[%2%]:t-name]Talents]" -inc "Bastion"|=DR;[$DR] + 2
+  --?[*[%2%]:t-bar1_value] -le [$injuredD] -and "[&[*[%2%]:t-name]Talents]" -inc "Resolve"|=DR;[$DR] + 2
+  --?[*[%2%]:t-bar1_value] -ge [*[%2%]:t-bar1_max] -and "[&[*[%2%]:t-name]Talents]" -inc "Full Power"|=DR;[$DR] + 1
+  --dNihil4|
+  --?"[&[*[%2%]:t-name]Talents]" -ninc "Warding Blow"|wardingblow
+  --?"[&dType]" -eq "Physical"|wardingblow
+  --?"[*[%2%]:initiating]" -ne "on" -and "[&[*[%1%]:t-name]Talents]" -ninc "Nihil"|=DR;[$DR] + 10
+  --=DR|[$DR] + 5
+  --:wardingblow|
+  --?"[&[*[%2%]:t-name]Talents]" -ninc "Armored Blow"|armorblow
+  --?"[&dType]" -eq "Magical"|wardingblow
+  --?"[*[%2%]:initiating]" -ne "on" -and "[&[*[%1%]:t-name]Talents]" -ninc "Nihil"|=DR;[$DR] + 10
+  --=DR|[$DR] + 5
+  --:armorblow|
+  --+Dmg|[$Dmg]
+  
+  --/|    Now we determine which stat(s) to use based on the damage type
+  --=dMag|[*[%1%]:Mag] - [*[%2%]:Res]
+  --=dPhys|[*[%1%]:Str] - [*[%2%]:Def]
+  --?"[&dType]" -eq "Adaptive" -and [$dMag] -ge [$dPhys] -or "[&dType]" -eq "Magical"|physical
+  --=Dmg|[$Dmg] + [*[%1%]:Str]
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Pierce"|=dArmor;[*[%2%]:Def] * 0.8 {ROUND}|=dArmor;[*[%2%]:Def]
+  --=DR|[$DR] + [*[%2%]:DR] + [$dArmor]
+  --:physical|
+  --?"[&dType]" -eq "Adaptive" -and [$dMag] -lt [$dPhys] -or "[&dType]" -eq "Physical"|magical
+  --=Dmg|[$Dmg] + [*[%1%]:Mag]
+  --?"[&[*[%1%]:t-name]Talents]" -inc "Pierce"|=dWard;[*[%2%]:Res] * 0.8 {ROUND}|=dWard;[*[%2%]:Res]
+  --=DR|[$DR] + [*[%2%]:DR_bonus] + [$dWard]
+  --:magical|
+  --?[$atkMult] -ne 1.0|=Dmg;[$Dmg] * [$atkMult] {FLOOR}
+  
+  --+Dmg|[$Dmg]
+  --/| If the defender is Vulnerable to an Effective attack, add that now.
+  --=effectiveness|0
+  --?"[&[*[%2%]:t-name]Talents]" -ninc "Effective" -and "[&wepDesc]" -ninc "Effective"|weaknesses
+  --?"[&Conditions2]" -inc "edge-crack"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Heavy" -and "[*[%2%]:auras]" -inc "Heavy"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Horse" -and "[*[%2%]:auras]" -inc "Horse"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Pegasus" -and "[*[%2%]:auras]" -inc "Pegasus"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Wolf" -and "[*[%2%]:auras]" -inc "Wolf"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Wyvern" -and "[*[%2%]:auras]" -inc "Wyvern"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Mount" -and "[*[%2%]:auras]" -inc "Mount"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Monster" -and "[*[%2%]:auras]" -inc "Monster"|=effectiveness;[$effectiveness] + 10
+  --?"[&wepDesc]" -inc "Flying" -and "[*[%2%]:auras]" -inc "Flying"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Heavy)" -and "[*[%2%]:auras]" -inc "Heavy"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Horse)" -and "[*[%2%]:auras]" -inc "Horse"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Pegasus)" -and "[*[%2%]:auras]" -inc "Pegasus"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Wolf)" -and "[*[%2%]:auras]" -inc "Wolf"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Wyvern)" -and "[*[%2%]:auras]" -inc "Wyvern"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Mount)" -and "[*[%2%]:auras]" -inc "Mount"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Monster)" -and "[*[%2%]:auras]" -inc "Monster"|=effectiveness;[$effectiveness] + 10
+  --?"[&[*[%1%]:t-name]Talents]" -inc "(Flying)" -and "[*[%2%]:auras]" -inc "Flying"|=effectiveness;[$effectiveness] + 10
+  --?[$effectiveness] -gt 0 -and "[&[*[%1%]:t-name]Talents]" -inc "Exploit"|=effectiveness;[$effectiveness] + 10
+  --?[$effectiveness] -gt 0 -and "[&[*[%2%]:t-name]Talents]" -inc "Nullify"|=effectiveness;[$effectiveness] - 5 {MIN:0}
+  --?[$effectiveness] -gt 0 -and "[&[*[%2%]:t-name]Talents]" -inc "Wolf"|=effectiveness;[$effectiveness] - 5 {MIN:0}
+  --?[$effectiveness] -gt 0 -and "[&[*[%2%]:t-name]Talents]" -inc "Wyvern"|=effectiveness;[$effectiveness] - 5 {MIN:0}
+  --:weaknesses|
+
+  --/|  Now we finally total the damage
+  --/|    It's bounded at 0 to prevent negative damage from healing the person
+  --=attackDmg|[$Dmg] - [$DR] {MIN:0} + [$effectiveness]
+  
+  
+  --/| Check for any types that might be relevant, like Heavy or Monster
+  --=hpMult|1.0
+  --?"[*[%2%]:auras]" -inc "Heavy"|=hpMult;[$hpMult] - 0.2
+  --?"[*[%1%]:auras]" -inc "Monster"|=hpMult;[$hpMult] + 0.2
+  --?"[&[*[%2%]:t-name]Talents]" -inc "Sanctuary"|=hpMult;[$hpMult] - 0.2
+  
+  --+BaseRate|[$baseRate]
+  --+Triangle|[$triangle]
+  --+Acc|[$Acc]
+  --+Evade|[$Evade]
+  --+Crit|[$Crit]
+  --+Guard|[$Guard]
+  --+Dmg|[$Dmg]
+  --+DR|[$DR]
+  --+Weakness|[$effectiveness]
+  
+  --/| Display the card to the players
+  --+ShowHit|[*[%1%]:t-name] has a(n) [$hitRate]% chance to hit and would have rolled [$hitRoll].
+  --+Crit/Guard|There's a critical or guard chance of [$critRate] and would have rolled [$critRoll].
+  --=critdiff|[$Dmg] / 2 {FLOOR}
+  --+ShowDamage|Normal damage is [$attackDmg], +/- [$critdiff] on a crit/guard.
+  
+  
+  --/| 
+  --/|
+  --:Miss|
+  --+|[hr]
+  --:skipAttack|
+  --<|
+    
+  
+  --/|  Set a token's bar value to the specified amount
+  --:ApplyTokenValue|Parameters are tokenid;bar#;amount
+  --@token-mod|_ignore-selected _ids [%1%] _set bar[%2%]_value|[%3%]
+  --<| 
+  
+  
+  --/|  Set a status marker on a token
+  --:ApplyTokenStatus|Parameters are tokenid;status;duration;max
+  --@token-mod|_ignore-selected _ids [%1%] _set statusmarkers|[%2%]:+[%3%]::[%4%]
+  --<| 
+  
+  
+  
+  --/| Get Auras for the token's team
+  --:GetTokenAuras|Parameters are tokenid;
+  
+  --&team|[*[%1%]:faction]
+
+  --/|Get all tokens on the page into the "alltokens" array
+  --~|array;pagetokens;alltokens;[%1%]
+
+  --/|Create the "inRange" array. It will have a blank item in it to begin with, which we will remove later.
+  --~|array;define;targetRange;
+
+  --/|Loop through all of the tokens in "alltokens" to check their distance
+  --~tokenid|array;getfirst;alltokens
+  --?[&tokenid] -eq ArrayError|endOutput
+  --:loopCheck|
+  
+  --/|Skip targets that are not on the token layer or that don't represent creatures
+  --?[*[&tokenid]:t-layer] -ne objects|continue
+  --?"[*[&tokenid]:t-represents]" -ninc "-"|continue
+  
+ --/|Check the distance between the target token and the current array token
+  --~disttemp1|manhattandistance;[%1%];[&tokenid]
+  --=dist1|[$disttemp1] {FLOOR}
+  --?[$dist1] -gt 3|targetcheck
+  --~|array;add;targetRange;[&tokenid]
+  --:targetcheck|
+  
+  --:continue|
+  --~tokenid|array;getnext;alltokens
+  --?[&tokenid] -ne ArrayError|loopCheck
+
+  --/|Remove the dummy first item in the Range arrays
+  --~|array;removeat;targetRange;0
+  
+  --/|Loop through the targetRange tokens
+  --~tokenid|array;getfirst;targetRange
+  --?[&tokenid] -eq ArrayError|endOutput
+  --:loopTarget|
+  
+  --/|Check if the person is close enough to get the stronger aura benefit
+  --/| People give themselves beneficial auras, but only the weaker tier
+  --=aurafactor|1
+  --?[&tokenid] -eq [%1%]|rangecheck
+  --~disttemp2|manhattandistance;[%1%];[&tokenid]
+  --=dist2|[$disttemp2] {FLOOR}
+  --?[$dist2] -gt 1|rangecheck
+  --=aurafactor|3
+  --:rangecheck|
+  
+  
+  --/|Check if the person is on the same team or an enemy team
+  --/| neutrals are considered green units so they count as player units for aura purposes
+  --/| teamdiff = 0 -> you're on the same team
+  --/| teamdiff = 1 -> you're on different teams
+  --?"[*[&tokenid]:faction]" -eq "[*[%1%]:faction]"|=teamdiff;0|=teamdiff;1
+  
+  --?"[*[&tokenid]:auras]" -inc "Numbers" -and [$teamdiff] -eq 0|=[&team]StrInNumbers;[$[&team]StrInNumbers] + 1*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Flank" -and [$teamdiff] -eq 1|=[&team]FlankingMan;[$[&team]FlankingMan] + 2*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Heart" -and [$teamdiff] -eq 1|=[&team]Heart2Heart;[$[&team]Heart2Heart] + 5*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Rad" -and [$teamdiff] -eq 1|=[&team]Radiance;[$[&team]Radiance] + 5*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Coord" -and [$teamdiff] -eq 0|=[&team]CoordinatedAss;[$[&team]CoordinatedAss] + 1*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Intim" -and [$teamdiff] -eq 1|=[&team]Intimidator;[$[&team]Intimidator] + 1*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Enervate" -and [$teamdiff] -eq 1|=[&team]Enervate;[$[&team]Enervate] + 5*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Flank" -and [$teamdiff] -eq 1|=[&team]FlankingMan;[$[&team]FlankingMan] + 2*[$aurafactor]
+  --?"[*[&tokenid]:auras]" -inc "Instruct" -and [$teamdiff] -eq 0|=[&team]Instructor;[$[&team]Instructor] + 3*[$aurafactor]
+
+  --/|Get the next token and continue the loop until we run out.
+  --~tokenid|array;getnext;targetRange
+  --?[&tokenid] -ne ArrayError|loopTarget
+  
+  --/|After this loop with the target token, there will be a second loop on the selected token.
+  --/| 
+  
+  --:endOutput|
+  
+  --<|
+  
+}}
